@@ -1,4 +1,4 @@
-(welcome) = 
+(welcome)= 
 # Welcome to GEOGM0068: Geographic Information Retrieval and Integration
 
 This unit introduces core principles of geographic information retrieval and integration by covering basic concepts of spatial indexing and ranking, spatial query, spatial data conflation, as well as data-driven techniques for geo-text mining. Applications on urban structures and smart city will be applied to assist the learning process.
