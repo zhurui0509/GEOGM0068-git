@@ -5,4 +5,4 @@ In this lecture, we finish discussing the remaining key concepts for geographic 
 
 [![Lecture01-slides](/lectures/l02-preface.png)](https://docs.google.com/presentation/d/1yAmjmLbVm3Zl2gt8t_vcad20CAHEb4XDq-Wmd92tU9w/edit?usp=sharing)
 
-This lecture is coupled with a practice [](lab01)
+<!-- This lecture is coupled with a practice [](lab01) -->
