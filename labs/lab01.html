@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Lab 01: Dealing with Spatial Databases &#8212; GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</title>
+    <title>Lab 01: Dealing with Spatial Data in Python &#8212; GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lecture 02: Retrievaling Location-based Social Media" href="lab02.html" />
+    <link rel="next" title="Lab 02: Retrieving Location-based Social Media" href="lab02.html" />
     <link rel="prev" title="Lecture 10: Ethics, Summary, and Career" href="../lectures/lecture10.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -178,22 +178,22 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Lab 01: Dealing with Spatial Databases
+   Lab 01: Dealing with Spatial Data in Python
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lab02.html">
-   Lecture 02: Retrievaling Location-based Social Media
+   Lab 02: Retrieving Location-based Social Media
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lab03.html">
-   Lecture 03: Natural Language Processing on Geo-Text
+   Lab 03: Natural Language Processing on Geo-Text
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lab04.html">
-   Lecture 04: Geographic Information Integration
+   Lab 04: Integrating Geographic Information
   </a>
  </li>
 </ul>
@@ -247,6 +247,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/zhurui0509/GEOGM0068-git/master?urlpath=tree/docs/labs/lab01.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -314,7 +343,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/labs/lab01.md"
+        <a href="../_sources/labs/lab01.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -325,7 +354,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.md</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
 
       </li>
@@ -351,23 +380,222 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">
+   Basics in Pandas (for non-spatial data)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-dataframe-from-scratch">
+     Create dataframe from scratch
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-data">
+     Loading data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viewing-your-data">
+     Viewing your data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">
+     Querying (selecting, slicing, extracting) Dataframe
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#select-by-column">
+       Select by column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#select-by-row">
+       Select by row
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conditional-selection">
+       Conditional selection
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#geopandas-for-spatial-data">
+   GeoPandas for Spatial Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-spatial-data">
+     Loading spatial data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-spatial-data">
+     Saving spatial data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">
+     Retrieving data directly from OSM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">
+     Coordinate Reference System for GeoDataFrame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computation-on-geodataframe">
+     Computation on GeoDataFrame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spatial-join">
+     Spatial join
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualization">
+     Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Lab 01: Dealing with Spatial Databases</h1>
+                <h1>Lab 01: Dealing with Spatial Data in Python</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">
+   Basics in Pandas (for non-spatial data)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-dataframe-from-scratch">
+     Create dataframe from scratch
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-data">
+     Loading data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#viewing-your-data">
+     Viewing your data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">
+     Querying (selecting, slicing, extracting) Dataframe
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#select-by-column">
+       Select by column
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#select-by-row">
+       Select by row
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#conditional-selection">
+       Conditional selection
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#geopandas-for-spatial-data">
+   GeoPandas for Spatial Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading-spatial-data">
+     Loading spatial data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-spatial-data">
+     Saving spatial data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">
+     Retrieving data directly from OSM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">
+     Coordinate Reference System for GeoDataFrame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computation-on-geodataframe">
+     Computation on GeoDataFrame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spatial-join">
+     Spatial join
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualization">
+     Visualization
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -375,8 +603,1491 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="lab-01-dealing-with-spatial-databases">
-<span id="lab01"></span><h1>Lab 01: Dealing with Spatial Databases<a class="headerlink" href="#lab-01-dealing-with-spatial-databases" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-01-dealing-with-spatial-data-in-python">
+<h1>Lab 01: Dealing with Spatial Data in Python<a class="headerlink" href="#lab-01-dealing-with-spatial-data-in-python" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial, we will work on dealing with general non-spatial and spatial data using the Python library pandas and geopandas. Many concepts/techniques will be echoed to the ones your learned from <a class="reference internal" href="../lectures/lecture02.html#lecture02"><span class="std std-ref">Lecture 02: Spatial Database I</span></a>.</p>
+<p>To follow this tutorial, you should have installed <a class="reference external" href="https://jupyter.org/install">Jupyter Notebook</a> (or Jupyter Lab) on your own computer (note: computers in the lab should have already installed it).</p>
+<p>Requred packages include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pandas.pydata.org/docs/getting_started/install.html">pandas</a> / <a class="reference external" href="https://geopandas.org/en/stable/getting_started/install.html">geopandas</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/Shapely/">shapely</a></p></li>
+<li><p><a class="reference external" href="https://pysal.org/docs/install/">pysal</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/pyproj/">pyproj</a></p></li>
+<li><p><a class="reference external" href="https://osmnx.readthedocs.io/en/stable/">osmnx</a> / <a class="reference external" href="https://pyrosm.readthedocs.io/en/latest/installation.html">pyrosm</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/matplotlib/">matplotlib</a> (visualization)</p></li>
+</ul>
+<p>Mostly, you can use the commond like <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas</span></code> to install the package</p>
+<section id="basics-in-pandas-for-non-spatial-data">
+<h2>Basics in Pandas (for non-spatial data)<a class="headerlink" href="#basics-in-pandas-for-non-spatial-data" title="Permalink to this headline">#</a></h2>
+<p>Pandas is currently the mostly important tool for data scientists working in Python. It is the backbone of many state-of-the-art techniques like machine learning and visualization. Here we cover the basics of using Pandas. For more comprehensive tutorial, follow <a class="reference external" href="https://www.youtube.com/watch?v=5rNu16O3YNE">this video</a> and <a class="reference external" href="https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduction-for-beginners/">this post</a></p>
+<p>First of all, the two key components in Pandas are <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. A <code class="docutils literal notranslate"><span class="pre">Series</span></code> is essentially a column, and a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a multi-dimensional table made up of a collection of <code class="docutils literal notranslate"><span class="pre">Series</span></code>. These two components are quite similar in that many operations that you can do with one you can do with the other, such as filling in null values and calculating the mean.</p>
+<p><img alt="Series and DataFrame" src="../_images/lab1-fig1.png" /></p>
+<section id="create-dataframe-from-scratch">
+<h3>Create dataframe from scratch<a class="headerlink" href="#create-dataframe-from-scratch" title="Permalink to this headline">#</a></h3>
+<p>There are many ways to create a DataFrame from scratch, but a great option is to just use a simple <code class="docutils literal notranslate"><span class="pre">dict</span></code> (this is a common data structure called dictionary, which is composed by a key:value pair). Each key:value item in data corresponds to a column in the resulting DataFrame.</p>
+<p>Let’s say we have a fruit stand that sells apples and oranges. We want to have a column for each fruit and a row for each customer purchase. To organize this as a dictionary for pandas we could do something like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;apples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+    <span class="s1">&#39;oranges&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">purchases</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">purchases</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>apples</th>
+      <th>oranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The Index of this DataFrame was given to us as the numbers 0-3. We could also create our own when we initialize the DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;June&#39;</span><span class="p">,</span> <span class="s1">&#39;Robert&#39;</span><span class="p">,</span> <span class="s1">&#39;Lily&#39;</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">])</span>
+<span class="n">purchases</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>apples</th>
+      <th>oranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>June</th>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Robert</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Lily</th>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>David</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>So now we could locate a customer’s order by using their name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;June&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apples     3
+oranges    0
+Name: June, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-data">
+<h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">#</a></h3>
+<p>We can also load in data from data formats like <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">txt</span></code>, and so on. For example, if you downloaded <code class="docutils literal notranslate"><span class="pre">purchase.csv</span></code> to your local directory, you should be able to load the data by running:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_loaded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;purchase.csv&#39;</span><span class="p">)</span>
+<span class="n">purchases_loaded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed:0</th>
+      <th>apples</th>
+      <th>oranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>June</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Robert</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lily</td>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>David</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note here that CSVs don’t have indexes like DataFrames, so we need to designate the <code class="docutils literal notranslate"><span class="pre">index_col</span></code> when reading:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_loaded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;purchase.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">purchases_loaded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>apples</th>
+      <th>oranges</th>
+    </tr>
+    <tr>
+      <th>Unnamed:0</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>June</th>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Robert</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Lily</th>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>David</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="viewing-your-data">
+<h3>Viewing your data<a class="headerlink" href="#viewing-your-data" title="Permalink to this headline">#</a></h3>
+<p>There are many operations to view/describe your data. For example, you can use <code class="docutils literal notranslate"><span class="pre">.head()</span></code> to check the first several rows of your dataframe, <code class="docutils literal notranslate"><span class="pre">.tail()</span></code> to see the last severl rows, <code class="docutils literal notranslate"><span class="pre">.info()</span></code> to have a list of information about your dataframe (you should always run it first after your data is loaded), <code class="docutils literal notranslate"><span class="pre">.shape</span></code> to see the dimension of your dataframe (i.e., how many rows and columns are there?), etc. Let’s try <code class="docutils literal notranslate"><span class="pre">.info()</span></code> here and you should also try the others yourself.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_loaded</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 4 entries, June to David
+Data columns (total 2 columns):
+ #   Column   Non-Null Count  Dtype
+---  ------   --------------  -----
+ 0   apples   4 non-null      int64
+ 1   oranges  4 non-null      int64
+dtypes: int64(2)
+memory usage: 96.0+ bytes
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the output, you can see our loaded <code class="docutils literal notranslate"><span class="pre">purchases_loaded</span></code> dataframe has 4 entries (rows), and there are two columnes, each has 4 non-null values and their data types are both int64 (i.e., integer with 64 digits). Data type here is an important concept (we have covered it in our lecture as well). Different data types might have various operations/analysis. See below table for a full list of data types in Pandas, and Python and NumPy (another important package in Python).</p>
+<p><img alt="dtype_pandas" src="../_images/lab1-fig2.png" /></p>
+</section>
+<section id="querying-selecting-slicing-extracting-dataframe">
+<h3>Querying (selecting, slicing, extracting) Dataframe<a class="headerlink" href="#querying-selecting-slicing-extracting-dataframe" title="Permalink to this headline">#</a></h3>
+<p>Similar to the complex DBMS, Pandas also support selecting, slicing or extracting data from the <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code>.</p>
+<section id="select-by-column">
+<h4>Select by column<a class="headerlink" href="#select-by-column" title="Permalink to this headline">#</a></h4>
+<p>We can extract a column using square brackets like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_apple</span> <span class="o">=</span> <span class="n">purchases_loaded</span><span class="p">[</span><span class="s1">&#39;apples&#39;</span><span class="p">]</span>
+<span class="n">purchases_apple</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unnamed:0
+June       3
+Robert     2
+Lily       0
+David      1
+Name: apples, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">purchases_apple</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.series.Series
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the returned <code class="docutils literal notranslate"><span class="pre">purchases_apple</span></code> is a <code class="docutils literal notranslate"><span class="pre">Series</span></code>. To extract a column as a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, we need to pass a list of column names. In our case that’s just a single column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_apple</span> <span class="o">=</span> <span class="n">purchases_loaded</span><span class="p">[[</span><span class="s1">&#39;apples&#39;</span><span class="p">]]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">purchases_apple</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.frame.DataFrame
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-by-row">
+<h4>Select by row<a class="headerlink" href="#select-by-row" title="Permalink to this headline">#</a></h4>
+<p>For rows, we can use two ways to extract data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loc</span></code>: locates by name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iloc</span></code>: locates by numerical index</p></li>
+</ul>
+<p>For example, we can select the row of June (how many apples and oranges June has got?) from our <code class="docutils literal notranslate"><span class="pre">purchase_loaded</span></code> dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">purchases_June</span> <span class="o">=</span> <span class="n">purchases_loaded</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;June&quot;</span><span class="p">]</span>
+<span class="n">purchases_June</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>apples     3
+oranges    0
+Name: June, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conditional-selection">
+<h4>Conditional selection<a class="headerlink" href="#conditional-selection" title="Permalink to this headline">#</a></h4>
+<p>So far, We’ve gone over how to select columns and rows, but what if we want to make a conditional selection?</p>
+<p>For example, what if we want to filter our <code class="docutils literal notranslate"><span class="pre">purchases_loaded</span></code> DataFrame to show only people who bought apples less than 2?</p>
+<p>To do that, we take a column from the DataFrame and apply a Boolean condition to it. Here’s an example of a Boolean condition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condition</span> <span class="o">=</span> <span class="p">(</span><span class="n">purchases_loaded</span><span class="p">[</span><span class="s1">&#39;apples&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">condition</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unnamed:0
+June       False
+Robert     False
+Lily        True
+David       True
+Name: apples, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>A little bit more complex, how about showing people who bought apples less than 2 but oranges larger than 2? Can you try it? Hint, you need to use the logic operator <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> to connect two conditions.</p>
+</section>
+</section>
+</section>
+<section id="geopandas-for-spatial-data">
+<h2>GeoPandas for Spatial Data<a class="headerlink" href="#geopandas-for-spatial-data" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Geopandas</span></code> is designed to process spatial data in Python. <code class="docutils literal notranslate"><span class="pre">Geopandas</span></code> combines the capabilities of the data analysis library <code class="docutils literal notranslate"><span class="pre">pandas</span></code> with other packages like <code class="docutils literal notranslate"><span class="pre">shapely</span></code> and <code class="docutils literal notranslate"><span class="pre">fiona</span></code> for managing spatial data. The main data structures in geopandas are <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> which extend the capabilities of <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> from <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
+<p>The key difference between <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> and pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is that a <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> should contain at least one column for geometries. By default, the name of this column is <code class="docutils literal notranslate"><span class="pre">'geometry'</span></code>. The geometry column is a <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> which contains the geometries (points, lines, polygons, multipolygons etc.) as <code class="docutils literal notranslate"><span class="pre">shapely</span></code> objects.</p>
+<section id="loading-spatial-data">
+<h3>Loading spatial data<a class="headerlink" href="#loading-spatial-data" title="Permalink to this headline">#</a></h3>
+<p>Spatial data that are in the format of geojson, shp, etc. can all be loaded as GeoPandas Dataframe by using the function <code class="docutils literal notranslate"><span class="pre">read_file()</span></code>. Let’s use a shapefile (shp) downloaded from <a class="reference external" href="http://download.geofabrik.de/">OpenStreetMap</a> as an example here. You can also find the specific data (building in Bristol) from Blackboard.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="c1"># Filepath</span>
+<span class="n">bristol_building_file</span> <span class="o">=</span> <span class="s2">&quot;./bristol-buildings.shp/gis_osm_buildings_a_free_1.shp&quot;</span> <span class="c1"># make sure the directory is correct in your case</span>
+
+<span class="c1"># Read the file</span>
+<span class="n">bristol_building</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">bristol_building_file</span><span class="p">)</span>
+
+<span class="c1"># How does it look?</span>
+<span class="n">bristol_building</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>osm_id</th>
+      <th>code</th>
+      <th>fclass</th>
+      <th>name</th>
+      <th>type</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4309554</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Bristol City Hall</td>
+      <td>None</td>
+      <td>POLYGON ((-2.60242 51.45242, -2.60241 51.45244...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4315318</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Clifton Cathedral</td>
+      <td>church</td>
+      <td>POLYGON ((-2.61673 51.45965, -2.61673 51.45965...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4315809</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Clifton Down Shopping Centre</td>
+      <td>retail</td>
+      <td>POLYGON ((-2.61133 51.46431, -2.61070 51.46441...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4317900</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Za Za Bazaar</td>
+      <td>None</td>
+      <td>POLYGON ((-2.59869 51.45029, -2.59865 51.45042...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4317901</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Mackenzies Café Bar</td>
+      <td>commercial</td>
+      <td>POLYGON ((-2.59851 51.45107, -2.59850 51.45110...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As we can see, the <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> contains various attributes in separate columns. The <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column contains the spatial information (it is <a class="reference external" href="https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry">WKT format</a>, which is implemented by <code class="docutils literal notranslate"><span class="pre">shapely</span></code>). We can next take a look of some of the basic information of <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> using the command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
+RangeIndex: 149805 entries, 0 to 149804
+Data columns (total 6 columns):
+ #   Column    Non-Null Count   Dtype   
+---  ------    --------------   -----   
+ 0   osm_id    149805 non-null  object  
+ 1   code      149805 non-null  int64   
+ 2   fclass    149805 non-null  object  
+ 3   name      7587 non-null    object  
+ 4   type      98915 non-null   object  
+ 5   geometry  149805 non-null  geometry
+dtypes: geometry(1), int64(1), object(4)
+memory usage: 6.9+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<p>What kind of information can you get from this output?</p>
+<p>Since our data is intrinsically spatial (it has a <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column), we can visualize it to understand the spatial distribution of the data better. <code class="docutils literal notranslate"><span class="pre">plot()</span></code> is the function for it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../_images/lab01_31_1.png" src="../_images/lab01_31_1.png" />
+</div>
+</div>
+</section>
+<section id="saving-spatial-data">
+<h3>Saving spatial data<a class="headerlink" href="#saving-spatial-data" title="Permalink to this headline">#</a></h3>
+<p>Once you are done with your process/analysis, you can also save your GeoDataFrame into files (e.g., <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.geojson</span></code>, etc). Here, since we loaded data from <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, let’s now try to save our data to <code class="docutils literal notranslate"><span class="pre">.geojson</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;osm_bristol_buildings.geojson&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span> 
+<span class="c1">## this will save your data to the current directory same to this notebook. </span>
+<span class="c1">## you can check the current directory by ruing cwd = os.getcwd()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieving-data-directly-from-osm">
+<h3>Retrieving data directly from OSM<a class="headerlink" href="#retrieving-data-directly-from-osm" title="Permalink to this headline">#</a></h3>
+<p>We have so far seen how to read spatial data from disk (i.e., the data is downloaded and saved on your local directory). Next, let’s see how we can retrieve data from OSM directlt using a library called <code class="docutils literal notranslate"><span class="pre">pyrosm</span></code>. With <code class="docutils literal notranslate"><span class="pre">pyrosm</span></code>, you can easily retrieve data from anywhere in the world based on <code class="docutils literal notranslate"><span class="pre">OSM.PBF</span></code> (a specific data format for OSM) files that are distributed by <a class="reference external" href="http://download.geofabrik.de/">Geofabrik</a> (this is where the Bristol buildings data were downloaded). The package aims to be an efficient way to parse OSM data covering large geographical areas (such as countries and cities)</p>
+<p>Note that if you would like to be flexible about your download, e.g., selecting a bounding box by yourself rather than by administrative regions, you can consider using <a class="reference external" href="https://osmnx.readthedocs.io/en/stable/"><code class="docutils literal notranslate"><span class="pre">OSMnx</span></code></a> library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrosm</span> <span class="kn">import</span> <span class="n">OSM</span><span class="p">,</span> <span class="n">get_data</span>
+
+<span class="c1"># Download data for Bristol</span>
+<span class="n">bristol</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;bristol&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the reader object for Bristol</span>
+<span class="n">osm</span> <span class="o">=</span> <span class="n">OSM</span><span class="p">(</span><span class="n">bristol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the first command, we downloaded the data for “Bristol” using the <code class="docutils literal notranslate"><span class="pre">get_data</span></code> function. This function in fact automates the data downloading process and stores the data locally in a temporary folder. The next step was to initialize a reader object called <code class="docutils literal notranslate"><span class="pre">osm</span></code>. The <code class="docutils literal notranslate"><span class="pre">OSM()</span></code> function takes the filepath to a given osm.pbf file as an input. Notice that at this point we actually didn’t yet read any data into <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code>.</p>
+<p>OSM contains a lot of information about the world, which is contributed by citizens like you and me. In principle, we can retrieve information under various themes from OSM using the following functions.</p>
+<ul class="simple">
+<li><p>road networks –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_network()</span></code></p></li>
+<li><p>buildings –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_buildings()</span></code></p></li>
+<li><p>Points of Interest (POI) –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_pois()</span></code></p></li>
+<li><p>landuse –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_landuse()</span></code></p></li>
+<li><p>natural elements –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_natural()</span></code></p></li>
+<li><p>boundaries –&gt; <code class="docutils literal notranslate"><span class="pre">osm.get_boundaries()</span></code></p></li>
+</ul>
+<p>Here, let’s extract the road network at Bristol from OSM:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_roadnetwork</span> <span class="o">=</span> <span class="n">osm</span><span class="o">.</span><span class="n">get_network</span><span class="p">()</span>
+<span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>access</th>
+      <th>bicycle</th>
+      <th>bridge</th>
+      <th>busway</th>
+      <th>cycleway</th>
+      <th>est_width</th>
+      <th>foot</th>
+      <th>footway</th>
+      <th>highway</th>
+      <th>junction</th>
+      <th>...</th>
+      <th>tunnel</th>
+      <th>turn</th>
+      <th>width</th>
+      <th>id</th>
+      <th>timestamp</th>
+      <th>version</th>
+      <th>tags</th>
+      <th>osm_type</th>
+      <th>geometry</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>secondary</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>190</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>{"bus_name":"Chew Valley Explorer","route":"bus"}</td>
+      <td>way</td>
+      <td>MULTILINESTRING ((-2.60972 51.36571, -2.60955 ...</td>
+      <td>184.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>unclassified</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>193</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>None</td>
+      <td>way</td>
+      <td>MULTILINESTRING ((-2.61912 51.36762, -2.61940 ...</td>
+      <td>55.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>yes</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>unclassified</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>196</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>None</td>
+      <td>way</td>
+      <td>MULTILINESTRING ((-2.60464 51.37130, -2.60449 ...</td>
+      <td>1957.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>primary</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>209</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>{"maxweight":"7.5","maxweight:conditional":"no...</td>
+      <td>way</td>
+      <td>MULTILINESTRING ((-2.36077 51.38521, -2.36083 ...</td>
+      <td>91.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>primary</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>210</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>{"maxweight":"7.5","maxweight:conditional":"no...</td>
+      <td>way</td>
+      <td>MULTILINESTRING ((-2.36347 51.38456, -2.36342 ...</td>
+      <td>85.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 39 columns</p>
+</div></div></div>
+</div>
+<p>We can get the lenth of this DataFrame (how many road network do we have in Bristol?) and some basic descritions of it by running:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">bristol_roadnetwork</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96693
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span> <span class="c1"># note that it only provide a statistical summary for columns whoes data type is numeric</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>timestamp</th>
+      <th>version</th>
+      <th>length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>9.669300e+04</td>
+      <td>96693.0</td>
+      <td>96693.0</td>
+      <td>96693.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.113229e+08</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>111.388249</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>3.477955e+08</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>198.521158</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.900000e+02</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>7.761732e+07</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>21.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3.105967e+08</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>50.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>7.190331e+08</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>114.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.097824e+09</td>
+      <td>0.0</td>
+      <td>-1.0</td>
+      <td>7571.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Likewise, we can also plot it. Please try it yourself.</p>
+</section>
+<section id="coordinate-reference-system-for-geodataframe">
+<h3>Coordinate Reference System for GeoDataFrame<a class="headerlink" href="#coordinate-reference-system-for-geodataframe" title="Permalink to this headline">#</a></h3>
+<p>Another difference between <code class="docutils literal notranslate"><span class="pre">GeoDataFrames</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> is that the former has intrinsic coordinate reference system (CRS) as it has the <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column. To check this information, we can call its attribute <code class="docutils literal notranslate"><span class="pre">crs</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">crs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Geographic 2D CRS: EPSG:4326&gt;
+Name: WGS 84
+Axis Info [ellipsoidal]:
+- Lat[north]: Geodetic latitude (degree)
+- Lon[east]: Geodetic longitude (degree)
+Area of Use:
+- name: World.
+- bounds: (-180.0, -90.0, 180.0, 90.0)
+Datum: World Geodetic System 1984 ensemble
+- Ellipsoid: WGS 84
+- Prime Meridian: Greenwich
+</pre></div>
+</div>
+</div>
+</div>
+<p>It shows that coordinates in <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column are using the WGS 84 with a EPSG code 4326. In fact, it is the mostly used coordinate reference system (CRS) in spatial data science as it is a global coordinate system and has been used for GPS as well. However, as we covered in the lecture, those global CRSs are not that accurate for local regions. For the UK, or Bristol, a more commonly used CRS is EPSG:27700 (National Grid for Great Britain), and this CRS is also projected. Let’s then transfer <code class="docutils literal notranslate"><span class="pre">bristol_roadnetwork</span></code> from EPSG:4326 to EPSG:27700:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_roadnetwork_reprojected</span> <span class="o">=</span> <span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">epsg</span><span class="o">=</span><span class="mi">27700</span><span class="p">)</span>
+<span class="n">bristol_roadnetwork_reprojected</span><span class="o">.</span><span class="n">crs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Derived Projected CRS: EPSG:27700&gt;
+Name: OSGB36 / British National Grid
+Axis Info [cartesian]:
+- E[east]: Easting (metre)
+- N[north]: Northing (metre)
+Area of Use:
+- name: United Kingdom (UK) - offshore to boundary of UKCS within 49°45&#39;N to 61°N and 9°W to 2°E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore.
+- bounds: (-9.0, 49.75, 2.01, 61.01)
+Coordinate Operation:
+- name: British National Grid
+- method: Transverse Mercator
+Datum: Ordnance Survey of Great Britain 1936
+- Ellipsoid: Airy 1830
+- Prime Meridian: Greenwich
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have an projected CRS for the road network data in Bristol. To confirm the difference, let’s take a look at the geometry of the first row in our original road network <code class="docutils literal notranslate"><span class="pre">bristol_roadnetwork</span></code> and the projected <code class="docutils literal notranslate"><span class="pre">bristol_roadnetwork_reprojected</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orig_geom</span> <span class="o">=</span> <span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">]</span>
+<span class="n">projected_geom</span> <span class="o">=</span> <span class="n">bristol_roadnetwork_reprojected</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Orig:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">orig_geom</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Proj:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">projected_geom</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Orig:
+ MULTILINESTRING ((-2.6097212 51.3657117, -2.6095465 51.3656477), (-2.6095465 51.3656477, -2.6092646 51.3654812), (-2.6092646 51.3654812, -2.6088734 51.3653167), (-2.6088734 51.3653167, -2.6085088 51.3650842), (-2.6085088 51.3650842, -2.6083427 51.3649802), (-2.6083427 51.3649802, -2.6081261 51.3648105), (-2.6081261 51.3648105, -2.6078208 51.3645815)) 
+
+Proj:
+ MULTILINESTRING ((357648.823472627 163137.45959180896, 357660.9265108949 163130.24084904365), (357660.9265108949 163130.24084904365, 357680.3978917962 163111.560813186), (357680.3978917962 163111.560813186, 357707.480545406 163093.04007779417), (357707.480545406 163093.04007779417, 357732.64877296326 163066.97239782498), (357732.64877296326 163066.97239782498, 357744.11646257003 163055.31031830708), (357744.11646257003 163055.31031830708, 357759.0393570516 163036.31243119104), (357759.0393570516 163036.31243119104, 357780.08292435773 163010.6684798217))
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we be seen, the coordinates that form our road segments (MULTILINESTRING) has changed from <code class="docutils literal notranslate"><span class="pre">decimal</span> <span class="pre">degrees</span></code> to <code class="docutils literal notranslate"><span class="pre">meters</span></code>. Next, let’s visualize it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orig_geom</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/lab01_49_0.svg" src="../_images/lab01_49_0.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">projected_geom</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/lab01_50_0.svg" src="../_images/lab01_50_0.svg" /></div>
+</div>
+<p>As you can see, the shape of the two road segments are quite different (e.g., the lenth, where the curve occures, etc.). This is exactly due to the difference between the two CRSs.</p>
+<p>It is also worth noting here, the data type, MultiLineString, of the variables <code class="docutils literal notranslate"><span class="pre">orig_geom</span></code> and <code class="docutils literal notranslate"><span class="pre">projected_geom</span></code> are defined by <code class="docutils literal notranslate"><span class="pre">shapely</span></code>. It enables us to conduct these kind of spatial operations and visializations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">orig_geom</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>shapely.geometry.multilinestring.MultiLineString
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="computation-on-geodataframe">
+<h3>Computation on GeoDataFrame<a class="headerlink" href="#computation-on-geodataframe" title="Permalink to this headline">#</a></h3>
+<p>There are many operations embeded in GeoDataFrame that can be directly called to do some spatial computations. For example, we can get the area of buildings for our <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> dataframe:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="p">[</span><span class="s2">&quot;building_area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">area</span>
+<span class="n">bristol_building</span><span class="p">[</span><span class="s2">&quot;building_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_21858/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  bristol_building[&quot;building_area&quot;] = bristol_building.area
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    1.498050e+05
+mean     1.341308e-08
+std      6.657677e-08
+min      5.667000e-11
+25%      6.084315e-09
+50%      7.575225e-09
+75%      1.033238e-08
+max      1.038017e-05
+Name: building_area, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, you can see a warning that WGS is a geographic CRS, hence the results of area mighht not be accurate. Can you project the dataframe to a projected coordicate reference system (e.g.,EPSG:27700 in our case)? After your projection, do the area computation again. What do the results look like? What is the unit of the area?</p>
+</section>
+<section id="spatial-join">
+<h3>Spatial join<a class="headerlink" href="#spatial-join" title="Permalink to this headline">#</a></h3>
+<p>As we discussed in the lecture, joining tables using keys is a core operation for DBMS. Regarding spatial data, spatial join is somewhat similar to table join but with the operation being based on geometries.</p>
+<p>In this tutorial, we will try to conduct a spatial join and merge information between two GeoDataFrames. First, let’s read all restaurants (a type of Point of Interests (POI)) at Bristol from the OSM. Then, we combine information from restaurants to the underlying building (restaurants typically are within buildings). We will again use pyrosm for reading the data, but this time we will use the <code class="docutils literal notranslate"><span class="pre">get_pois()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read Points of Interest (POI) using the same OSM reader object that was initialized earlier</span>
+<span class="c1"># The custom_filter={&quot;amenity&quot;: [&quot;restaurant&quot;]} indicates that we want only &quot;restaurant&quot;, a type of POI</span>
+<span class="n">bristol_restaurants</span> <span class="o">=</span> <span class="n">osm</span><span class="o">.</span><span class="n">get_pois</span><span class="p">(</span><span class="n">custom_filter</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;amenity&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;restaurant&quot;</span><span class="p">]})</span>
+<span class="n">bristol_restaurants</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/pyrosm/pyrosm.py:576: ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the &#39;.coords&#39; to a numpy array instead.
+  gdf = get_poi_data(
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../_images/lab01_57_2.png" src="../_images/lab01_57_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_restaurants</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
+RangeIndex: 642 entries, 0 to 641
+Data columns (total 30 columns):
+ #   Column            Non-Null Count  Dtype   
+---  ------            --------------  -----   
+ 0   id                642 non-null    int64   
+ 1   timestamp         642 non-null    int64   
+ 2   version           642 non-null    int8    
+ 3   lat               138 non-null    float32 
+ 4   tags              610 non-null    object  
+ 5   lon               138 non-null    float32 
+ 6   changeset         139 non-null    float64 
+ 7   addr:city         482 non-null    object  
+ 8   addr:country      52 non-null     object  
+ 9   addr:housenumber  456 non-null    object  
+ 10  addr:housename    100 non-null    object  
+ 11  addr:postcode     590 non-null    object  
+ 12  addr:place        29 non-null     object  
+ 13  addr:street       549 non-null    object  
+ 14  email             24 non-null     object  
+ 15  name              641 non-null    object  
+ 16  opening_hours     83 non-null     object  
+ 17  operator          10 non-null     object  
+ 18  phone             94 non-null     object  
+ 19  website           226 non-null    object  
+ 20  amenity           642 non-null    object  
+ 21  internet_access   5 non-null      object  
+ 22  source            21 non-null     object  
+ 23  start_date        4 non-null      object  
+ 24  geometry          642 non-null    geometry
+ 25  osm_type          642 non-null    object  
+ 26  bar               2 non-null      object  
+ 27  building          494 non-null    object  
+ 28  building:levels   71 non-null     object  
+ 29  wikipedia         5 non-null      object  
+dtypes: float32(2), float64(1), geometry(1), int64(2), int8(1), object(23)
+memory usage: 141.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the <code class="docutils literal notranslate"><span class="pre">info()</span></code>, we can see that there are 642 restaurants in Bristol according to OSM. Note. that OSM is a valunteered geographic information platform. So the quality, accuracy, and completness of the data might be low.
+Next, let’s join data from <code class="docutils literal notranslate"><span class="pre">bristol_buildings</span></code> to the <code class="docutils literal notranslate"><span class="pre">bristol_restaurants</span></code> using <code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> function from geopandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Join information from buildings to restaurants</span>
+<span class="n">bristol_join</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">bristol_restaurants</span><span class="p">,</span> <span class="n">bristol_building</span><span class="p">)</span>
+
+<span class="c1"># Print column names</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bristol_join</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Show rows</span>
+<span class="n">bristol_join</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;id&#39;, &#39;timestamp&#39;, &#39;version&#39;, &#39;lat&#39;, &#39;tags&#39;, &#39;lon&#39;, &#39;changeset&#39;,
+       &#39;addr:city&#39;, &#39;addr:country&#39;, &#39;addr:housenumber&#39;, &#39;addr:housename&#39;,
+       &#39;addr:postcode&#39;, &#39;addr:place&#39;, &#39;addr:street&#39;, &#39;email&#39;, &#39;name_left&#39;,
+       &#39;opening_hours&#39;, &#39;operator&#39;, &#39;phone&#39;, &#39;website&#39;, &#39;amenity&#39;,
+       &#39;internet_access&#39;, &#39;source&#39;, &#39;start_date&#39;, &#39;geometry&#39;, &#39;osm_type&#39;,
+       &#39;bar&#39;, &#39;building&#39;, &#39;building:levels&#39;, &#39;wikipedia&#39;, &#39;index_right&#39;,
+       &#39;osm_id&#39;, &#39;code&#39;, &#39;fclass&#39;, &#39;name_right&#39;, &#39;type&#39;, &#39;building_area&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>timestamp</th>
+      <th>version</th>
+      <th>lat</th>
+      <th>tags</th>
+      <th>lon</th>
+      <th>changeset</th>
+      <th>addr:city</th>
+      <th>addr:country</th>
+      <th>addr:housenumber</th>
+      <th>...</th>
+      <th>building</th>
+      <th>building:levels</th>
+      <th>wikipedia</th>
+      <th>index_right</th>
+      <th>osm_id</th>
+      <th>code</th>
+      <th>fclass</th>
+      <th>name_right</th>
+      <th>type</th>
+      <th>building_area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>853556896</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.458733</td>
+      <td>None</td>
+      <td>-2.611020</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>24609</td>
+      <td>451622999</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>The Clifton</td>
+      <td>None</td>
+      <td>9.942395e-09</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>4375465482</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.458771</td>
+      <td>{"addr:suburb":"Clifton","contact:facebook":"h...</td>
+      <td>-2.610929</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>24609</td>
+      <td>451622999</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>The Clifton</td>
+      <td>None</td>
+      <td>9.942395e-09</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1207448023</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.453415</td>
+      <td>None</td>
+      <td>-2.625203</td>
+      <td>0.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1164</td>
+      <td>104679655</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Avon Gorge Hotel</td>
+      <td>hotel</td>
+      <td>8.777610e-08</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1386051923</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.455570</td>
+      <td>None</td>
+      <td>-2.619858</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>4</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>23228</td>
+      <td>444980827</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Rodney Hotel</td>
+      <td>None</td>
+      <td>2.753519e-08</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1881624837</td>
+      <td>0</td>
+      <td>0</td>
+      <td>51.451546</td>
+      <td>{"cuisine":"regional","outdoor_seating":"yes",...</td>
+      <td>-2.585233</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2138</td>
+      <td>125956114</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Hilton Garden Inn Bristol City Centre</td>
+      <td>None</td>
+      <td>1.725836e-07</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>632</th>
+      <td>822257659</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>323</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>None</td>
+      <td>None</td>
+      <td>114096</td>
+      <td>822257660</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>None</td>
+      <td>None</td>
+      <td>8.170520e-09</td>
+    </tr>
+    <tr>
+      <th>632</th>
+      <td>822257659</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>323</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>None</td>
+      <td>None</td>
+      <td>114095</td>
+      <td>822257659</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Pizza Hut</td>
+      <td>None</td>
+      <td>1.050200e-08</td>
+    </tr>
+    <tr>
+      <th>641</th>
+      <td>13721513418</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>NaN</td>
+      <td>12</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10989</td>
+      <td>279457775</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>None</td>
+      <td>None</td>
+      <td>4.035725e-09</td>
+    </tr>
+    <tr>
+      <th>641</th>
+      <td>13721513418</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>NaN</td>
+      <td>12</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>138593</td>
+      <td>13450709</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>The Mint Room</td>
+      <td>None</td>
+      <td>1.037321e-08</td>
+    </tr>
+    <tr>
+      <th>641</th>
+      <td>13721513418</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>NaN</td>
+      <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>Bristol</td>
+      <td>NaN</td>
+      <td>12</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>138594</td>
+      <td>1003617567</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Clifton Community Bookshop</td>
+      <td>None</td>
+      <td>5.714835e-09</td>
+    </tr>
+  </tbody>
+</table>
+<p>1034 rows × 37 columns</p>
+</div></div></div>
+</div>
+<p>Now with this joined table, you can check which building each restaurant is locatd in. Note that after have joining information from the buildings to restaurants. The geometries of the left GeoDataFrame, i.e. restaurants, were kept by default as the geometries. So if we plot <code class="docutils literal notranslate"><span class="pre">bristol_join</span></code>, you will only see restaurants, rather than buildings + restaurant. Please try!</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> use the topological relation intersects. You can also specify this parameter (i.e., contains and within) in the function. More details can be found at: <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html">https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html</a></p>
+</section>
+<section id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h3>
+<p>So far, we simply used the <code class="docutils literal notranslate"><span class="pre">plot()</span></code> function to visualize GeoDataFrame. These maps are less appealing compared to the ones generated via GIS softwares. In fact, the package: <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is very powerful in providing us beautiful visualization in Python. Let’s try it.</p>
+<p>First, let’s add some legends to the <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> data using its building type:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/lab01_63_0.png" src="../_images/lab01_63_0.png" />
+</div>
+</div>
+<p>Here, we used the parameter <code class="docutils literal notranslate"><span class="pre">column</span></code> to specify the attribute that is used to specify the color for each building (can be categorical or continuous). We used <code class="docutils literal notranslate"><span class="pre">cmap</span></code> to specify the colormap for the categories and we added the legend by specifying <code class="docutils literal notranslate"><span class="pre">legend=True</span></code>. Note that since the type of buildings for Bristol is very diverse, we see a long list of lengend. There are ways to make it into two columns, for example. Can you explore it? Feel free to use Google search!</p>
+<p>Another issue is that the map is in a very large map scale. Next, we would like to zoom in a little bit. To do so, we can use <code class="docutils literal notranslate"><span class="pre">set_xlim()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_ylim()</span></code> functions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Zoom into city center by specifying X and Y coordinate extent</span>
+<span class="c1"># These values should be given in the units that our data is presented (here decimal degrees)</span>
+<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.65</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.55</span>
+<span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mf">51.44</span><span class="p">,</span> <span class="mf">51.48</span>
+
+<span class="c1"># Plot the map again</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Control and set the x and y limits for the axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51.44, 51.48)
+</pre></div>
+</div>
+<img alt="../_images/lab01_65_1.png" src="../_images/lab01_65_1.png" />
+</div>
+</div>
+<p>As you can see, we now zoomed in to the city center quite a lot. You can adjust the parameters yourself and test more!</p>
+<p>Meanwhile, you may wonder whether we can overlay multiple dataframes into the map? The answer is yes. Here is a sample code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Zoom into city center by specifying X and Y coordinate extent</span>
+<span class="c1"># These values should be given in the units that our data is presented (here decimal degrees)</span>
+<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.65</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.55</span>
+<span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mf">51.44</span><span class="p">,</span> <span class="mf">51.48</span>
+
+<span class="c1"># Plot the map again</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot the roads into the same axis</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="c1"># Control and set the x and y limits for the axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Congrats! You have now finished the very first lab of using Python to process spatial data. I hope you enjoyed it and have seen the power of GeoPandas, and Python in general, for processing and studying spatial data. It is also worth highlighting that the functions introduced in this tutorial are selective. There are way more interesting and useful functions provided by these aforementioned packages. I highly recommended you to explore them by yourself. Learning never stops!</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -416,7 +2127,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="lab02.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lecture 02: Retrievaling Location-based Social Media</p>
+        <p class="prev-next-title">Lab 02: Retrieving Location-based Social Media</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

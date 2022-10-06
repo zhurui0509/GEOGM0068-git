@@ -1,4 +1,4 @@
-(lecture01) = 
+(lecture01)= 
 # Lecture 01: Introduction and Basics 
 
 Welcome to the unit, the slides below give you a general introduction of the unit and cover the basic backgrounds:

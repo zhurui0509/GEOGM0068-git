@@ -1,2 +1,3 @@
-(lab02) = 
-# Lecture 02: Retrievaling Location-based Social Media  
+(lab02)= 
+# Lab 02: Retrieving Location-based Social Media  
+TBA

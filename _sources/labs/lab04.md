@@ -1,2 +1,3 @@
-(lab04) = 
-# Lecture 04: Geographic Information Integration 
+(lab04)= 
+# Lab 04: Integrating Geographic Information  
+TBA
