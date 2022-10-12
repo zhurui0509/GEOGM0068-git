@@ -1180,6 +1180,12 @@ memory usage: 6.9+ MB
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded Protobuf data &#39;Bristol.osm.pbf&#39; (22.94 MB) to:
+&#39;/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/pyrosm/Bristol.osm.pbf&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>In the first command, we downloaded the data for “Bristol” using the <code class="docutils literal notranslate"><span class="pre">get_data</span></code> function. This function in fact automates the data downloading process and stores the data locally in a temporary folder. The next step was to initialize a reader object called <code class="docutils literal notranslate"><span class="pre">osm</span></code>. The <code class="docutils literal notranslate"><span class="pre">OSM()</span></code> function takes the filepath to a given osm.pbf file as an input. Notice that at this point we actually didn’t yet read any data into <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code>.</p>
 <p>OSM contains a lot of information about the world, which is contributed by citizens like you and me. In principle, we can retrieve information under various themes from OSM using the following functions.</p>
@@ -1375,7 +1381,7 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96693
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96780
 </pre></div>
 </div>
 </div>
@@ -1414,24 +1420,24 @@ memory usage: 6.9+ MB
   <tbody>
     <tr>
       <th>count</th>
-      <td>9.669300e+04</td>
-      <td>96693.0</td>
-      <td>96693.0</td>
-      <td>96693.000000</td>
+      <td>9.678000e+04</td>
+      <td>96780.0</td>
+      <td>96780.0</td>
+      <td>96780.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>4.113229e+08</td>
+      <td>4.120138e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>111.388249</td>
+      <td>111.305983</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>3.477955e+08</td>
+      <td>3.483146e+08</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>198.521158</td>
+      <td>198.424842</td>
     </tr>
     <tr>
       <th>min</th>
@@ -1442,28 +1448,28 @@ memory usage: 6.9+ MB
     </tr>
     <tr>
       <th>25%</th>
-      <td>7.761732e+07</td>
+      <td>7.774309e+07</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>21.000000</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>3.105967e+08</td>
+      <td>3.110425e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>50.000000</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>7.190331e+08</td>
+      <td>7.203334e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>114.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.097824e+09</td>
+      <td>1.099908e+09</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>7571.000000</td>
@@ -1592,7 +1598,7 @@ Proj:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_22295/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_87213/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
 
   bristol_building[&quot;building_area&quot;] = bristol_building.area
 </pre></div>
@@ -1648,23 +1654,23 @@ RangeIndex: 642 entries, 0 to 641
 Data columns (total 30 columns):
  #   Column            Non-Null Count  Dtype   
 ---  ------            --------------  -----   
- 0   version           642 non-null    int8    
- 1   lat               138 non-null    float32 
- 2   tags              610 non-null    object  
- 3   lon               138 non-null    float32 
- 4   id                642 non-null    int64   
+ 0   changeset         139 non-null    float64 
+ 1   tags              610 non-null    object  
+ 2   lon               138 non-null    float32 
+ 3   id                642 non-null    int64   
+ 4   version           642 non-null    int8    
  5   timestamp         642 non-null    int64   
- 6   changeset         139 non-null    float64 
+ 6   lat               138 non-null    float32 
  7   addr:city         482 non-null    object  
  8   addr:country      52 non-null     object  
- 9   addr:housenumber  456 non-null    object  
+ 9   addr:housenumber  457 non-null    object  
  10  addr:housename    100 non-null    object  
  11  addr:postcode     590 non-null    object  
  12  addr:place        29 non-null     object  
  13  addr:street       549 non-null    object  
  14  email             24 non-null     object  
  15  name              641 non-null    object  
- 16  opening_hours     83 non-null     object  
+ 16  opening_hours     85 non-null     object  
  17  operator          10 non-null     object  
  18  phone             94 non-null     object  
  19  website           226 non-null    object  
@@ -1700,7 +1706,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;version&#39;, &#39;lat&#39;, &#39;tags&#39;, &#39;lon&#39;, &#39;id&#39;, &#39;timestamp&#39;, &#39;changeset&#39;,
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;changeset&#39;, &#39;tags&#39;, &#39;lon&#39;, &#39;id&#39;, &#39;version&#39;, &#39;timestamp&#39;, &#39;lat&#39;,
        &#39;addr:city&#39;, &#39;addr:country&#39;, &#39;addr:housenumber&#39;, &#39;addr:housename&#39;,
        &#39;addr:postcode&#39;, &#39;addr:place&#39;, &#39;addr:street&#39;, &#39;email&#39;, &#39;name_left&#39;,
        &#39;opening_hours&#39;, &#39;operator&#39;, &#39;phone&#39;, &#39;website&#39;, &#39;amenity&#39;,
@@ -1728,13 +1734,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>version</th>
-      <th>lat</th>
+      <th>changeset</th>
       <th>tags</th>
       <th>lon</th>
       <th>id</th>
+      <th>version</th>
       <th>timestamp</th>
-      <th>changeset</th>
+      <th>lat</th>
       <th>addr:city</th>
       <th>addr:country</th>
       <th>addr:housenumber</th>
@@ -1754,13 +1760,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   <tbody>
     <tr>
       <th>9</th>
-      <td>0</td>
-      <td>51.458733</td>
+      <td>0.0</td>
       <td>None</td>
       <td>-2.611020</td>
       <td>853556896</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>51.458733</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
@@ -1778,13 +1784,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>74</th>
-      <td>0</td>
-      <td>51.458771</td>
+      <td>0.0</td>
       <td>{"addr:suburb":"Clifton","contact:facebook":"h...</td>
       <td>-2.610929</td>
       <td>4375465482</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>51.458771</td>
       <td>Bristol</td>
       <td>None</td>
       <td>None</td>
@@ -1802,13 +1808,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>12</th>
-      <td>0</td>
-      <td>51.453415</td>
+      <td>0.0</td>
       <td>None</td>
       <td>-2.625203</td>
       <td>1207448023</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>51.453415</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
@@ -1826,13 +1832,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>14</th>
-      <td>0</td>
-      <td>51.455570</td>
+      <td>0.0</td>
       <td>None</td>
       <td>-2.619858</td>
       <td>1386051923</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>51.455570</td>
       <td>Bristol</td>
       <td>None</td>
       <td>4</td>
@@ -1850,13 +1856,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>18</th>
-      <td>0</td>
-      <td>51.451546</td>
+      <td>0.0</td>
       <td>{"cuisine":"regional","outdoor_seating":"yes",...</td>
       <td>-2.585233</td>
       <td>1881624837</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>0</td>
+      <td>51.451546</td>
       <td>Bristol</td>
       <td>None</td>
       <td>None</td>
@@ -1898,11 +1904,11 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>632</th>
-      <td>-1</td>
       <td>NaN</td>
       <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
       <td>NaN</td>
       <td>822257659</td>
+      <td>-1</td>
       <td>0</td>
       <td>NaN</td>
       <td>Bristol</td>
@@ -1922,11 +1928,11 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>632</th>
-      <td>-1</td>
       <td>NaN</td>
       <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
       <td>NaN</td>
       <td>822257659</td>
+      <td>-1</td>
       <td>0</td>
       <td>NaN</td>
       <td>Bristol</td>
@@ -1946,13 +1952,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>641</th>
-      <td>-1</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
       <td>NaN</td>
       <td>13721513418</td>
+      <td>-1</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>NaN</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -1970,13 +1976,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>641</th>
-      <td>-1</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
       <td>NaN</td>
       <td>13721513418</td>
+      <td>-1</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>NaN</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -1994,13 +2000,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>641</th>
-      <td>-1</td>
-      <td>NaN</td>
+      <td>0.0</td>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
       <td>NaN</td>
       <td>13721513418</td>
+      <td>-1</td>
       <td>0</td>
-      <td>0.0</td>
+      <td>NaN</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -2038,7 +2044,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 <img alt="../_images/lab01_63_0.png" src="../_images/lab01_63_0.png" />
 </div>
 </div>
-<p>Here, we used the parameter <code class="docutils literal notranslate"><span class="pre">column</span></code> to specify the attribute that is used to specify the color for each building (can be categorical or continuous). We used <code class="docutils literal notranslate"><span class="pre">cmap</span></code> to specify the colormap for the categories and we added the legend by specifying <code class="docutils literal notranslate"><span class="pre">legend=True</span></code>. Note that since the type of buildings for Bristol is very diverse, we see a long list of lengend. There are ways to make it into two columns, for example. Can you explore it? Feel free to use Google search!</p>
+<p>Here, we used the parameter <code class="docutils literal notranslate"><span class="pre">column</span></code> to specify the attribute that is used to specify the color for each building (can be categorical or continuous). We used <code class="docutils literal notranslate"><span class="pre">cmap</span></code> to specify the colormap for the categories and we added the legend by specifying <code class="docutils literal notranslate"><span class="pre">legend=True</span></code>. Note that since the type of buildings for Bristol is very diverse, we see a long list of legend. There are ways to make it into two columns, for example. Can you explore it? Feel free to use Google search!</p>
 <p>Another issue is that the map is in a very large map scale. Next, we would like to zoom in a little bit. To do so, we can use <code class="docutils literal notranslate"><span class="pre">set_xlim()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_ylim()</span></code> functions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2049,6 +2055,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 
 <span class="c1"># Plot the map again</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+ 
 
 <span class="c1"># Control and set the x and y limits for the axis</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
@@ -2085,106 +2092,53 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="nn">Input In [32],</span> in <span class="ni">&lt;cell line: 10&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Plot the roads into the same axis</span>
-<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># Control and set the x and y limits for the axis</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:963,</span> in <span class="ni">GeoplotAccessor.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">961</span> <span class="n">kind</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">962</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">963</span>     <span class="k">return</span> <span class="n">plot_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">964</span> <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pandas_kinds</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">965</span>     <span class="c1"># Access pandas plots</span>
-<span class="g g-Whitespace">    </span><span class="mi">966</span>     <span class="k">return</span> <span class="n">PlotAccessor</span><span class="p">(</span><span class="n">data</span><span class="p">)(</span><span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:704,</span> in <span class="ni">plot_dataframe</span><span class="nt">(df, column, cmap, color, ax, cax, categorical, legend, scheme, k, vmin, vmax, markersize, figsize, legend_kwds, categories, classification_kwds, missing_kwds, aspect, **style_kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">701</span>     <span class="n">markersize</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">markersize</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="g g-Whitespace">    </span><span class="mi">703</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">704</span>     <span class="k">return</span> <span class="n">plot_series</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">705</span>         <span class="n">df</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">706</span>         <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">707</span>         <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">708</span>         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">709</span>         <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">710</span>         <span class="n">markersize</span><span class="o">=</span><span class="n">markersize</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">711</span>         <span class="n">aspect</span><span class="o">=</span><span class="n">aspect</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">712</span>         <span class="o">**</span><span class="n">style_kwds</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">713</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">715</span> <span class="c1"># To accept pd.Series and np.arrays as column</span>
-<span class="g g-Whitespace">    </span><span class="mi">716</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)):</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:468,</span> in <span class="ni">plot_series</span><span class="nt">(s, cmap, color, ax, figsize, aspect, **style_kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">465</span>     <span class="n">values_</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">line_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">cmap</span> <span class="k">else</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">466</span>     <span class="n">color_</span> <span class="o">=</span> <span class="n">expl_color</span><span class="p">[</span><span class="n">line_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">color_given</span> <span class="k">else</span> <span class="n">color</span>
-<span class="ne">--&gt; </span><span class="mi">468</span>     <span class="n">_plot_linestring_collection</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">469</span>         <span class="n">ax</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">values_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="o">**</span><span class="n">style_kwds</span>
-<span class="g g-Whitespace">    </span><span class="mi">470</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">472</span> <span class="c1"># plot all Points in the same collection</span>
-<span class="g g-Whitespace">    </span><span class="mi">473</span> <span class="n">points</span> <span class="o">=</span> <span class="n">expl_series</span><span class="p">[</span><span class="n">point_idx</span><span class="p">]</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:216,</span> in <span class="ni">_plot_linestring_collection</span><span class="nt">(ax, geoms, values, color, cmap, vmin, vmax, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span> <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span><span class="sd"> Plots a collection of LineString and MultiLineString geometries to `ax`</span>
-<span class="g g-Whitespace">    </span><span class="mi">197</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">212</span><span class="sd"> collection : matplotlib.collections.Collection that was plotted</span>
-<span class="g g-Whitespace">    </span><span class="mi">213</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">214</span> <span class="kn">from</span> <span class="nn">matplotlib.collections</span> <span class="kn">import</span> <span class="n">LineCollection</span>
-<span class="ne">--&gt; </span><span class="mi">216</span> <span class="n">geoms</span><span class="p">,</span> <span class="n">multiindex</span> <span class="o">=</span> <span class="n">_flatten_multi_geoms</span><span class="p">(</span><span class="n">geoms</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span> <span class="k">if</span> <span class="n">values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span>     <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">multiindex</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:52,</span> in <span class="ni">_flatten_multi_geoms</span><span class="nt">(geoms, prefix)</span>
-<span class="g g-Whitespace">     </span><span class="mi">50</span> <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">geom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">geoms</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">51</span>     <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">geom</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">geom</span><span class="o">.</span><span class="n">is_empty</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">52</span>         <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">geoms</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">53</span>             <span class="n">components</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">54</span>             <span class="n">component_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ix</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py:1084,</span> in <span class="ni">GeometrySequence.__iter__</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1082</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1083</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
-<span class="ne">-&gt; </span><span class="mi">1084</span>     <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_geom_item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py:1076,</span> in <span class="ni">GeometrySequence._get_geom_item</span><span class="nt">(self, i)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1074</span> <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape_factory</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1075</span> <span class="n">g</span><span class="o">.</span><span class="n">_other_owned</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="ne">-&gt; </span><span class="mi">1076</span> <span class="n">g</span><span class="o">.</span><span class="n">_set_geom</span><span class="p">(</span><span class="n">lgeos</span><span class="o">.</span><span class="n">GEOSGetGeometryN</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geom</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-<span class="g g-Whitespace">   </span><span class="mi">1077</span> <span class="n">g</span><span class="o">.</span><span class="n">_ndim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ndim</span>
-<span class="g g-Whitespace">   </span><span class="mi">1078</span> <span class="n">g</span><span class="o">.</span><span class="n">__p__</span> <span class="o">=</span> <span class="bp">self</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py:241,</span> in <span class="ni">BaseGeometry._set_geom</span><span class="nt">(self, val)</span>
-<span class="g g-Whitespace">    </span><span class="mi">240</span> <span class="k">def</span> <span class="nf">_set_geom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">241</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_empty</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">242</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_is_empty</span> <span class="o">=</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">[</span><span class="n">EMPTY</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span>     <span class="bp">self</span><span class="o">.</span><span class="n">__geom__</span> <span class="o">=</span> <span class="n">val</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py:199,</span> in <span class="ni">BaseGeometry._empty</span><span class="nt">(self, val)</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span>     <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span>         <span class="c1"># _lgeos might be empty on shutdown</span>
-<span class="g g-Whitespace">    </span><span class="mi">197</span>         <span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Failed to delete GEOS geom&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">199</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_empty</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span> <span class="bp">self</span><span class="o">.</span><span class="n">__geom__</span> <span class="o">=</span> <span class="n">val</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py:250,</span> in <span class="ni">BaseGeometry.__setattr__</span><span class="nt">(self, name, value)</span>
-<span class="g g-Whitespace">    </span><span class="mi">248</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">249</span>     <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">250</span>     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="k">return</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function BaseGeometry.__del__ at 0x7fda10597550&gt;
+Traceback (most recent call last):
+  File &quot;/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py&quot;, line 208, in __del__
 </pre></div>
 </div>
-<img alt="../_images/lab01_67_1.png" src="../_images/lab01_67_1.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    def __del__(self):
+KeyboardInterrupt: 
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51.44, 51.48)
+</pre></div>
+</div>
 </div>
 </div>
 <p>Congrats! You have now finished the very first lab of using Python to process spatial data. I hope you enjoyed it and have seen the power of GeoPandas, and Python in general, for processing and studying spatial data. It is also worth highlighting that the functions introduced in this tutorial are selective. There are way more interesting and useful functions provided by these aforementioned packages. I highly recommended you to explore them by yourself. Learning never stops!</p>
+<p>Finally, let’s go back to the task of asking you to figure out how to better organize the long legend box. Below is the solution I found. There might be other ways of doing it. How is yours?</p>
+<p>Basically, I used the parameter ‘legend_kwds’ to set up the number of columns (‘ncol’) to be 4. For more details, check its <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.plot.html">official documentation</a>. Note that knowing how to read these kinds of documentations would be very helpful, so it is an important skill you should develop.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+
+<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.65</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.55</span>
+<span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mf">51.44</span><span class="p">,</span> <span class="mf">51.48</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+
+<span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;type&#39;</span><span class="p">,</span>
+                <span class="n">categorical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> 
+                <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;loc&#39;</span><span class="p">:</span> <span class="s1">&#39;lower left&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;ncol&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                             <span class="s1">&#39;bbox_to_anchor&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)})</span>
+<span class="c1">#ax.set_axis_off()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/lab01_70_0.png" src="../_images/lab01_70_0.png" />
+</div>
+</div>
 </section>
 </section>
 </section>

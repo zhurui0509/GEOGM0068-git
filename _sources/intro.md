@@ -13,8 +13,8 @@ The unit aims to:
 |    <br>Week           |    <br>Topics                                  |    <br>Reading              |    <br>Lab                |
 |-----------------------|------------------------------------------------|-----------------------------|---------------------------|
 | Week 1 (Sept. 29)     | * Unit overview and policy<br>* Basic Concepts | GIR: Chapter 1 and 2<br>    | No   Lab                  |
-| Week 2 (Oct. 6)       | Spatial Database I                             | GIS: Chapter 2 and 3        | Lab 1-1                   |
-| Week 3 (Oct. 13)      | Spatial Database II                            | GIS: Chapter 4              | Lab 1-2                   |
+| Week 2 (Oct. 6)       | Spatial Database I                             | GIS: Chapter 2 and 3        | Lab 1                   |
+| Week 3 (Oct. 13)      | Spatial Database II                            | GIS: Chapter 4              | Lab 1                   |
 | Week 4 (Oct. 20)      | Georeferencing I                               | GIR: Chapter 4              | Lab 2-1                   |
 | Week 5 (Oct. 27)      | Georeferencing   II                            | GIR: Chapter 4              | Lab 2-2                   |
 | Week 6 (Nov. 3)       | Reading                                        |                             | No Lab (Assessment 1 Due) |
