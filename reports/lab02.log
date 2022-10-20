@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Post a tweet from Python
+api.update_status("Hello Twitter, I'm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience")
+# Your tweet has been posted!
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mForbidden[0m                                 Traceback (most recent call last)
+Input [0;32mIn [4][0m, in [0;36m<cell line: 2>[0;34m()[0m
+[1;32m      1[0m [38;5;66;03m# Post a tweet from Python[39;00m
+[0;32m----> 2[0m [43mapi[49m[38;5;241;43m.[39;49m[43mupdate_status[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mHello Twitter, I[39;49m[38;5;124;43m'[39;49m[38;5;124;43mm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience[39;49m[38;5;124;43m"[39;49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46[0m, in [0;36mpayload.<locals>.decorator.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m     44[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_list[39m[38;5;124m'[39m] [38;5;241m=[39m payload_list
+[1;32m     45[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_type[39m[38;5;124m'[39m] [38;5;241m=[39m payload_type
+[0;32m---> 46[0m [38;5;28;01mreturn[39;00m [43mmethod[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136[0m, in [0;36mAPI.update_status[0;34m(self, status, **kwargs)[0m
+[1;32m   1133[0m [38;5;28;01mif[39;00m [38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m [38;5;129;01min[39;00m kwargs:
+[1;32m   1134[0m     kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m] [38;5;241m=[39m list_to_csv(kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m])
+[0;32m-> 1136[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m
+[1;32m   1137[0m [43m    [49m[38;5;124;43m'[39;49m[38;5;124;43mPOST[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mstatuses/update[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mendpoint_parameters[49m[38;5;241;43m=[39;49m[43m([49m
+[1;32m   1138[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mstatus[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43min_reply_to_status_id[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m   1139[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mauto_populate_reply_metadata[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mexclude_reply_user_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m   1140[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mattachment_url[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mmedia_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mpossibly_sensitive[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mlat[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m   1141[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mlong[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mplace_id[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mdisplay_coordinates[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mtrim_user[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[1;32m   1142[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mcard_uri[39;49m[38;5;124;43m'[39;49m
+[1;32m   1143[0m [43m    [49m[43m)[49m[43m,[49m[43m [49m[43mstatus[49m[38;5;241;43m=[39;49m[43mstatus[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
+[1;32m   1144[0m [43m[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259[0m, in [0;36mAPI.request[0;34m(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)[0m
+[1;32m    257[0m     [38;5;28;01mraise[39;00m Unauthorized(resp)
+[1;32m    258[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m403[39m:
+[0;32m--> 259[0m     [38;5;28;01mraise[39;00m Forbidden(resp)
+[1;32m    260[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m404[39m:
+[1;32m    261[0m     [38;5;28;01mraise[39;00m NotFound(resp)
+
+[0;31mForbidden[0m: 403 Forbidden
+187 - Status is a duplicate.
+Forbidden: 403 Forbidden
+187 - Status is a duplicate.
+

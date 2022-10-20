@@ -1181,7 +1181,7 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded Protobuf data &#39;Bristol.osm.pbf&#39; (22.94 MB) to:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded Protobuf data &#39;Bristol.osm.pbf&#39; (22.96 MB) to:
 &#39;/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/pyrosm/Bristol.osm.pbf&#39;
 </pre></div>
 </div>
@@ -1381,7 +1381,7 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96780
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>96844
 </pre></div>
 </div>
 </div>
@@ -1420,24 +1420,24 @@ memory usage: 6.9+ MB
   <tbody>
     <tr>
       <th>count</th>
-      <td>9.678000e+04</td>
-      <td>96780.0</td>
-      <td>96780.0</td>
-      <td>96780.000000</td>
+      <td>9.684400e+04</td>
+      <td>96844.0</td>
+      <td>96844.0</td>
+      <td>96844.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>4.120138e+08</td>
+      <td>4.124801e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>111.305983</td>
+      <td>111.237836</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>3.483146e+08</td>
+      <td>3.486543e+08</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>198.424842</td>
+      <td>198.167947</td>
     </tr>
     <tr>
       <th>min</th>
@@ -1448,28 +1448,28 @@ memory usage: 6.9+ MB
     </tr>
     <tr>
       <th>25%</th>
-      <td>7.774309e+07</td>
+      <td>7.782050e+07</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>21.000000</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>3.110425e+08</td>
+      <td>3.113436e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>50.000000</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>7.203334e+08</td>
+      <td>7.220495e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>114.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.099908e+09</td>
+      <td>1.102395e+09</td>
       <td>0.0</td>
       <td>-1.0</td>
       <td>7571.000000</td>
@@ -1598,7 +1598,7 @@ Proj:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_87213/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_8067/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
 
   bristol_building[&quot;building_area&quot;] = bristol_building.area
 </pre></div>
@@ -1650,42 +1650,42 @@ Name: building_area, dtype: float64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
-RangeIndex: 642 entries, 0 to 641
+RangeIndex: 645 entries, 0 to 644
 Data columns (total 30 columns):
  #   Column            Non-Null Count  Dtype   
 ---  ------            --------------  -----   
- 0   changeset         139 non-null    float64 
- 1   tags              610 non-null    object  
- 2   lon               138 non-null    float32 
- 3   id                642 non-null    int64   
- 4   version           642 non-null    int8    
- 5   timestamp         642 non-null    int64   
- 6   lat               138 non-null    float32 
- 7   addr:city         482 non-null    object  
+ 0   tags              613 non-null    object  
+ 1   changeset         140 non-null    float64 
+ 2   timestamp         645 non-null    int64   
+ 3   lon               139 non-null    float32 
+ 4   lat               139 non-null    float32 
+ 5   version           645 non-null    int8    
+ 6   id                645 non-null    int64   
+ 7   addr:city         484 non-null    object  
  8   addr:country      52 non-null     object  
- 9   addr:housenumber  457 non-null    object  
+ 9   addr:housenumber  459 non-null    object  
  10  addr:housename    100 non-null    object  
- 11  addr:postcode     590 non-null    object  
+ 11  addr:postcode     592 non-null    object  
  12  addr:place        29 non-null     object  
- 13  addr:street       549 non-null    object  
- 14  email             24 non-null     object  
- 15  name              641 non-null    object  
+ 13  addr:street       552 non-null    object  
+ 14  email             25 non-null     object  
+ 15  name              643 non-null    object  
  16  opening_hours     85 non-null     object  
  17  operator          10 non-null     object  
- 18  phone             94 non-null     object  
- 19  website           226 non-null    object  
- 20  amenity           642 non-null    object  
+ 18  phone             95 non-null     object  
+ 19  website           228 non-null    object  
+ 20  amenity           645 non-null    object  
  21  internet_access   5 non-null      object  
  22  source            21 non-null     object  
  23  start_date        4 non-null      object  
- 24  geometry          642 non-null    geometry
- 25  osm_type          642 non-null    object  
+ 24  geometry          645 non-null    geometry
+ 25  osm_type          645 non-null    object  
  26  bar               2 non-null      object  
- 27  building          494 non-null    object  
- 28  building:levels   71 non-null     object  
+ 27  building          496 non-null    object  
+ 28  building:levels   72 non-null     object  
  29  wikipedia         5 non-null      object  
 dtypes: float32(2), float64(1), geometry(1), int64(2), int8(1), object(23)
-memory usage: 141.2+ KB
+memory usage: 141.8+ KB
 </pre></div>
 </div>
 </div>
@@ -1706,7 +1706,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;changeset&#39;, &#39;tags&#39;, &#39;lon&#39;, &#39;id&#39;, &#39;version&#39;, &#39;timestamp&#39;, &#39;lat&#39;,
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;tags&#39;, &#39;changeset&#39;, &#39;timestamp&#39;, &#39;lon&#39;, &#39;lat&#39;, &#39;version&#39;, &#39;id&#39;,
        &#39;addr:city&#39;, &#39;addr:country&#39;, &#39;addr:housenumber&#39;, &#39;addr:housename&#39;,
        &#39;addr:postcode&#39;, &#39;addr:place&#39;, &#39;addr:street&#39;, &#39;email&#39;, &#39;name_left&#39;,
        &#39;opening_hours&#39;, &#39;operator&#39;, &#39;phone&#39;, &#39;website&#39;, &#39;amenity&#39;,
@@ -1734,13 +1734,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>changeset</th>
       <th>tags</th>
-      <th>lon</th>
-      <th>id</th>
-      <th>version</th>
+      <th>changeset</th>
       <th>timestamp</th>
+      <th>lon</th>
       <th>lat</th>
+      <th>version</th>
+      <th>id</th>
       <th>addr:city</th>
       <th>addr:country</th>
       <th>addr:housenumber</th>
@@ -1760,13 +1760,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   <tbody>
     <tr>
       <th>9</th>
-      <td>0.0</td>
       <td>None</td>
+      <td>0.0</td>
+      <td>0</td>
       <td>-2.611020</td>
-      <td>853556896</td>
-      <td>0</td>
-      <td>0</td>
       <td>51.458733</td>
+      <td>0</td>
+      <td>853556896</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
@@ -1784,13 +1784,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>74</th>
-      <td>0.0</td>
       <td>{"addr:suburb":"Clifton","contact:facebook":"h...</td>
+      <td>0.0</td>
+      <td>0</td>
       <td>-2.610929</td>
-      <td>4375465482</td>
-      <td>0</td>
-      <td>0</td>
       <td>51.458771</td>
+      <td>0</td>
+      <td>4375465482</td>
       <td>Bristol</td>
       <td>None</td>
       <td>None</td>
@@ -1808,13 +1808,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>12</th>
-      <td>0.0</td>
       <td>None</td>
+      <td>0.0</td>
+      <td>0</td>
       <td>-2.625203</td>
-      <td>1207448023</td>
-      <td>0</td>
-      <td>0</td>
       <td>51.453415</td>
+      <td>0</td>
+      <td>1207448023</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
@@ -1832,13 +1832,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>14</th>
-      <td>0.0</td>
       <td>None</td>
+      <td>0.0</td>
+      <td>0</td>
       <td>-2.619858</td>
-      <td>1386051923</td>
-      <td>0</td>
-      <td>0</td>
       <td>51.455570</td>
+      <td>0</td>
+      <td>1386051923</td>
       <td>Bristol</td>
       <td>None</td>
       <td>4</td>
@@ -1856,13 +1856,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
     <tr>
       <th>18</th>
-      <td>0.0</td>
       <td>{"cuisine":"regional","outdoor_seating":"yes",...</td>
+      <td>0.0</td>
+      <td>0</td>
       <td>-2.585233</td>
-      <td>1881624837</td>
-      <td>0</td>
-      <td>0</td>
       <td>51.451546</td>
+      <td>0</td>
+      <td>1881624837</td>
       <td>Bristol</td>
       <td>None</td>
       <td>None</td>
@@ -1903,62 +1903,62 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>...</td>
     </tr>
     <tr>
-      <th>632</th>
+      <th>643</th>
+      <td>{"house":"terraced"}</td>
       <td>NaN</td>
-      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
-      <td>NaN</td>
-      <td>822257659</td>
-      <td>-1</td>
       <td>0</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>1069613264</td>
       <td>Bristol</td>
       <td>None</td>
-      <td>323</td>
+      <td>15</td>
       <td>...</td>
-      <td>yes</td>
+      <td>house</td>
+      <td>2</td>
       <td>None</td>
-      <td>None</td>
-      <td>114096</td>
-      <td>822257660</td>
+      <td>145380</td>
+      <td>1069613264</td>
       <td>1500</td>
       <td>building</td>
       <td>None</td>
-      <td>None</td>
-      <td>8.170520e-09</td>
+      <td>house</td>
+      <td>6.423220e-09</td>
     </tr>
     <tr>
-      <th>632</th>
+      <th>643</th>
+      <td>{"house":"terraced"}</td>
       <td>NaN</td>
-      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
-      <td>NaN</td>
-      <td>822257659</td>
-      <td>-1</td>
       <td>0</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>1069613264</td>
       <td>Bristol</td>
       <td>None</td>
-      <td>323</td>
+      <td>15</td>
       <td>...</td>
-      <td>yes</td>
+      <td>house</td>
+      <td>2</td>
       <td>None</td>
-      <td>None</td>
-      <td>114095</td>
-      <td>822257659</td>
+      <td>145379</td>
+      <td>1069613263</td>
       <td>1500</td>
       <td>building</td>
-      <td>Pizza Hut</td>
       <td>None</td>
-      <td>1.050200e-08</td>
+      <td>house</td>
+      <td>9.538465e-09</td>
     </tr>
     <tr>
-      <th>641</th>
-      <td>0.0</td>
+      <th>644</th>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>NaN</td>
-      <td>13721513418</td>
-      <td>-1</td>
+      <td>0.0</td>
       <td>0</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>13721513418</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -1975,14 +1975,14 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>4.035725e-09</td>
     </tr>
     <tr>
-      <th>641</th>
-      <td>0.0</td>
+      <th>644</th>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>NaN</td>
-      <td>13721513418</td>
-      <td>-1</td>
+      <td>0.0</td>
       <td>0</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>13721513418</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -1999,14 +1999,14 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>1.037321e-08</td>
     </tr>
     <tr>
-      <th>641</th>
-      <td>0.0</td>
+      <th>644</th>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>NaN</td>
-      <td>13721513418</td>
-      <td>-1</td>
+      <td>0.0</td>
       <td>0</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>13721513418</td>
       <td>Bristol</td>
       <td>NaN</td>
       <td>12</td>
@@ -2024,7 +2024,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
     </tr>
   </tbody>
 </table>
-<p>1034 rows × 37 columns</p>
+<p>1037 rows × 37 columns</p>
 </div></div></div>
 </div>
 <p>Now with this joined table, you can check which building each restaurant is locatd in. Note that after have joining information from the buildings to restaurants. The geometries of the left GeoDataFrame, i.e. restaurants, were kept by default as the geometries. So if we plot <code class="docutils literal notranslate"><span class="pre">bristol_join</span></code>, you will only see restaurants, rather than buildings + restaurant. Please try!</p>
@@ -2092,18 +2092,78 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Exception ignored in: &lt;function BaseGeometry.__del__ at 0x7fda10597550&gt;
-Traceback (most recent call last):
-  File &quot;/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/shapely/geometry/base.py&quot;, line 208, in __del__
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">Input In [32],</span> in <span class="ni">&lt;cell line: 10&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_building</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Plot the roads into the same axis</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">bristol_roadnetwork</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># Control and set the x and y limits for the axis</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">])</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:963,</span> in <span class="ni">GeoplotAccessor.__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">961</span> <span class="n">kind</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="s2">&quot;geo&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">962</span> <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;geo&quot;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">963</span>     <span class="k">return</span> <span class="n">plot_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">964</span> <span class="k">if</span> <span class="n">kind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pandas_kinds</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">965</span>     <span class="c1"># Access pandas plots</span>
+<span class="g g-Whitespace">    </span><span class="mi">966</span>     <span class="k">return</span> <span class="n">PlotAccessor</span><span class="p">(</span><span class="n">data</span><span class="p">)(</span><span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:704,</span> in <span class="ni">plot_dataframe</span><span class="nt">(df, column, cmap, color, ax, cax, categorical, legend, scheme, k, vmin, vmax, markersize, figsize, legend_kwds, categories, classification_kwds, missing_kwds, aspect, **style_kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">701</span>     <span class="n">markersize</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">markersize</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span> <span class="k">if</span> <span class="n">column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">704</span>     <span class="k">return</span> <span class="n">plot_series</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">705</span>         <span class="n">df</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">706</span>         <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">707</span>         <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">708</span>         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">709</span>         <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">710</span>         <span class="n">markersize</span><span class="o">=</span><span class="n">markersize</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">711</span>         <span class="n">aspect</span><span class="o">=</span><span class="n">aspect</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">712</span>         <span class="o">**</span><span class="n">style_kwds</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">713</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">715</span> <span class="c1"># To accept pd.Series and np.arrays as column</span>
+<span class="g g-Whitespace">    </span><span class="mi">716</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)):</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:468,</span> in <span class="ni">plot_series</span><span class="nt">(s, cmap, color, ax, figsize, aspect, **style_kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">465</span>     <span class="n">values_</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">line_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">cmap</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">466</span>     <span class="n">color_</span> <span class="o">=</span> <span class="n">expl_color</span><span class="p">[</span><span class="n">line_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">color_given</span> <span class="k">else</span> <span class="n">color</span>
+<span class="ne">--&gt; </span><span class="mi">468</span>     <span class="n">_plot_linestring_collection</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">469</span>         <span class="n">ax</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">values_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="o">**</span><span class="n">style_kwds</span>
+<span class="g g-Whitespace">    </span><span class="mi">470</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">472</span> <span class="c1"># plot all Points in the same collection</span>
+<span class="g g-Whitespace">    </span><span class="mi">473</span> <span class="n">points</span> <span class="o">=</span> <span class="n">expl_series</span><span class="p">[</span><span class="n">point_idx</span><span class="p">]</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/plotting.py:234,</span> in <span class="ni">_plot_linestring_collection</span><span class="nt">(ax, geoms, values, color, cmap, vmin, vmax, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">231</span> <span class="n">_expand_kwargs</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">multiindex</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span> <span class="n">segments</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">linestring</span><span class="o">.</span><span class="n">coords</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">linestring</span> <span class="ow">in</span> <span class="n">geoms</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">234</span> <span class="n">collection</span> <span class="o">=</span> <span class="n">LineCollection</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">236</span> <span class="k">if</span> <span class="n">values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span>     <span class="n">collection</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/matplotlib/collections.py:1446,</span> in <span class="ni">LineCollection.__init__</span><span class="nt">(self, segments, zorder, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1442</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;facecolors&#39;</span><span class="p">,</span> <span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1443</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1444</span>     <span class="n">zorder</span><span class="o">=</span><span class="n">zorder</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1445</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1446</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_segments</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/matplotlib/collections.py:1458,</span> in <span class="ni">LineCollection.set_segments</span><span class="nt">(self, segments)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1455</span>         <span class="n">seg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1456</span>     <span class="n">_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1458</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">_seg</span><span class="p">)</span> <span class="k">for</span> <span class="n">_seg</span> <span class="ow">in</span> <span class="n">_segments</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1459</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/matplotlib/collections.py:1458,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1455</span>         <span class="n">seg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1456</span>     <span class="n">_segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seg</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1458</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">mpath</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">_seg</span><span class="p">)</span> <span class="k">for</span> <span class="n">_seg</span> <span class="ow">in</span> <span class="n">_segments</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1459</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    def __del__(self):
-KeyboardInterrupt: 
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51.44, 51.48)
-</pre></div>
-</div>
+<img alt="../_images/lab01_67_1.png" src="../_images/lab01_67_1.png" />
 </div>
 </div>
 <p>Congrats! You have now finished the very first lab of using Python to process spatial data. I hope you enjoyed it and have seen the power of GeoPandas, and Python in general, for processing and studying spatial data. It is also worth highlighting that the functions introduced in this tutorial are selective. There are way more interesting and useful functions provided by these aforementioned packages. I highly recommended you to explore them by yourself. Learning never stops!</p>

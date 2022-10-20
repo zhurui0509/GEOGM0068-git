@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Lab 02: Retrieving Location-based Social Media &#8212; GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</title>
+    <title>Lab 02: Georefereing Location-based Social Media &#8212; GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -183,7 +183,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Lab 02: Retrieving Location-based Social Media
+   Lab 02: Georefereing Location-based Social Media
   </a>
  </li>
  <li class="toctree-l1">
@@ -247,6 +247,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/zhurui0509/GEOGM0068-git/master?urlpath=tree/docs/labs/lab02.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -314,7 +343,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/labs/lab02.md"
+        <a href="../_sources/labs/lab02.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -325,7 +354,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.md</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
 
       </li>
@@ -351,23 +380,70 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">
+   Part 1: Extracting (geo)text from Twitter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">
+   Part 2: Basic Natural Language Processing and Geoparsing
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Lab 02: Retrieving Location-based Social Media</h1>
+                <h1>Lab 02: Georefereing Location-based Social Media</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">
+   Part 1: Extracting (geo)text from Twitter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">
+   Part 2: Basic Natural Language Processing and Geoparsing
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -375,9 +451,689 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="lab-02-retrieving-location-based-social-media">
-<span id="lab02"></span><h1>Lab 02: Retrieving Location-based Social Media<a class="headerlink" href="#lab-02-retrieving-location-based-social-media" title="Permalink to this headline">#</a></h1>
-<p>TBA</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-02-georefereing-location-based-social-media">
+<h1>Lab 02: Georefereing Location-based Social Media<a class="headerlink" href="#lab-02-georefereing-location-based-social-media" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial, we will learn:</p>
+<ul class="simple">
+<li><p>How to extract information (e.g., tweets) from location-based social media (e.g., Twitter)</p></li>
+<li><p>How to identify locational (e.g., place name) information from text-based data (e.g., tweets, newspapers)</p></li>
+<li><p>How to refer the identified location to metric-based coordinates on the surface of the earcth</p></li>
+</ul>
+<p>Several libraries/packages are needed in this tutorial. Use <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install them:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pypi.org/project/tweepy/">tweepy</a>: this is library to access the Tweeter API</p></li>
+<li><p><a class="reference external" href="https://spacy.io/usage">spaCy</a>: this is the libeary to do natural lanuguage processing</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/spacy-dbpedia-spotlight/">spacy-dbpedia-spotlight</a>: a small library that annotate recognized entities from spaCy to DBpedia enities.</p></li>
+<li><p>…</p></li>
+</ul>
+<section id="part-1-extracting-geo-text-from-twitter">
+<h2>Part 1: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-extracting-geo-text-from-twitter" title="Permalink to this headline">#</a></h2>
+<p>This part explains how to extract text-based unstructured information from the social media Twitter via its API. Similar pipline can be used to extract information from other types of social media/Web services (e.g., Foursquare, Yelp, Flickr, etc.).</p>
+<p>Twitter is a useful data source for studying the social impacts of events and activities. In this part, we are going to learn how to collect Twitter data using its API. Specifically, we are going to focus on geotagged Twitter data.</p>
+<p>First, Twitter requires the users of Twitter API to be authenticated by the system. One simple approach to obtain such authentication is by registering a Twitter account. This is the approach we are going to take in this tutorial.</p>
+<p>Go to the website of Twitter: <a class="reference external" href="https://twitter.com/">https://twitter.com/</a> , and click “Sign up” at the upper right corner. You can skip this step if you already have a Twitter account.</p>
+<p>After you have registered/logged in to your Twitter account, we are going to obtain the keys that are necessary to use Twitter API. Go to <a class="reference external" href="https://apps.twitter.com/">https://apps.twitter.com/</a> , and sign in using the Twitter account you have just created
+(sometimes the browser will automatically sign you in).</p>
+<p>After you have signed in, click the button “Create New App”. Then fill in the necessary information to create an APP. Note that you might need to record your phone number in your Twitter account in order to do so. If you don’t like it, feel free to remove your phone number from your account after you have done your project.</p>
+<p>Then you will be directed to a page (see example below) asking you for a name of your App. Give it a name that you want.</p>
+<p><img alt="Get Keys from Twitter Developer" src="../_images/lab2-fig1.png" /></p>
+<p>Click <code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">keys</span></code>. It will then generated API Key, API Key Secret, and Bearer Token (see below for an example). Make sure you copy and paste them into a safe place (e.g., a text editor). We need these authentications later.</p>
+<p><img alt="Authentication Example" src="../_images/lab2-fig2.png" /></p>
+<p>Next, we also need to obtain the Access Token and its key. To do so, go to the <code class="docutils literal notranslate"><span class="pre">Projects</span> <span class="pre">&amp;</span> <span class="pre">Apps</span></code>–&gt; Select your App. Then click <code class="docutils literal notranslate"><span class="pre">Keys</span> <span class="pre">and</span> <span class="pre">tokens</span></code>, and then click <code class="docutils literal notranslate"><span class="pre">Generate</span></code> on the right of <code class="docutils literal notranslate"><span class="pre">Access</span> <span class="pre">Token</span> <span class="pre">ane</span> <span class="pre">Secret</span></code> (see below). Again, make sure you record them in a safe place. We need them later. Note that if for some reasons, you lose your tokens and secrets, this page is where you regenerate them.</p>
+<p><img alt="Access Token Example" src="../_images/lab2-fig3.png" /></p>
+<p>Once you have your Twitter app set-up, you are ready to access tweets in Python. Begin by importing the necessary Python libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To access the Twitter API, you will need four things from the your Twitter App page. These keys are located in your Twitter app settings in the Keys and Access Tokens tab.</p>
+<ul class="simple">
+<li><p>api key</p></li>
+<li><p>api key seceret</p></li>
+<li><p>access token</p></li>
+<li><p>access token secret</p></li>
+</ul>
+<p>Below I put in my authentications. You should use yours! But remember to not share these with anyone else because these values are specific to your app.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">api_key</span><span class="o">=</span> <span class="s1">&#39;5TX6isrDz92kOC1s7qsTFWq5F&#39;</span>
+<span class="n">api_key_secret</span><span class="o">=</span> <span class="s1">&#39;DL4Gw2WLNo2bK538lL5GeNYCtiwlsuYUHOlW8NCSQszK3ac101&#39;</span>
+<span class="n">access_token</span><span class="o">=</span> <span class="s1">&#39;1582847729486684180-VH5N9AEb2zyyFyLOj5BuD8I9ca0ils&#39;</span>
+<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s1">&#39;e0cvkxJz9AWvu9dq0Fb48r61vkmIaA1JqLLyhEhms5FGt&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With these authentications, we can next build an API variable in Python that build the connection between this Jupyter program and Twitter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_key_secret</span><span class="p">)</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">wait_on_rate_limit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For example, now we can send tweets using your API access. Note that your tweet needs to be 280 characters or less:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Post a tweet from Python</span>
+<span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;</span><span class="p">)</span>
+<span class="c1"># Your tweet has been posted!</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">Forbidden</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Post a tweet from Python</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46,</span> in <span class="ni">payload.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_list</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_type</span>
+<span class="ne">---&gt; </span><span class="mi">46</span> <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136,</span> in <span class="ni">API.update_status</span><span class="nt">(self, status, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span> <span class="k">if</span> <span class="s1">&#39;media_ids&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1134</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_to_csv</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">])</span>
+<span class="ne">-&gt; </span><span class="mi">1136</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="n">endpoint_parameters</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1138</span>         <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_status_id&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1139</span>         <span class="s1">&#39;auto_populate_reply_metadata&#39;</span><span class="p">,</span> <span class="s1">&#39;exclude_reply_user_ids&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>         <span class="s1">&#39;attachment_url&#39;</span><span class="p">,</span> <span class="s1">&#39;media_ids&#39;</span><span class="p">,</span> <span class="s1">&#39;possibly_sensitive&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1141</span>         <span class="s1">&#39;long&#39;</span><span class="p">,</span> <span class="s1">&#39;place_id&#39;</span><span class="p">,</span> <span class="s1">&#39;display_coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;trim_user&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1142</span>         <span class="s1">&#39;card_uri&#39;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1143</span>     <span class="p">),</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1144</span> <span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259,</span> in <span class="ni">API.request</span><span class="nt">(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span>     <span class="k">raise</span> <span class="n">Unauthorized</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">259</span>     <span class="k">raise</span> <span class="n">Forbidden</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>     <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+<span class="ne">Forbidden</span>: 403 Forbidden
+<span class="mi">187</span> <span class="o">-</span> <span class="n">Status</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">duplicate</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you go to your Twitter account and check Profile, you will see the tweet being posted! Congrats for your first post via Python!</p>
+<p>Note that if you see errors like “453 - You currently have Essential access which includes access to Twitter API v2 endpoints only. If you need access to this endpoint, you’ll need to apply for Elevated access via the Developer Portal. You can learn more here: <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve">https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve</a>”. It means you need to elevate your access. What you need to do is (1). Go to Products –&gt; Twitter API v2; (2). click the tab “Elevated” (or “Academic Research” if you need it for your dissertation later); (3). Click <code class="docutils literal notranslate"><span class="pre">Apply</span></code>, then file the form (you can choose No for many of the questions). See screenshot below for (1) and (2):</p>
+<p><img alt="Elevate your access" src="../_images/lab2-fig4.png" /></p>
+<p>Next, let’s retrieve (search) some tweets that are about <code class="docutils literal notranslate"><span class="pre">#energycrisis</span></code> that are posted since 2022-10-01 in English. There are going to be many posts returned. To make it easy to illustrate and to save some request (note you have a limited number of requests via this API), we only request 5 from the list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_words</span> <span class="o">=</span> <span class="s2">&quot;#energycrisis&quot;</span>
+<span class="n">tweets</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">search_tweets</span><span class="p">,</span>
+              <span class="n">q</span><span class="o">=</span><span class="n">search_words</span><span class="p">,</span>
+              <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">tweets</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tweepy.cursor.ItemIterator at 0x7fe4101d0f10&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, you see a  an object that you can iterate (i.e. <code class="docutils literal notranslate"><span class="pre">ItemIterator</span></code>) or loop over to access the data collected. Each item in the iterator has various attributes that you can access to get information about each tweet including:</p>
+<ul class="simple">
+<li><p>the text of the tweet</p></li>
+<li><p>who sent the tweet</p></li>
+<li><p>the date the tweet was sent</p></li>
+</ul>
+<p>and more. The code below loops through the object and save the time of the tweet, the user who posted the tweet, the text of the tweet, as well ast the user location to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># create dataframe</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="s1">&#39;Tweet&#39;</span><span class="p">,</span> <span class="s1">&#39;Location&#39;</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">location</span><span class="p">])</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time</th>
+      <th>User</th>
+      <th>Tweet</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-10-19 23:58:43+00:00</td>
+      <td>wildbluethistle</td>
+      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-10-19 23:58:12+00:00</td>
+      <td>DrowerR</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Melbourne, Victoria</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-10-19 23:57:48+00:00</td>
+      <td>grahamtfn</td>
+      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
+      <td>Glasgow, Scotland</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-10-19 23:57:16+00:00</td>
+      <td>SocEntEdinburgh</td>
+      <td>RT @socialprintandc: For further details on ho...</td>
+      <td>Edinburgh</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2022-10-19 23:53:03+00:00</td>
+      <td>lindakillian</td>
+      <td>RT @LevittFlisser: High electric bill poised t...</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can further save the dataframe to a local csv file (structured data):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tweets_example.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that there is another way of writing the query to Twitter API, which might be more intuitive to some users. For example, you can replace <code class="docutils literal notranslate"><span class="pre">tweets</span> <span class="pre">=</span> <span class="pre">tw.Cursor(api.search_tweets,q=search_words,lang=&quot;en&quot;).items(5)</span></code> to something like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tweets2</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search_tweets</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">search_words</span><span class="p">,</span><span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="s2">&quot;5&quot;</span><span class="p">)</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tweet2</span> <span class="ow">in</span> <span class="n">tweets2</span><span class="p">:</span>
+    <span class="n">data2</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tweet2</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">location</span><span class="p">])</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Time</th>
+      <th>User</th>
+      <th>Tweet</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-10-20 00:00:59+00:00</td>
+      <td>WhosFibbing</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Everywhere</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-10-19 23:59:12+00:00</td>
+      <td>SocEntEdinburgh</td>
+      <td>RT @socialprintandc: For further details on ho...</td>
+      <td>Edinburgh</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-10-19 23:58:43+00:00</td>
+      <td>wildbluethistle</td>
+      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2022-10-19 23:58:12+00:00</td>
+      <td>DrowerR</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Melbourne, Victoria</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2022-10-19 23:57:48+00:00</td>
+      <td>grahamtfn</td>
+      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
+      <td>Glasgow, Scotland</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To learn more about the key function <code class="docutils literal notranslate"><span class="pre">search_tweets()</span></code>, check its webpage <a class="reference external" href="https://docs.tweepy.org/en/stable/api.html#tweepy.API.search_tweets">here</a>. Please try yourself to set up some other parameters to see what you can get.</p>
+</section>
+<section id="part-2-basic-natural-language-processing-and-geoparsing">
+<h2>Part 2: Basic Natural Language Processing and Geoparsing<a class="headerlink" href="#part-2-basic-natural-language-processing-and-geoparsing" title="Permalink to this headline">#</a></h2>
+<p>To extract places (or other categories) from text-based (unstructured) data, we need to do some basic Natural Language Processing (NLP), such as tokenization and Part-of-Speech analysis. All these operations can be done through the library <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>.</p>
+<p>Ideally, you can use the tweets you got from Part 1 to do the experiment. But since sometimes the tweets you get might be very heterogenous and noisy, here we use a clean example (you can also get it from some long news online) to show how to use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> in order to make sure all the knowledge points are covered in one example.</p>
+<p>First make sure you have intsalled and imported <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">spaCy</span></code> comes with pretrained NLP models that can perform most common NLP tasks, such as tokenization, parts of speech (POS) tagging, named entity recognition (NER), transforming to word vectors etc.</p>
+<p>If you are dealing with a particular language, you can load the spacy model specific to the language using spacy.load() function. For example, we want to load the English version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load small english model: https://spacy.io/models</span>
+<span class="n">nlp</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">nlp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;spacy.lang.en.English at 0x7fe3f00d2fd0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This returns a Language object that comes ready with multiple built-in capabilities.</p>
+<p>Now let’s say you have your text data in a string. What can be done to understand the structure of the text?</p>
+<p>First, call the loaded nlp object on the text. It should return a processed Doc object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse text through the `nlp` model</span>
+<span class="n">my_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;The economic situation of the country is on edge , as the stock </span>
+<span class="s2">market crashed causing loss of millions. Citizens who had their main investment </span>
+<span class="s2">in the share-market are facing a great loss. Many companies might lay off </span>
+<span class="s2">thousands of people to reduce labor cost&quot;&quot;&quot;</span>
+
+<span class="n">my_doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">my_text</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">my_doc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spacy.tokens.doc.Doc
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hmmm, it is a  Doc object. But wait, what exactly is a Doc object?</p>
+<p>It is a sequence of tokens that contains not just the original text but all the results produced by the spaCy model after processing the text. Useful information such as the lemma of the text, whether it is a stop word or not, named entities, the word vector of the text and so on are pre-computed and readily stored in the Doc object.</p>
+<p>So first, what is a token?</p>
+<p>As you have learnt from the lecture. Tokens are individual text entities that make up the text. Typically a token can be the words, punctuation, spaces, etc. Tokenization is the process of converting a text into smaller sub-texts, based on certain predefined rules. For example, sentences are tokenized to words (and punctuation optionally). And paragraphs into sentences, depending on the context.</p>
+<p>Each token in <code class="docutils literal notranslate"><span class="pre">spacy</span></code> has different attributes that tell us a great deal of information.</p>
+<p>Let’s see the token texts on <code class="docutils literal notranslate"><span class="pre">my_doc</span></code>. The string which the token represents can be accessed through the <code class="docutils literal notranslate"><span class="pre">token.text</span></code> attribute.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Printing the tokens of a doc</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The
+economic
+situation
+of
+the
+country
+is
+on
+edge
+,
+as
+the
+stock
+
+
+market
+crashed
+causing
+loss
+of
+millions
+.
+Citizens
+who
+had
+their
+main
+investment
+
+
+in
+the
+share
+-
+market
+are
+facing
+a
+great
+loss
+.
+Many
+companies
+might
+lay
+off
+
+
+thousands
+of
+people
+to
+reduce
+labor
+cost
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above tokens contain punctuation and common words like “a”, ” the”, “was”, etc. These do not add any value to the meaning of your text. They are called stop words. We can clean it up.</p>
+<p>The type of tokens will allow us to clean those noisy tokens such as stop word, punctuation, and space. First, we show whether a token is stop/punctuation or not, and then we use this information to remove them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Printing tokens and boolean values stored in different attributes</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">token</span><span class="o">.</span><span class="n">is_stop</span><span class="p">,</span><span class="s1">&#39;---&#39;</span><span class="p">,</span><span class="n">token</span><span class="o">.</span><span class="n">is_punct</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The -- True --- False
+economic -- False --- False
+situation -- False --- False
+of -- True --- False
+the -- True --- False
+country -- False --- False
+is -- True --- False
+on -- True --- False
+edge -- False --- False
+, -- False --- True
+as -- True --- False
+the -- True --- False
+stock -- False --- False
+
+ -- False --- False
+market -- False --- False
+crashed -- False --- False
+causing -- False --- False
+loss -- False --- False
+of -- True --- False
+millions -- False --- False
+. -- False --- True
+Citizens -- False --- False
+who -- True --- False
+had -- True --- False
+their -- True --- False
+main -- False --- False
+investment -- False --- False
+
+ -- False --- False
+in -- True --- False
+the -- True --- False
+share -- False --- False
+- -- False --- True
+market -- False --- False
+are -- True --- False
+facing -- False --- False
+a -- True --- False
+great -- False --- False
+loss -- False --- False
+. -- False --- True
+Many -- True --- False
+companies -- False --- False
+might -- True --- False
+lay -- False --- False
+off -- True --- False
+
+ -- False --- False
+thousands -- False --- False
+of -- True --- False
+people -- False --- False
+to -- True --- False
+reduce -- False --- False
+labor -- False --- False
+cost -- False --- False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Removing StopWords and punctuations</span>
+<span class="n">my_doc_cleaned</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_stop</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_punct</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc_cleaned</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>economic
+situation
+country
+edge
+stock
+market
+crashed
+causing
+loss
+millions
+Citizens
+main
+investment
+share
+market
+facing
+great
+loss
+companies
+lay
+thousands
+people
+reduce
+labor
+cost
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the POS tagging of your text, you use code like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc_cleaned</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="s1">&#39;---- &#39;</span><span class="p">,</span><span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>economic ----  ADJ
+situation ----  NOUN
+country ----  NOUN
+edge ----  NOUN
+stock ----  NOUN
+market ----  NOUN
+crashed ----  VERB
+causing ----  VERB
+loss ----  NOUN
+millions ----  NOUN
+Citizens ----  NOUN
+main ----  ADJ
+investment ----  NOUN
+share ----  NOUN
+market ----  NOUN
+facing ----  VERB
+great ----  ADJ
+loss ----  NOUN
+companies ----  NOUN
+lay ----  VERB
+thousands ----  NOUN
+people ----  NOUN
+reduce ----  VERB
+labor ----  NOUN
+cost ----  NOUN
+</pre></div>
+</div>
+</div>
+</div>
+<p>You will see each word (tokenization) now is associated with a POS tag, whether it is a Noun, a Adj, a Verb, or so on … POS often can help us disambiguate the meaning of words (or places in GIR).</p>
+<p>Btw, if you don’t know what “ADJ” means, you can use code like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spacy</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s1">&#39;ADJ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;adjective&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> to do some Named Entity Recognition (including place name identification or geoparsing). For you instance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Tony Stark owns the company StarkEnterprises . Emily Clark works at Microsoft and lives in Manchester. She loves to read the Bible and learn French&#39;</span>
+<span class="n">doc</span><span class="o">=</span><span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="s1">&#39;--- &#39;</span><span class="p">,</span><span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tony Stark ---  PERSON
+StarkEnterprises ---  ORG
+Emily Clark ---  PERSON
+Microsoft ---  ORG
+Manchester ---  GPE
+Bible ---  WORK_OF_ART
+French ---  NORP
+</pre></div>
+</div>
+</div>
+</div>
+<p>What is “GPE”?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spacy</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="s1">&#39;GPE&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Countries, cities, states&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>spaCy also provides special visualization for NER through displacy. Using displacy.render() function, you can set the style=ent to visualize.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using displacy for visualizing NER</span>
+<span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">displacy</span>
+<span class="n">displacy</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;ent&#39;</span><span class="p">,</span><span class="n">jupyter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><span class="tex2jax_ignore"><div class="entities" style="line-height: 2.5; direction: ltr">
+<mark class="entity" style="background: #aa9cfc; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Tony Stark
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">PERSON</span>
+</mark>
+ owns the company 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    StarkEnterprises
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ . 
+<mark class="entity" style="background: #aa9cfc; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Emily Clark
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">PERSON</span>
+</mark>
+ works at 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Microsoft
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ and lives in 
+<mark class="entity" style="background: #feca74; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Manchester
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">GPE</span>
+</mark>
+. She loves to read the 
+<mark class="entity" style="background: #f0d0ff; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Bible
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">WORK_OF_ART</span>
+</mark>
+ and learn 
+<mark class="entity" style="background: #c887fb; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    French
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">NORP</span>
+</mark>
+</div></span></div></div>
+</div>
+<p>So far, you have learnt the basics of retrieving information from social media like Twitter, as well as basic NLP operations and named entity recognition (geoparsing is part of it). I suggest you to play with what you have learnt so far by using new data to experiment these functions, changing the parameters of function, combining these skills with what you have learn in Tutorial 1 (e.g., geopandas), etc.</p>
+<p>Next week, we will try more cool libraries and examples related to geoparsing and geocoding.</p>
+<p>TBC next week …</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
