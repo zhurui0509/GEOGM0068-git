@@ -412,6 +412,11 @@ title="Print to PDF"
    Part 2: Basic Natural Language Processing and Geoparsing
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">
+   Part 3: Geocoding the recognized place names
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -441,6 +446,11 @@ title="Print to PDF"
    Part 2: Basic Natural Language Processing and Geoparsing
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">
+   Part 3: Geocoding the recognized place names
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -456,15 +466,14 @@ title="Print to PDF"
 <p>In this tutorial, we will learn:</p>
 <ul class="simple">
 <li><p>How to extract information (e.g., tweets) from location-based social media (e.g., Twitter)</p></li>
-<li><p>How to identify locational (e.g., place name) information from text-based data (e.g., tweets, newspapers)</p></li>
+<li><p>How to identify locational information (e.g., place name) from text-based data (e.g., tweets, newspapers)</p></li>
 <li><p>How to refer the identified location to metric-based coordinates on the surface of the earcth</p></li>
 </ul>
 <p>Several libraries/packages are needed in this tutorial. Use <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install them:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pypi.org/project/tweepy/">tweepy</a>: this is library to access the Tweeter API</p></li>
-<li><p><a class="reference external" href="https://spacy.io/usage">spaCy</a>: this is the libeary to do natural lanuguage processing</p></li>
+<li><p><a class="reference external" href="https://spacy.io/usage">spaCy</a>: this is the library to do natural lanuguage processing</p></li>
 <li><p><a class="reference external" href="https://pypi.org/project/spacy-dbpedia-spotlight/">spacy-dbpedia-spotlight</a>: a small library that annotate recognized entities from spaCy to DBpedia enities.</p></li>
-<li><p>…</p></li>
 </ul>
 <section id="part-1-extracting-geo-text-from-twitter">
 <h2>Part 1: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-extracting-geo-text-from-twitter" title="Permalink to this headline">#</a></h2>
@@ -491,14 +500,14 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>To access the Twitter API, you will need four things from the your Twitter App page. These keys are located in your Twitter app settings in the Keys and Access Tokens tab.</p>
+<p>To access the Twitter API, you will need four things from your Twitter App page. These keys are located in your Twitter app settings in the Keys and Access Tokens tab.</p>
 <ul class="simple">
 <li><p>api key</p></li>
 <li><p>api key seceret</p></li>
 <li><p>access token</p></li>
 <li><p>access token secret</p></li>
 </ul>
-<p>Below I put in my authentications. You should use yours! But remember to not share these with anyone else because these values are specific to your app.</p>
+<p>Below I put in my authentications. You should use yours! But remember to not share these with anyone else because these values are specific to your App.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">api_key</span><span class="o">=</span> <span class="s1">&#39;5TX6isrDz92kOC1s7qsTFWq5F&#39;</span>
@@ -569,7 +578,7 @@ title="Print to PDF"
 <p>If you go to your Twitter account and check Profile, you will see the tweet being posted! Congrats for your first post via Python!</p>
 <p>Note that if you see errors like “453 - You currently have Essential access which includes access to Twitter API v2 endpoints only. If you need access to this endpoint, you’ll need to apply for Elevated access via the Developer Portal. You can learn more here: <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve">https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve</a>”. It means you need to elevate your access. What you need to do is (1). Go to Products –&gt; Twitter API v2; (2). click the tab “Elevated” (or “Academic Research” if you need it for your dissertation later); (3). Click <code class="docutils literal notranslate"><span class="pre">Apply</span></code>, then file the form (you can choose No for many of the questions). See screenshot below for (1) and (2):</p>
 <p><img alt="Elevate your access" src="../_images/lab2-fig4.png" /></p>
-<p>Next, let’s retrieve (search) some tweets that are about <code class="docutils literal notranslate"><span class="pre">#energycrisis</span></code> that are posted since 2022-10-01 in English. There are going to be many posts returned. To make it easy to illustrate and to save some request (note you have a limited number of requests via this API), we only request 5 from the list.</p>
+<p>Next, let’s retrieve (search) some tweets that are about <code class="docutils literal notranslate"><span class="pre">#energycrisis</span></code> that are posted currently in English. There are going to be many posts returned. To make it easy to illustrate and to save some request (note you have a limited number of requests via this API), we only request 5 from the list.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_words</span> <span class="o">=</span> <span class="s2">&quot;#energycrisis&quot;</span>
@@ -774,7 +783,7 @@ title="Print to PDF"
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">spaCy</span></code> comes with pretrained NLP models that can perform most common NLP tasks, such as tokenization, parts of speech (POS) tagging, named entity recognition (NER), transforming to word vectors etc.</p>
-<p>If you are dealing with a particular language, you can load the spacy model specific to the language using spacy.load() function. For example, we want to load the English version:</p>
+<p>If you are dealing with a particular language, you can load the spacy model specific to the language using <code class="docutils literal notranslate"><span class="pre">spacy.load()</span></code> function. For example, we want to load the English version:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load small english model: https://spacy.io/models</span>
@@ -789,9 +798,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>This returns a Language object that comes ready with multiple built-in capabilities.</p>
+<p>This returns a <code class="docutils literal notranslate"><span class="pre">Language</span></code> object that comes ready with multiple built-in capabilities.</p>
 <p>Now let’s say you have your text data in a string. What can be done to understand the structure of the text?</p>
-<p>First, call the loaded nlp object on the text. It should return a processed Doc object.</p>
+<p>First, call the loaded <code class="docutils literal notranslate"><span class="pre">nlp</span></code> object on the text. It should return a processed <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse text through the `nlp` model</span>
@@ -811,11 +820,11 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>Hmmm, it is a  Doc object. But wait, what exactly is a Doc object?</p>
-<p>It is a sequence of tokens that contains not just the original text but all the results produced by the spaCy model after processing the text. Useful information such as the lemma of the text, whether it is a stop word or not, named entities, the word vector of the text and so on are pre-computed and readily stored in the Doc object.</p>
+<p>Hmmm, it is a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object. But wait, what exactly is a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object?</p>
+<p>It is a sequence of tokens that contains not just the original text but all the results produced by the <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> model after processing the text. Useful information such as the lemma of the text, whether it is a stop word or not, named entities, the word vector of the text and so on are pre-computed and readily stored in the <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object.</p>
 <p>So first, what is a token?</p>
-<p>As you have learnt from the lecture. Tokens are individual text entities that make up the text. Typically a token can be the words, punctuation, spaces, etc. Tokenization is the process of converting a text into smaller sub-texts, based on certain predefined rules. For example, sentences are tokenized to words (and punctuation optionally). And paragraphs into sentences, depending on the context.</p>
-<p>Each token in <code class="docutils literal notranslate"><span class="pre">spacy</span></code> has different attributes that tell us a great deal of information.</p>
+<p>As you have learnt from the lecture. Tokens are individual textual entities that make up the text. Typically a token can be the words, punctuation, spaces, etc. Tokenization is the process of converting a text into smaller sub-texts, based on certain predefined rules. For example, sentences are tokenized to words (and punctuation optionally). And paragraphs into sentences, depending on the context.</p>
+<p>Each token in <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> has different attributes that tell us a great deal of information.</p>
 <p>Let’s see the token texts on <code class="docutils literal notranslate"><span class="pre">my_doc</span></code>. The string which the token represents can be accessed through the <code class="docutils literal notranslate"><span class="pre">token.text</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1033,7 +1042,7 @@ cost ----  NOUN
 </div>
 </div>
 </div>
-<p>You will see each word (tokenization) now is associated with a POS tag, whether it is a Noun, a Adj, a Verb, or so on … POS often can help us disambiguate the meaning of words (or places in GIR).</p>
+<p>You will see each word (token) now is associated with a POS tag, whether it is a Noun, a Adj, a Verb, or so on … POS often can help us disambiguate the meaning of words (or places in GIR).</p>
 <p>Btw, if you don’t know what “ADJ” means, you can use code like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1083,7 +1092,7 @@ French ---  NORP
 </div>
 </div>
 </div>
-<p>spaCy also provides special visualization for NER through displacy. Using displacy.render() function, you can set the style=ent to visualize.</p>
+<p>spaCy also provides special visualization for NER through displacy. Using <code class="docutils literal notranslate"><span class="pre">displacy.render()</span></code> function, you can set the <code class="docutils literal notranslate"><span class="pre">style='ent'</span></code> to visualize.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using displacy for visualizing NER</span>
@@ -1131,8 +1140,1206 @@ French ---  NORP
 </div></span></div></div>
 </div>
 <p>So far, you have learnt the basics of retrieving information from social media like Twitter, as well as basic NLP operations and named entity recognition (geoparsing is part of it). I suggest you to play with what you have learnt so far by using new data to experiment these functions, changing the parameters of function, combining these skills with what you have learn in Tutorial 1 (e.g., geopandas), etc.</p>
-<p>Next week, we will try more cool libraries and examples related to geoparsing and geocoding.</p>
-<p>TBC next week …</p>
+</section>
+<section id="part-3-geocoding-the-recognized-place-names">
+<h2>Part 3: Geocoding the recognized place names<a class="headerlink" href="#part-3-geocoding-the-recognized-place-names" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">spaCy</span></code> helps us recognize different categories of tokens from a text, including place names (with tag <code class="docutils literal notranslate"><span class="pre">GPE</span></code> or <code class="docutils literal notranslate"><span class="pre">LOC</span></code>), but have not refer these place names into geographical locations on the surface of the earth. In this part, we will explore ways of geocoding text-based place names to geographic coordinates. There are several cool libraries/packages there for us to directly use, which we will cover some in this tutorial. But before that, let’s develop our own geocoding tool first. We might not use it in the future due to its simplicity, but it will help us understand the fundementals behind those technologies, which we have highlighted in our lectures.</p>
+<p>First, let’s create a variable storing the text that we want to georeference. The text below is copied from the Physical Geography section from the wikipedia page about the UK. We then use <code class="docutils literal notranslate"><span class="pre">nlp()</span></code> to convert the text into a <code class="docutils literal notranslate"><span class="pre">nlp</span></code> object defined by <code class="docutils literal notranslate"><span class="pre">spacy</span></code>. Having this object, we can then extract place names using the label <code class="docutils literal notranslate"><span class="pre">LOC</span></code> and <code class="docutils literal notranslate"><span class="pre">GPE</span></code>. Here we use a <code class="docutils literal notranslate"><span class="pre">for-loop</span></code> to go through all the tokens and only get those that have the two location-related labels, and then save them all into a list <code class="docutils literal notranslate"><span class="pre">locations</span></code>. Then we transfer such a list into a <code class="docutils literal notranslate"><span class="pre">panda</span></code> dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UK_physicalGeo</span> <span class="o">=</span> <span class="s2">&quot;The physical geography of the UK varies greatly. England consists of mostly lowland terrain, with upland or mountainous terrain only found north-west of the Tees-Exe line. The upland areas include the Lake District, the Pennines, North York Moors, Exmoor and Dartmoor. The lowland areas are typically traversed by ranges of low hills, frequently composed of chalk, and flat plains. Scotland is the most mountainous country in the UK and its physical geography is distinguished by the Highland Boundary Fault which traverses the Scottish mainland from Helensburgh to Stonehaven. The faultline separates the two distinctively different regions of the Highlands to the north and west, and the Lowlands to the south and east. The Highlands are predominantly mountainous, containing the majority of Scotland&#39;s mountainous landscape, while the Lowlands contain flatter land, especially across the Central Lowlands, with upland and mountainous terrain located at the Southern Uplands. Wales is mostly mountainous, though south Wales is less mountainous than north and mid Wales. Northern Ireland consists of mostly hilly landscape and its geography includes the Mourne Mountains as well as Lough Neagh, at 388 square kilometres (150 sq mi), the largest body of water in the UK.[12]The overall geomorphology of the UK was shaped by a combination of forces including tectonics and climate change, in particular glaciation in northern and western areas. The tallest mountain in the UK (and British Isles) is Ben Nevis, in the Grampian Mountains, Scotland. The longest river is the River Severn which flows from Wales into England. The largest lake by surface area is Lough Neagh in Northern Ireland, though Scotland&#39;s Loch Ness has the largest volume.&quot;</span>
+<span class="n">UK_physicalGeo_doc</span><span class="o">=</span><span class="n">nlp</span><span class="p">(</span><span class="n">UK_physicalGeo</span><span class="p">)</span>
+
+<span class="n">locations</span> <span class="o">=</span> <span class="p">[]</span> 
+
+<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">UK_physicalGeo_doc</span><span class="o">.</span><span class="n">ents</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;LOC&#39;</span><span class="p">,</span> <span class="s1">&#39;GPE&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span><span class="s1">&#39;--- &#39;</span><span class="p">,</span><span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">)</span>
+        <span class="n">locations</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">entity</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">label_</span><span class="p">])</span>
+<span class="n">locations_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Place Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Tag&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UK ---  GPE
+the Lake District ---  LOC
+Pennines ---  LOC
+North York Moors ---  GPE
+Scotland ---  GPE
+UK ---  GPE
+Helensburgh ---  GPE
+Scotland ---  GPE
+Wales ---  GPE
+Wales ---  GPE
+Northern Ireland ---  GPE
+the Mourne Mountains ---  LOC
+UK ---  GPE
+UK ---  GPE
+the Grampian Mountains ---  LOC
+Scotland ---  GPE
+Wales ---  GPE
+England ---  GPE
+Northern Ireland ---  GPE
+Scotland ---  GPE
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that we see many duplicates in the list. What we can do is then to delete those duplicates. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provides a very easy function for us to do it: <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">locations_df</span> <span class="o">=</span> <span class="n">locations_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">locations_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Place Name</th>
+      <th>Tag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>UK</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>the Lake District</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Pennines</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>North York Moors</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Helensburgh</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Wales</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Northern Ireland</td>
+      <td>GPE</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>the Mourne Mountains</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>the Grampian Mountains</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>England</td>
+      <td>GPE</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In Python, there are often many ways to achieve the same goal. To use what we have done so far as an example, you can also use the code below to achieve the same (creating the <code class="docutils literal notranslate"><span class="pre">locations</span></code> list). Try it yourself!</p>
+<p><code class="docutils literal notranslate"><span class="pre">locations.extend([[entity.text,</span> <span class="pre">entity.label_]</span> <span class="pre">for</span> <span class="pre">entity</span> <span class="pre">in</span> <span class="pre">UK_physicalGeo_doc.ents</span> <span class="pre">if</span> <span class="pre">entity.label_</span> <span class="pre">in</span> <span class="pre">[‘LOC’,</span> <span class="pre">'GPE']]</span></code></p>
+<p>After recognized these place names, we next want to geocode them. First, we want to see how far we can go without using any external geocoding/geoparsing libraries.</p>
+<p>As we discussed in the lecture, to do geocoding, we need a gazetteer first. Since the example we are using is mostly about the UK, we can use the <a class="reference external" href="https://gazetteer.org.uk/purchase">Gazetteer of British Place Names</a>. Make sure you downloaded the csv file into your local directory, and remember to replace the directory <code class="docutils literal notranslate"><span class="pre">../../LabData/GBPN_14062021.csv</span></code> below to yours.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="n">UK_gazetteer_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../LabData/GBPN_14062021.csv&#39;</span><span class="p">)</span>
+<span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_3617/3736579507.py:4: DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
+  UK_gazetteer_df = pd.read_csv(&#39;../../LabData/GBPN_14062021.csv&#39;)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GBPNID</th>
+      <th>PlaceName</th>
+      <th>GridRef</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>HistCounty</th>
+      <th>Division</th>
+      <th>AdCounty</th>
+      <th>District</th>
+      <th>UniAuth</th>
+      <th>Police</th>
+      <th>Region</th>
+      <th>Alternative_Names</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A' Chill</td>
+      <td>NG2705</td>
+      <td>57.057719</td>
+      <td>-6.500908</td>
+      <td>Argyllshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Highland</td>
+      <td>Highlands and Islands</td>
+      <td>Scotland</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Ab Kettleby</td>
+      <td>SK7223</td>
+      <td>52.800049</td>
+      <td>-0.927993</td>
+      <td>Leicestershire</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>Melton</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Ab Lench</td>
+      <td>SP0151</td>
+      <td>52.163533</td>
+      <td>-1.980962</td>
+      <td>Worcestershire</td>
+      <td>NaN</td>
+      <td>Worcestershire</td>
+      <td>Wychavon</td>
+      <td>NaN</td>
+      <td>West Mercia</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Abaty Cwm-hir</td>
+      <td>SO0571</td>
+      <td>52.331015</td>
+      <td>-3.389919</td>
+      <td>Radnorshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Powys</td>
+      <td>Dyfed Powys</td>
+      <td>Wales</td>
+      <td>Abbey-cwm-hir, Abbeycwmhir</td>
+      <td>Settlement</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Abbey-cwm-hir</td>
+      <td>SO0571</td>
+      <td>52.331015</td>
+      <td>-3.389919</td>
+      <td>Radnorshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Powys</td>
+      <td>Dyfed Powys</td>
+      <td>Wales</td>
+      <td>Abaty Cwm-hir, Abbeycwmhir</td>
+      <td>Settlement</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This is obiviously a spatial data set. Then, we want to represent the data as <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>. To do so, we will convert the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> and <code class="docutils literal notranslate"><span class="pre">Lng</span></code> columns into a new column, which is <code class="docutils literal notranslate"><span class="pre">geometry</span></code>. We also need to assign the coordinate reference system to the data.</p>
+<p>If you started doing so, you will quickly find there might be an error saying something is wrong on the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> column. Don’t be panic! After you understand what the error indicates, you can go back to the csv file, where you will find a cell value on <code class="docutils literal notranslate"><span class="pre">Lat</span></code> is <code class="docutils literal notranslate"><span class="pre">53.20N</span></code>. This is not a standard way of representing geographic coordinates. What we can do is to simply remove that row, then finish the transformation from dataframe to geodataframe:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">UK_gazetteer_df</span><span class="p">[</span><span class="n">UK_gazetteer_df</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;53.20N &#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">UK_gazetteer_gpd</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
+   <span class="n">UK_gazetteer_df</span> <span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">gpd</span><span class="o">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">Lng</span><span class="p">,</span> <span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">Lat</span><span class="p">))</span>
+<span class="n">UK_gazetteer_gpd</span><span class="o">.</span><span class="n">set_crs</span><span class="p">(</span><span class="s1">&#39;epsg:4326&#39;</span><span class="p">)</span>
+<span class="n">UK_gazetteer_gpd</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GBPNID</th>
+      <th>PlaceName</th>
+      <th>GridRef</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>HistCounty</th>
+      <th>Division</th>
+      <th>AdCounty</th>
+      <th>District</th>
+      <th>UniAuth</th>
+      <th>Police</th>
+      <th>Region</th>
+      <th>Alternative_Names</th>
+      <th>Type</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A' Chill</td>
+      <td>NG2705</td>
+      <td>57.057719</td>
+      <td>-6.500908</td>
+      <td>Argyllshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Highland</td>
+      <td>Highlands and Islands</td>
+      <td>Scotland</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-6.50091 57.05772)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Ab Kettleby</td>
+      <td>SK7223</td>
+      <td>52.800049</td>
+      <td>-0.927993</td>
+      <td>Leicestershire</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>Melton</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-0.92799 52.80005)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Ab Lench</td>
+      <td>SP0151</td>
+      <td>52.163533</td>
+      <td>-1.980962</td>
+      <td>Worcestershire</td>
+      <td>NaN</td>
+      <td>Worcestershire</td>
+      <td>Wychavon</td>
+      <td>NaN</td>
+      <td>West Mercia</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.98096 52.16353)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Abaty Cwm-hir</td>
+      <td>SO0571</td>
+      <td>52.331015</td>
+      <td>-3.389919</td>
+      <td>Radnorshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Powys</td>
+      <td>Dyfed Powys</td>
+      <td>Wales</td>
+      <td>Abbey-cwm-hir, Abbeycwmhir</td>
+      <td>Settlement</td>
+      <td>POINT (-3.38992 52.33102)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Abbey-cwm-hir</td>
+      <td>SO0571</td>
+      <td>52.331015</td>
+      <td>-3.389919</td>
+      <td>Radnorshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Powys</td>
+      <td>Dyfed Powys</td>
+      <td>Wales</td>
+      <td>Abaty Cwm-hir, Abbeycwmhir</td>
+      <td>Settlement</td>
+      <td>POINT (-3.38992 52.33102)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we have the geoparsed place name list and a gazetteer to extract candidate place names with their coordinates. Let’s now do a lookup matching.</p>
+<p>Guess what? We can use the <code class="docutils literal notranslate"><span class="pre">merge()</span></code> (similar to <code class="docutils literal notranslate"><span class="pre">join()</span></code>) operations we learned in Tutoiral 1 to achieve it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">locations_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">locations_df</span><span class="p">,</span> <span class="n">UK_gazetteer_gpd</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;Place Name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;PlaceName&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span><span class="p">)</span>
+<span class="n">locations_merged</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Place Name</th>
+      <th>Tag</th>
+      <th>GBPNID</th>
+      <th>PlaceName</th>
+      <th>GridRef</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>HistCounty</th>
+      <th>Division</th>
+      <th>AdCounty</th>
+      <th>District</th>
+      <th>UniAuth</th>
+      <th>Police</th>
+      <th>Region</th>
+      <th>Alternative_Names</th>
+      <th>Type</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>UK</td>
+      <td>GPE</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>the Lake District</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Pennines</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>North York Moors</td>
+      <td>GPE</td>
+      <td>198897.0</td>
+      <td>North York Moors</td>
+      <td>SE7295</td>
+      <td>54.347372</td>
+      <td>-0.886344</td>
+      <td>Yorkshire</td>
+      <td>North Riding</td>
+      <td>North Yorkshire</td>
+      <td>Ryedale</td>
+      <td>NaN</td>
+      <td>North Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Downs, Moorland</td>
+      <td>POINT (-0.88634 54.34737)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+      <td>39523.0</td>
+      <td>Scotland</td>
+      <td>SK3822</td>
+      <td>52.796412</td>
+      <td>-1.428229</td>
+      <td>Leicestershire</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>North West Leicestershire</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.42823 52.79641)</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+      <td>39524.0</td>
+      <td>Scotland</td>
+      <td>SP6798</td>
+      <td>52.57925</td>
+      <td>-1.000125</td>
+      <td>Leicestershire</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>Harborough</td>
+      <td>NaN</td>
+      <td>Leicestershire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.00012 52.57925)</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+      <td>39525.0</td>
+      <td>Scotland</td>
+      <td>SU5669</td>
+      <td>51.417258</td>
+      <td>-1.196096</td>
+      <td>Berkshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>West Berkshire</td>
+      <td>Thames Valley</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.19610 51.41726)</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+      <td>39526.0</td>
+      <td>Scotland</td>
+      <td>TF0030</td>
+      <td>52.8604</td>
+      <td>-0.512500</td>
+      <td>Lincolnshire</td>
+      <td>Parts of Kesteven</td>
+      <td>Lincolnshire</td>
+      <td>South Kesteven</td>
+      <td>NaN</td>
+      <td>Lincolnshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-0.51250 52.86040)</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Scotland</td>
+      <td>GPE</td>
+      <td>294460.0</td>
+      <td>Scotland</td>
+      <td>SE2340</td>
+      <td>53.857797</td>
+      <td>-1.641983</td>
+      <td>Yorkshire</td>
+      <td>West Riding</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Leeds</td>
+      <td>West Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.64198 53.85780)</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Helensburgh</td>
+      <td>GPE</td>
+      <td>21050.0</td>
+      <td>Helensburgh</td>
+      <td>NS2982</td>
+      <td>56.003981</td>
+      <td>-4.733445</td>
+      <td>Dunbartonshire</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Argyll and Bute</td>
+      <td>Argyll and West Dunbartonshire</td>
+      <td>Scotland</td>
+      <td>Baile Eilidh</td>
+      <td>Settlement</td>
+      <td>POINT (-4.73344 56.00398)</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Wales</td>
+      <td>GPE</td>
+      <td>47495.0</td>
+      <td>Wales</td>
+      <td>SK4782</td>
+      <td>53.341077</td>
+      <td>-1.284149</td>
+      <td>Yorkshire</td>
+      <td>West Riding</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Rotherham</td>
+      <td>South Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.28415 53.34108)</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Wales</td>
+      <td>GPE</td>
+      <td>47496.0</td>
+      <td>Wales</td>
+      <td>ST5824</td>
+      <td>51.02019</td>
+      <td>-2.590189</td>
+      <td>Somerset</td>
+      <td>NaN</td>
+      <td>Somerset</td>
+      <td>South Somerset</td>
+      <td>NaN</td>
+      <td>Avon and Somerset</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-2.59019 51.02019)</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Wales</td>
+      <td>GPE</td>
+      <td>64525.0</td>
+      <td>Wales</td>
+      <td>SK4782</td>
+      <td>53.341105</td>
+      <td>-1.290959</td>
+      <td>Yorkshire</td>
+      <td>West Riding</td>
+      <td>South Yorkshire</td>
+      <td>Rotherham</td>
+      <td>NaN</td>
+      <td>South Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Civil Parish</td>
+      <td>POINT (-1.29096 53.34110)</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Northern Ireland</td>
+      <td>GPE</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>the Mourne Mountains</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>the Grampian Mountains</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>England</td>
+      <td>GPE</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Alright, as you can see, many place names, such as “North York Moors” and “Helensburgh” are now geocoded. You will also notice some places, like “Wales” and “Scotland” are matched to multiple coordinates. It is because in our gazetteer, there are multiple records about “Wales” and “Scotland”. Note also that these are not the “Wales” and “Scotland” you are thinking. If you check the gazetteer by searching for rows that have <code class="docutils literal notranslate"><span class="pre">Place</span> <span class="pre">Name</span></code> and “Wales” for example (see below), you will find these <code class="docutils literal notranslate"><span class="pre">Wales</span></code> are either “Settlement” and “Civil Parish” in England.</p>
+<p>Plus, we also see many place names such as “UK”, “the Lake District”, “Pennines”, etc. do not find a match (their GBPNIDs are all NaN).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UK_gazetteer_gpd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">UK_gazetteer_gpd</span><span class="p">[</span><span class="s1">&#39;PlaceName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Wales&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GBPNID</th>
+      <th>PlaceName</th>
+      <th>GridRef</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>HistCounty</th>
+      <th>Division</th>
+      <th>AdCounty</th>
+      <th>District</th>
+      <th>UniAuth</th>
+      <th>Police</th>
+      <th>Region</th>
+      <th>Alternative_Names</th>
+      <th>Type</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>47317</th>
+      <td>47495</td>
+      <td>Wales</td>
+      <td>SK4782</td>
+      <td>53.341077</td>
+      <td>-1.284149</td>
+      <td>Yorkshire</td>
+      <td>West Riding</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Rotherham</td>
+      <td>South Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-1.28415 53.34108)</td>
+    </tr>
+    <tr>
+      <th>47318</th>
+      <td>47496</td>
+      <td>Wales</td>
+      <td>ST5824</td>
+      <td>51.02019</td>
+      <td>-2.590189</td>
+      <td>Somerset</td>
+      <td>NaN</td>
+      <td>Somerset</td>
+      <td>South Somerset</td>
+      <td>NaN</td>
+      <td>Avon and Somerset</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Settlement</td>
+      <td>POINT (-2.59019 51.02019)</td>
+    </tr>
+    <tr>
+      <th>62356</th>
+      <td>64525</td>
+      <td>Wales</td>
+      <td>SK4782</td>
+      <td>53.341105</td>
+      <td>-1.290959</td>
+      <td>Yorkshire</td>
+      <td>West Riding</td>
+      <td>South Yorkshire</td>
+      <td>Rotherham</td>
+      <td>NaN</td>
+      <td>South Yorkshire</td>
+      <td>England</td>
+      <td>NaN</td>
+      <td>Civil Parish</td>
+      <td>POINT (-1.29096 53.34110)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>All these are due to facts that (1). our imported gazetteer is only about places in England, and (2). our simple model is uncapable to capture the context of the text. Do you have better ideas to improve our simple geocoding tool?</p>
+<p>Now it is a great time to introduce you some “fancy” geocoding/geoparsing libraries. Let’s try <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> next. Make sure you have installed it. Assuming we already have the <code class="docutils literal notranslate"><span class="pre">nlp</span></code> objec from previous steps, or you can create a new one like below, below are the code of using the library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacy_dbpedia_spotlight</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
+<span class="c1"># add the pipeline stage</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s1">&#39;dbpedia_spotlight&#39;</span><span class="p">)</span>
+<span class="c1"># get the document</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">UK_physicalGeo</span><span class="p">)</span>
+<span class="c1"># see the entities</span>
+<span class="n">entities_dbpedia</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ent</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">ent</span><span class="o">.</span><span class="n">label_</span><span class="p">,</span> <span class="n">ent</span><span class="o">.</span><span class="n">kb_id_</span><span class="p">,</span> <span class="n">ent</span><span class="o">.</span><span class="n">_</span><span class="o">.</span><span class="n">dbpedia_raw_result</span><span class="p">[</span><span class="s1">&#39;@similarityScore&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">ent</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">ents</span><span class="p">]</span>
+<span class="n">entities_dbpedia</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;UK&#39;,
+ &#39;DBPEDIA_ENT&#39;,
+ &#39;http://dbpedia.org/resource/United_Kingdom&#39;,
+ &#39;0.9999999697674871&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>What the code does is to go through all the tokens in the text and try to find the corresponding entities from DBpedia. The result is a list of tuples. One tuple example is as shown in the box. It includes the text that is parsed, its label (notice how different it is than <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>’s labels), its id in DBpedia (this is very useful as all associated information can be further retrieved using this link. We will cover more about in the future lectures and tutorials), and a score from 0-1 (this is the similarity score of the string matching; the higher it is, the more similar the target text with the candidate).</p>
+<p>Similar to what we did before, we can then transfer this list into a data frame. Note that since we do not have coordinates explicitly listed here, we can simply use <code class="docutils literal notranslate"><span class="pre">pandas</span></code>’s data frame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;DBpedia Label&#39;</span><span class="p">,</span> <span class="s1">&#39;DBpedia URI&#39;</span><span class="p">,</span> <span class="s1">&#39;Similarity Score&#39;</span><span class="p">]</span>
+
+<span class="n">UK_physicalGeo_DBpedia</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">entities_dbpedia</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">UK_physicalGeo_DBpedia</span> <span class="o">=</span> <span class="n">UK_physicalGeo_DBpedia</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">UK_physicalGeo_DBpedia</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Text</th>
+      <th>DBpedia Label</th>
+      <th>DBpedia URI</th>
+      <th>Similarity Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>physical geography</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Physical_geography</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>UK</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/United_Kingdom</td>
+      <td>0.9999999697674871</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>England</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/England</td>
+      <td>0.9999997958868998</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Lake District</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Lake_District</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Moors</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Moorland</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Exmoor</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Exmoor</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Dartmoor</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Dartmoor</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>chalk</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Chalk</td>
+      <td>0.999982297417919</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Scotland</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Scotland</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Highland Boundary Fault</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Highland_Boundary_...</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Scottish</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Scotland</td>
+      <td>0.9997720847861457</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Helensburgh</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Helensburgh</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Stonehaven</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Stonehaven</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>faultline</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Faultline_(musician)</td>
+      <td>0.9838808091555019</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Central Lowlands</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Central_Lowlands</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Southern Uplands</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Southern_Uplands</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Wales</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Wales</td>
+      <td>0.9999999999998863</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Northern Ireland</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Northern_Ireland</td>
+      <td>0.999999996766519</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>geography</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Geography</td>
+      <td>0.9947401620497708</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Mourne Mountains</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Mourne_Mountains</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Lough Neagh</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Lough_Neagh</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>geomorphology</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Geomorphology</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>climate change</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Global_warming</td>
+      <td>0.9859722723298184</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>glaciation</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Glacial_period</td>
+      <td>0.9861545121455497</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>British Isles</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/British_Isles</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Nevis</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/River_Nevis</td>
+      <td>0.9999978752268652</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Grampian Mountains</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Grampian_Mountains</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>River Severn</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/River_Severn</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>lake</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Lake</td>
+      <td>0.999999999890747</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Loch Ness</td>
+      <td>DBPEDIA_ENT</td>
+      <td>http://dbpedia.org/resource/Loch_Ness</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It seems that the coordinate is not extracted from the tool. But if you use the url, for example <a class="reference external" href="https://dbpedia.org/page/Lake_District">https://dbpedia.org/page/Lake_District</a>, you will see a full information about the place, including its geometry and more! See below for instance:
+<img alt="DBpedia-Point" src="../_images/lab2-fig5.png" /></p>
+<p>Again, even thgough <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> has its advantages, as you can see there are still flaws in such a tool. For example, many non-spatial entiteis are also detected and coordinates are not explicitly show. Do you have any idea on addressing these issues? (hint: maybe check this library - <a class="reference external" href="https://github.com/MatteusT/pyDBpedia">pyDBpedia</a> which helps you access the data shown in DBpedia).</p>
+<p>Now, you can also try to use it on your extracted twitts, or other texts you get from the Internet.</p>
 </section>
 </section>
 
