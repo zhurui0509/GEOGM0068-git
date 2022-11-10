@@ -17,44 +17,140 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Post a tweet from Python
-api.update_status("Hello Twitter, I'm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience")
-# Your tweet has been posted!
+# Load small english model: https://spacy.io/models
+nlp=spacy.load("en_core_web_sm")
+nlp
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mForbidden[0m                                 Traceback (most recent call last)
-Input [0;32mIn [4][0m, in [0;36m<cell line: 2>[0;34m()[0m
-[1;32m      1[0m [38;5;66;03m# Post a tweet from Python[39;00m
-[0;32m----> 2[0m [43mapi[49m[38;5;241;43m.[39;49m[43mupdate_status[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mHello Twitter, I[39;49m[38;5;124;43m'[39;49m[38;5;124;43mm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Input [0;32mIn [10][0m, in [0;36m<cell line: 2>[0;34m()[0m
+[1;32m      1[0m [38;5;66;03m# Load small english model: https://spacy.io/models[39;00m
+[0;32m----> 2[0m nlp[38;5;241m=[39m[43mspacy[49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43men_core_web_sm[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[1;32m      3[0m nlp
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46[0m, in [0;36mpayload.<locals>.decorator.<locals>.wrapper[0;34m(*args, **kwargs)[0m
-[1;32m     44[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_list[39m[38;5;124m'[39m] [38;5;241m=[39m payload_list
-[1;32m     45[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_type[39m[38;5;124m'[39m] [38;5;241m=[39m payload_type
-[0;32m---> 46[0m [38;5;28;01mreturn[39;00m [43mmethod[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/__init__.py:30[0m, in [0;36mload[0;34m(name, **overrides)[0m
+[1;32m     28[0m [38;5;28;01mif[39;00m depr_path [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ([38;5;28;01mTrue[39;00m, [38;5;28;01mFalse[39;00m, [38;5;28;01mNone[39;00m):
+[1;32m     29[0m     warnings[38;5;241m.[39mwarn(Warnings[38;5;241m.[39mW001[38;5;241m.[39mformat(path[38;5;241m=[39mdepr_path), [38;5;167;01mDeprecationWarning[39;00m)
+[0;32m---> 30[0m [38;5;28;01mreturn[39;00m [43mutil[49m[38;5;241;43m.[39;49m[43mload_model[49m[43m([49m[43mname[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136[0m, in [0;36mAPI.update_status[0;34m(self, status, **kwargs)[0m
-[1;32m   1133[0m [38;5;28;01mif[39;00m [38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m [38;5;129;01min[39;00m kwargs:
-[1;32m   1134[0m     kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m] [38;5;241m=[39m list_to_csv(kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m])
-[0;32m-> 1136[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m
-[1;32m   1137[0m [43m    [49m[38;5;124;43m'[39;49m[38;5;124;43mPOST[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mstatuses/update[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mendpoint_parameters[49m[38;5;241;43m=[39;49m[43m([49m
-[1;32m   1138[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mstatus[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43min_reply_to_status_id[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1139[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mauto_populate_reply_metadata[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mexclude_reply_user_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1140[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mattachment_url[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mmedia_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mpossibly_sensitive[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mlat[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1141[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mlong[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mplace_id[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mdisplay_coordinates[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mtrim_user[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1142[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mcard_uri[39;49m[38;5;124;43m'[39;49m
-[1;32m   1143[0m [43m    [49m[43m)[49m[43m,[49m[43m [49m[43mstatus[49m[38;5;241;43m=[39;49m[43mstatus[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
-[1;32m   1144[0m [43m[49m[43m)[49m
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:170[0m, in [0;36mload_model[0;34m(name, **overrides)[0m
+[1;32m    168[0m     [38;5;28;01mreturn[39;00m load_model_from_link(name, [38;5;241m*[39m[38;5;241m*[39moverrides)
+[1;32m    169[0m [38;5;28;01mif[39;00m is_package(name):  [38;5;66;03m# installed as package[39;00m
+[0;32m--> 170[0m     [38;5;28;01mreturn[39;00m [43mload_model_from_package[49m[43m([49m[43mname[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
+[1;32m    171[0m [38;5;28;01mif[39;00m Path(name)[38;5;241m.[39mexists():  [38;5;66;03m# path to model data directory[39;00m
+[1;32m    172[0m     [38;5;28;01mreturn[39;00m load_model_from_path(Path(name), [38;5;241m*[39m[38;5;241m*[39moverrides)
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259[0m, in [0;36mAPI.request[0;34m(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)[0m
-[1;32m    257[0m     [38;5;28;01mraise[39;00m Unauthorized(resp)
-[1;32m    258[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m403[39m:
-[0;32m--> 259[0m     [38;5;28;01mraise[39;00m Forbidden(resp)
-[1;32m    260[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m404[39m:
-[1;32m    261[0m     [38;5;28;01mraise[39;00m NotFound(resp)
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:191[0m, in [0;36mload_model_from_package[0;34m(name, **overrides)[0m
+[1;32m    189[0m [38;5;124;03m"""Load a model from an installed package."""[39;00m
+[1;32m    190[0m [38;5;28mcls[39m [38;5;241m=[39m importlib[38;5;241m.[39mimport_module(name)
+[0;32m--> 191[0m [38;5;28;01mreturn[39;00m [38;5;28;43mcls[39;49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
 
-[0;31mForbidden[0m: 403 Forbidden
-187 - Status is a duplicate.
-Forbidden: 403 Forbidden
-187 - Status is a duplicate.
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/en_core_web_sm/__init__.py:10[0m, in [0;36mload[0;34m(**overrides)[0m
+[1;32m      9[0m [38;5;28;01mdef[39;00m [38;5;21mload[39m([38;5;241m*[39m[38;5;241m*[39moverrides):
+[0;32m---> 10[0m     [38;5;28;01mreturn[39;00m [43mload_model_from_init_py[49m[43m([49m[38;5;18;43m__file__[39;49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:239[0m, in [0;36mload_model_from_init_py[0;34m(init_file, **overrides)[0m
+[1;32m    237[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m model_path[38;5;241m.[39mexists():
+[1;32m    238[0m     [38;5;28;01mraise[39;00m [38;5;167;01mIOError[39;00m(Errors[38;5;241m.[39mE052[38;5;241m.[39mformat(path[38;5;241m=[39mpath2str(data_path)))
+[0;32m--> 239[0m [38;5;28;01mreturn[39;00m [43mload_model_from_path[49m[43m([49m[43mdata_path[49m[43m,[49m[43m [49m[43mmeta[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:203[0m, in [0;36mload_model_from_path[0;34m(model_path, meta, **overrides)[0m
+[1;32m    201[0m lang [38;5;241m=[39m meta[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mlang_factory[39m[38;5;124m"[39m, meta[[38;5;124m"[39m[38;5;124mlang[39m[38;5;124m"[39m])
+[1;32m    202[0m [38;5;28mcls[39m [38;5;241m=[39m get_lang_class(lang)
+[0;32m--> 203[0m nlp [38;5;241m=[39m [38;5;28;43mcls[39;49m[43m([49m[43mmeta[49m[38;5;241;43m=[39;49m[43mmeta[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43moverrides[49m[43m)[49m
+[1;32m    204[0m pipeline [38;5;241m=[39m meta[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mpipeline[39m[38;5;124m"[39m, [])
+[1;32m    205[0m factories [38;5;241m=[39m meta[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mfactories[39m[38;5;124m"[39m, {})
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy/language.py:171[0m, in [0;36mLanguage.__init__[0;34m(self, vocab, make_doc, max_length, meta, **kwargs)[0m
+[1;32m    149[0m [38;5;28;01mdef[39;00m [38;5;21m__init__[39m(
+[1;32m    150[0m     [38;5;28mself[39m, vocab[38;5;241m=[39m[38;5;28;01mTrue[39;00m, make_doc[38;5;241m=[39m[38;5;28;01mTrue[39;00m, max_length[38;5;241m=[39m[38;5;241m10[39m [38;5;241m*[39m[38;5;241m*[39m [38;5;241m6[39m, meta[38;5;241m=[39m{}, [38;5;241m*[39m[38;5;241m*[39mkwargs
+[1;32m    151[0m ):
+[1;32m    152[0m     [38;5;124;03m"""Initialise a Language object.[39;00m
+[1;32m    153[0m 
+[1;32m    154[0m [38;5;124;03m    vocab (Vocab): A `Vocab` object. If `True`, a vocab is created via[39;00m
+[0;32m   (...)[0m
+[1;32m    169[0m [38;5;124;03m    RETURNS (Language): The newly constructed object.[39;00m
+[1;32m    170[0m [38;5;124;03m    """[39;00m
+[0;32m--> 171[0m     user_factories [38;5;241m=[39m [43mutil[49m[38;5;241;43m.[39;49m[43mregistry[49m[38;5;241;43m.[39;49m[43mfactories[49m[38;5;241;43m.[39;49m[43mget_all[49m[43m([49m[43m)[49m
+[1;32m    172[0m     [38;5;28mself[39m[38;5;241m.[39mfactories[38;5;241m.[39mupdate(user_factories)
+[1;32m    173[0m     [38;5;28mself[39m[38;5;241m.[39m_meta [38;5;241m=[39m [38;5;28mdict[39m(meta)
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/catalogue/__init__.py:112[0m, in [0;36mRegistry.get_all[0;34m(self)[0m
+[1;32m    110[0m result [38;5;241m=[39m OrderedDict()
+[1;32m    111[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mentry_points:
+[0;32m--> 112[0m     result[38;5;241m.[39mupdate([38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_entry_points[49m[43m([49m[43m)[49m)
+[1;32m    113[0m [38;5;28;01mfor[39;00m keys, value [38;5;129;01min[39;00m REGISTRY[38;5;241m.[39mitems():
+[1;32m    114[0m     [38;5;28;01mif[39;00m [38;5;28mlen[39m([38;5;28mself[39m[38;5;241m.[39mnamespace) [38;5;241m==[39m [38;5;28mlen[39m(keys) [38;5;241m-[39m [38;5;241m1[39m [38;5;129;01mand[39;00m [38;5;28mall[39m(
+[1;32m    115[0m         [38;5;28mself[39m[38;5;241m.[39mnamespace[i] [38;5;241m==[39m keys[i] [38;5;28;01mfor[39;00m i [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;28mlen[39m([38;5;28mself[39m[38;5;241m.[39mnamespace))
+[1;32m    116[0m     ):
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/catalogue/__init__.py:127[0m, in [0;36mRegistry.get_entry_points[0;34m(self)[0m
+[1;32m    125[0m result [38;5;241m=[39m {}
+[1;32m    126[0m [38;5;28;01mfor[39;00m entry_point [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39m_get_entry_points():
+[0;32m--> 127[0m     result[entry_point[38;5;241m.[39mname] [38;5;241m=[39m [43mentry_point[49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[43m)[49m
+[1;32m    128[0m [38;5;28;01mreturn[39;00m result
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/setuptools/_vendor/importlib_metadata/__init__.py:194[0m, in [0;36mEntryPoint.load[0;34m(self)[0m
+[1;32m    189[0m [38;5;124;03m"""Load the entry point from its definition. If only a module[39;00m
+[1;32m    190[0m [38;5;124;03mis indicated by the value, return that module. Otherwise,[39;00m
+[1;32m    191[0m [38;5;124;03mreturn the named object.[39;00m
+[1;32m    192[0m [38;5;124;03m"""[39;00m
+[1;32m    193[0m match [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mpattern[38;5;241m.[39mmatch([38;5;28mself[39m[38;5;241m.[39mvalue)
+[0;32m--> 194[0m module [38;5;241m=[39m [43mimport_module[49m[43m([49m[43mmatch[49m[38;5;241;43m.[39;49m[43mgroup[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mmodule[39;49m[38;5;124;43m'[39;49m[43m)[49m[43m)[49m
+[1;32m    195[0m attrs [38;5;241m=[39m [38;5;28mfilter[39m([38;5;28;01mNone[39;00m, (match[38;5;241m.[39mgroup([38;5;124m'[39m[38;5;124mattr[39m[38;5;124m'[39m) [38;5;129;01mor[39;00m [38;5;124m'[39m[38;5;124m'[39m)[38;5;241m.[39msplit([38;5;124m'[39m[38;5;124m.[39m[38;5;124m'[39m))
+[1;32m    196[0m [38;5;28;01mreturn[39;00m functools[38;5;241m.[39mreduce([38;5;28mgetattr[39m, attrs, module)
+
+File [0;32m~/opt/anaconda3/lib/python3.9/importlib/__init__.py:127[0m, in [0;36mimport_module[0;34m(name, package)[0m
+[1;32m    125[0m             [38;5;28;01mbreak[39;00m
+[1;32m    126[0m         level [38;5;241m+[39m[38;5;241m=[39m [38;5;241m1[39m
+[0;32m--> 127[0m [38;5;28;01mreturn[39;00m [43m_bootstrap[49m[38;5;241;43m.[39;49m[43m_gcd_import[49m[43m([49m[43mname[49m[43m[[49m[43mlevel[49m[43m:[49m[43m][49m[43m,[49m[43m [49m[43mpackage[49m[43m,[49m[43m [49m[43mlevel[49m[43m)[49m
+
+File [0;32m<frozen importlib._bootstrap>:1030[0m, in [0;36m_gcd_import[0;34m(name, package, level)[0m
+
+File [0;32m<frozen importlib._bootstrap>:1007[0m, in [0;36m_find_and_load[0;34m(name, import_)[0m
+
+File [0;32m<frozen importlib._bootstrap>:986[0m, in [0;36m_find_and_load_unlocked[0;34m(name, import_)[0m
+
+File [0;32m<frozen importlib._bootstrap>:680[0m, in [0;36m_load_unlocked[0;34m(spec)[0m
+
+File [0;32m<frozen importlib._bootstrap_external>:850[0m, in [0;36mexec_module[0;34m(self, module)[0m
+
+File [0;32m<frozen importlib._bootstrap>:228[0m, in [0;36m_call_with_frames_removed[0;34m(f, *args, **kwds)[0m
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy_dbpedia_spotlight/__init__.py:4[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mspacy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mlanguage[39;00m [38;5;28;01mimport[39;00m Language
+[1;32m      2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mspacy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutil[39;00m [38;5;28;01mimport[39;00m load_model_from_init_py
+[0;32m----> 4[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m [38;5;28;01mimport[39;00m entity_linker, util
+[1;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mentity_linker[39;00m [38;5;28;01mimport[39;00m EntityLinker, create
+[1;32m      7[0m __version__ [38;5;241m=[39m util[38;5;241m.[39mpkg_meta[[38;5;124m"[39m[38;5;124mversion[39m[38;5;124m"[39m]
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/spacy_dbpedia_spotlight/entity_linker.py:20[0m, in [0;36m<module>[0;34m[0m
+[1;32m     16[0m Span[38;5;241m.[39mset_extension([38;5;124m"[39m[38;5;124mdbpedia_raw_result[39m[38;5;124m"[39m, default[38;5;241m=[39m[38;5;28;01mNone[39;00m)
+[1;32m     17[0m Doc[38;5;241m.[39mset_extension([38;5;124m"[39m[38;5;124mdbpedia_raw_result[39m[38;5;124m"[39m, default[38;5;241m=[39m[38;5;28;01mNone[39;00m)
+[0;32m---> 20[0m [38;5;129m@Language[39m[38;5;241;43m.[39;49m[43mfactory[49m([38;5;124m'[39m[38;5;124mdbpedia_spotlight[39m[38;5;124m'[39m, default_config[38;5;241m=[39m{
+[1;32m     21[0m     [38;5;124m'[39m[38;5;124mlanguage_code[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     22[0m     [38;5;124m'[39m[38;5;124mdbpedia_rest_endpoint[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     23[0m     [38;5;124m'[39m[38;5;124mprocess[39m[38;5;124m'[39m: [38;5;124m'[39m[38;5;124mannotate[39m[38;5;124m'[39m,
+[1;32m     24[0m     [38;5;124m'[39m[38;5;124mconfidence[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     25[0m     [38;5;124m'[39m[38;5;124msupport[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     26[0m     [38;5;124m'[39m[38;5;124mtypes[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     27[0m     [38;5;124m'[39m[38;5;124msparql[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     28[0m     [38;5;124m'[39m[38;5;124mpolicy[39m[38;5;124m'[39m: [38;5;28;01mNone[39;00m,
+[1;32m     29[0m     [38;5;124m'[39m[38;5;124mspan_group[39m[38;5;124m'[39m: [38;5;124m'[39m[38;5;124mdbpedia_spotlight[39m[38;5;124m'[39m,
+[1;32m     30[0m     [38;5;124m'[39m[38;5;124moverwrite_ents[39m[38;5;124m'[39m: [38;5;28;01mTrue[39;00m,
+[1;32m     31[0m     [38;5;124m'[39m[38;5;124mraise_http_errors[39m[38;5;124m'[39m: [38;5;28;01mTrue[39;00m,
+[1;32m     32[0m     [38;5;124m'[39m[38;5;124mdebug[39m[38;5;124m'[39m: [38;5;28;01mFalse[39;00m
+[1;32m     33[0m })
+[1;32m     34[0m [38;5;28;01mdef[39;00m [38;5;21mdbpedia_spotlight_factory[39m(nlp, name, language_code, dbpedia_rest_endpoint, process, confidence, support, types, sparql, policy, span_group, overwrite_ents, raise_http_errors, debug):
+[1;32m     35[0m     [38;5;124;03m'''Factory of the pipeline stage `dbpedia_spotlight`.[39;00m
+[1;32m     36[0m [38;5;124;03m    Parameters:[39;00m
+[1;32m     37[0m [38;5;124;03m    - `language_code`: which language to use for entity linking. Possible values are listed in EntityLinker.supported_languages. If the parameter is left as None, the language code is matched with the nlp object currently used.[39;00m
+[0;32m   (...)[0m
+[1;32m     48[0m [38;5;124;03m    - `debug`: prints several debug information to stdout[39;00m
+[1;32m     49[0m [38;5;124;03m    '''[39;00m
+[1;32m     50[0m     logger[38;5;241m.[39mremove()
+
+[0;31mAttributeError[0m: type object 'Language' has no attribute 'factory'
+AttributeError: type object 'Language' has no attribute 'factory'
 
