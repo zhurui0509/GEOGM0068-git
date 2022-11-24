@@ -20,9 +20,9 @@ The unit aims to:
 | Week 6 (Nov. 3)       | Reading                                        |                             | No Lab (Assessment 1 Due) |
 | Week 7 (Nov. 10)      | Spatial   Indexing                             | GIR: Chapter 5              | Lab 3-1                   |
 | Week 8 (Nov. 17)      | Spatial   Ranking                              | GIR: Chapter 6              | Lab 3-2                   |
-| Week 9 (Nov. 24)      | Geospatial   Semantics                         | TBA                         | Lab 4-1                   |
-| Week 10 (Dec. 1)      | Geographic   Information Integration           | TBA                         | Lab 4-2                   |
-| Week 11 (Dec. 8)      | Ethics, Summary, and Career                    | TBA                         | No Lab                    |
+| Week 9 (Nov. 24)      | Geospatial   Semantics I                        | [Kuhn, 2005](https://link.springer.com/chapter/10.1007/11496168_1), [Janowicz et al., 2015](https://ojs.aaai.org/index.php/aimagazine/article/view/2560), [Hu, 2017](https://arxiv.org/abs/1707.03550)                        | Lab 4-1                   |
+| Week 10 (Dec. 1)      | Geospatial Semantics II           | Same to Week 9                         | Lab 4-2                   |
+| Week 11 (Dec. 8)      | Ethics, Summary, and Career                    | -                         | No Lab                    |
 | Week 12 (Dec. 15)     | Reading                                        |                             | No Lab (Assessment 2 Due) |
 
 ## Data Science, Geographic (Spatial) Data Science, and this unit
@@ -45,7 +45,7 @@ This unit is part of the curriculum of MSc in [Geographic Data Science and Spati
 
 ## Office Hour 
 
-Tuesday 10 am – noon (or by appointment) @ Room 2.21N
+Thursday, 11 am – 1 pm (or by appointment) @ Room 2.21N
 
 <!-- ```{tableofcontents}
 ``` -->

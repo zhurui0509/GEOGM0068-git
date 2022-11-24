@@ -17,35 +17,39 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-## use word cloud to visualize the frequency of poi types mentioned in Bristol 
-# first you need to install the package of wordcloud 
-from wordcloud import WordCloud, STOPWORDS
-import matplotlib.pyplot as plt
-
-bristol_pois_doc = " ".join(list(bristol_pois['fclass']))
-
-wordcloud = WordCloud(width = 800, height = 800,
-                background_color ='white',
-                min_font_size = 10).generate(bristol_pois_doc)
-
-# plot the WordCloud image                      
-plt.figure(figsize = (8, 8), facecolor = None)
-plt.imshow(wordcloud)
-plt.axis("off")
-plt.tight_layout(pad = 0)
- 
-plt.show()
+## Option 1: use the package pyrosm to access the server and get the data
+from pyrosm import OSM, get_data
+bristol = get_data("bristol")
+osm = OSM(bristol)
+bristol_pois = osm.get_pois()
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [0;32mIn [11][0m, in [0;36m<cell line: 3>[0;34m()[0m
-[1;32m      1[0m [38;5;66;03m## use word cloud to visualize the frequency of poi types mentioned in Bristol [39;00m
-[1;32m      2[0m [38;5;66;03m# first you need to install the package of wordcloud [39;00m
-[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mwordcloud[39;00m [38;5;28;01mimport[39;00m WordCloud, STOPWORDS
-[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[1;32m      6[0m bristol_pois_doc [38;5;241m=[39m [38;5;124m"[39m[38;5;124m [39m[38;5;124m"[39m[38;5;241m.[39mjoin([38;5;28mlist[39m(bristol_pois[[38;5;124m'[39m[38;5;124mfclass[39m[38;5;124m'[39m]))
+Input [0;32mIn [6][0m, in [0;36m<cell line: 2>[0;34m()[0m
+[1;32m      1[0m [38;5;66;03m## Option 1: use the package pyrosm to access the server and get the data[39;00m
+[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m [38;5;28;01mimport[39;00m OSM, get_data
+[1;32m      3[0m bristol [38;5;241m=[39m get_data([38;5;124m"[39m[38;5;124mbristol[39m[38;5;124m"[39m)
+[1;32m      4[0m osm [38;5;241m=[39m OSM(bristol)
 
-[0;31mModuleNotFoundError[0m: No module named 'wordcloud'
-ModuleNotFoundError: No module named 'wordcloud'
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/__init__.py:2[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m [38;5;28;01mimport[39;00m get_data, get_path  [38;5;66;03m# drop get_path in the future[39;00m
+[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyrosm[39;00m [38;5;28;01mimport[39;00m OSM
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/pyrosm.py:5[0m, in [0;36m<module>[0;34m[0m
+[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpbfreader[39;00m [38;5;28;01mimport[39;00m parse_osm_data
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_arrays[39;00m [38;5;28;01mimport[39;00m concatenate_dicts_of_arrays
+[0;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeometry[39;00m [38;5;28;01mimport[39;00m create_node_coordinates_lookup
+[1;32m      6[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mframes[39;00m [38;5;28;01mimport[39;00m create_nodes_gdf
+[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m [38;5;28;01mimport[39;00m (
+[1;32m      8[0m     validate_custom_filter,
+[1;32m      9[0m     validate_osm_keys,
+[0;32m   (...)[0m
+[1;32m     16[0m     get_bounding_box,
+[1;32m     17[0m )
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/geometry.pyx:2[0m, in [0;36minit pyrosm.geometry[0;34m()[0m
+
+[0;31mModuleNotFoundError[0m: No module named 'pygeos'
+ModuleNotFoundError: No module named 'pygeos'
 
