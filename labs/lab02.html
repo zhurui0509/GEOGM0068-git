@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Lab 02: Georefereing Location-based Social Media &#8212; GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</title>
+    <title>Lab 02: Georefereing Location-based Social Media &#8212; GEOGM0068: Geographic Information Retrieval and Integration</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Lab 03: Natural Language Processing on Geo-Text" href="lab03.html" />
+    <link rel="next" title="Lab 03: Indexing and Relevance Ranking on Geo-Texts" href="lab03.html" />
     <link rel="prev" title="Lab 01: Dealing with Spatial Data in Python" href="lab01.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -97,7 +97,7 @@ const thebe_selector_output = ".output, .cell_output"
       <img src="../_static/unit-logo2.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">GEOGM0068: Geographic Information Retrieval and Integration (Autumn 2022)</h1>
+      <h1 class="site-logo" id="site-title">GEOGM0068: Geographic Information Retrieval and Integration</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -156,12 +156,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lectures/lecture08.html">
-   Lecture 08: Geospatial Semantics
+   Lecture 08: Geospatial Semantics I
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../lectures/lecture09.html">
-   Lecture 09: Geographic Information Integration
+   Lecture 09: Geospatial Semantics II
   </a>
  </li>
  <li class="toctree-l1">
@@ -188,12 +188,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lab03.html">
-   Lab 03: Natural Language Processing on Geo-Text
+   Lab 03: Indexing and Relevance Ranking on Geo-Texts
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="lab04.html">
-   Lab 04: Integrating Geographic Information
+   Lab 04: Neural Network Embedding for Places
   </a>
  </li>
 </ul>
@@ -538,7 +538,39 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status(_api=&lt;tweepy.api.API object at 0x7fb1787dab20&gt;, _json={&#39;created_at&#39;: &#39;Thu Nov 10 11:50:08 +0000 2022&#39;, &#39;id&#39;: 1590673155726929923, &#39;id_str&#39;: &#39;1590673155726929923&#39;, &#39;text&#39;: &quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, &#39;truncated&#39;: False, &#39;entities&#39;: {&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, &#39;source&#39;: &#39;&lt;a href=&quot;https://ruizhugeographer.com/&quot; rel=&quot;nofollow&quot;&gt;GEOGM0068-Zhu&lt;/a&gt;&#39;, &#39;in_reply_to_status_id&#39;: None, &#39;in_reply_to_status_id_str&#39;: None, &#39;in_reply_to_user_id&#39;: None, &#39;in_reply_to_user_id_str&#39;: None, &#39;in_reply_to_screen_name&#39;: None, &#39;user&#39;: {&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 1, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 4, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, &#39;geo&#39;: None, &#39;coordinates&#39;: None, &#39;place&#39;: None, &#39;contributors&#39;: None, &#39;is_quote_status&#39;: False, &#39;retweet_count&#39;: 0, &#39;favorite_count&#39;: 0, &#39;favorited&#39;: False, &#39;retweeted&#39;: False, &#39;lang&#39;: &#39;en&#39;}, created_at=datetime.datetime(2022, 11, 10, 11, 50, 8, tzinfo=datetime.timezone.utc), id=1590673155726929923, id_str=&#39;1590673155726929923&#39;, text=&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, truncated=False, entities={&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, source=&#39;GEOGM0068-Zhu&#39;, source_url=&#39;https://ruizhugeographer.com/&#39;, in_reply_to_status_id=None, in_reply_to_status_id_str=None, in_reply_to_user_id=None, in_reply_to_user_id_str=None, in_reply_to_screen_name=None, author=User(_api=&lt;tweepy.api.API object at 0x7fb1787dab20&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 1, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 4, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=1, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=4, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), user=User(_api=&lt;tweepy.api.API object at 0x7fb1787dab20&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 1, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 4, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=1, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=4, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), geo=None, coordinates=None, place=None, contributors=None, is_quote_status=False, retweet_count=0, favorite_count=0, favorited=False, retweeted=False, lang=&#39;en&#39;)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">Forbidden</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Post a tweet from Python</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46,</span> in <span class="ni">payload.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_list</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_type</span>
+<span class="ne">---&gt; </span><span class="mi">46</span> <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136,</span> in <span class="ni">API.update_status</span><span class="nt">(self, status, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span> <span class="k">if</span> <span class="s1">&#39;media_ids&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1134</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_to_csv</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">])</span>
+<span class="ne">-&gt; </span><span class="mi">1136</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="n">endpoint_parameters</span><span class="o">=</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1138</span>         <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_status_id&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1139</span>         <span class="s1">&#39;auto_populate_reply_metadata&#39;</span><span class="p">,</span> <span class="s1">&#39;exclude_reply_user_ids&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>         <span class="s1">&#39;attachment_url&#39;</span><span class="p">,</span> <span class="s1">&#39;media_ids&#39;</span><span class="p">,</span> <span class="s1">&#39;possibly_sensitive&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1141</span>         <span class="s1">&#39;long&#39;</span><span class="p">,</span> <span class="s1">&#39;place_id&#39;</span><span class="p">,</span> <span class="s1">&#39;display_coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;trim_user&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1142</span>         <span class="s1">&#39;card_uri&#39;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1143</span>     <span class="p">),</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1144</span> <span class="p">)</span>
+
+<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259,</span> in <span class="ni">API.request</span><span class="nt">(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span>     <span class="k">raise</span> <span class="n">Unauthorized</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">259</span>     <span class="k">raise</span> <span class="n">Forbidden</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span>     <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+<span class="ne">Forbidden</span>: 403 Forbidden
+<span class="mi">453</span> <span class="o">-</span> <span class="n">You</span> <span class="n">currently</span> <span class="n">have</span> <span class="n">access</span> <span class="n">to</span> <span class="n">a</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">Twitter</span> <span class="n">API</span> <span class="n">v2</span> <span class="n">endpoints</span> <span class="ow">and</span> <span class="n">limited</span> <span class="n">v1</span><span class="mf">.1</span> <span class="n">endpoints</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">media</span> <span class="n">post</span><span class="p">,</span> <span class="n">oauth</span><span class="p">)</span> <span class="n">only</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">need</span> <span class="n">access</span> <span class="n">to</span> <span class="n">this</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">you</span> <span class="n">may</span> <span class="n">need</span> <span class="n">a</span> <span class="n">different</span> <span class="n">access</span> <span class="n">level</span><span class="o">.</span> <span class="n">You</span> <span class="n">can</span> <span class="n">learn</span> <span class="n">more</span> <span class="n">here</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">developer</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">portal</span><span class="o">/</span><span class="n">product</span>
 </pre></div>
 </div>
 </div>
@@ -558,7 +590,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tweepy.cursor.ItemIterator at 0x7fb198ad6400&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tweepy.cursor.ItemIterator at 0x7fe4101d0f10&gt;
 </pre></div>
 </div>
 </div>
@@ -614,38 +646,38 @@ title="Print to PDF"
   <tbody>
     <tr>
       <th>0</th>
-      <td>2022-11-10 11:49:20+00:00</td>
-      <td>shirleyyoung2</td>
-      <td>RT @secularmac: Isn't this nice?\n#EnergyCrisi...</td>
-      <td>Fife, Scotland</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2022-11-10 11:48:09+00:00</td>
-      <td>Q_Review_</td>
-      <td>How does living in the cold affect your health...</td>
+      <td>2022-10-19 23:58:43+00:00</td>
+      <td>wildbluethistle</td>
+      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
       <td></td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>2022-10-19 23:58:12+00:00</td>
+      <td>DrowerR</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Melbourne, Victoria</td>
+    </tr>
+    <tr>
       <th>2</th>
-      <td>2022-11-10 11:46:15+00:00</td>
-      <td>Bellona_EU</td>
-      <td>RT @jonashelseth: Encouraging!\nEU 🇪🇺 consumer...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:57:48+00:00</td>
+      <td>grahamtfn</td>
+      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
+      <td>Glasgow, Scotland</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2022-11-10 11:46:02+00:00</td>
-      <td>Bellona_EU</td>
-      <td>RT @LoviMarta: Renewables &amp;amp; heat pumps are...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:57:16+00:00</td>
+      <td>SocEntEdinburgh</td>
+      <td>RT @socialprintandc: For further details on ho...</td>
+      <td>Edinburgh</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2022-11-10 11:44:51+00:00</td>
-      <td>jonashelseth</td>
-      <td>Encouraging!\nEU 🇪🇺 consumer organisation @BEU...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:53:03+00:00</td>
+      <td>lindakillian</td>
+      <td>RT @LevittFlisser: High electric bill poised t...</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
@@ -699,38 +731,38 @@ title="Print to PDF"
   <tbody>
     <tr>
       <th>0</th>
-      <td>2022-11-10 11:49:20+00:00</td>
-      <td>shirleyyoung2</td>
-      <td>RT @secularmac: Isn't this nice?\n#EnergyCrisi...</td>
-      <td>Fife, Scotland</td>
+      <td>2022-10-20 00:00:59+00:00</td>
+      <td>WhosFibbing</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Everywhere</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2022-11-10 11:48:09+00:00</td>
-      <td>Q_Review_</td>
-      <td>How does living in the cold affect your health...</td>
-      <td></td>
+      <td>2022-10-19 23:59:12+00:00</td>
+      <td>SocEntEdinburgh</td>
+      <td>RT @socialprintandc: For further details on ho...</td>
+      <td>Edinburgh</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2022-11-10 11:46:15+00:00</td>
-      <td>Bellona_EU</td>
-      <td>RT @jonashelseth: Encouraging!\nEU 🇪🇺 consumer...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:58:43+00:00</td>
+      <td>wildbluethistle</td>
+      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
+      <td></td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2022-11-10 11:46:02+00:00</td>
-      <td>Bellona_EU</td>
-      <td>RT @LoviMarta: Renewables &amp;amp; heat pumps are...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:58:12+00:00</td>
+      <td>DrowerR</td>
+      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
+      <td>Melbourne, Victoria</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2022-11-10 11:44:51+00:00</td>
-      <td>jonashelseth</td>
-      <td>Encouraging!\nEU 🇪🇺 consumer organisation @BEU...</td>
-      <td>Brussels, Belgium</td>
+      <td>2022-10-19 23:57:48+00:00</td>
+      <td>grahamtfn</td>
+      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
+      <td>Glasgow, Scotland</td>
     </tr>
   </tbody>
 </table>
@@ -767,7 +799,7 @@ title="Print to PDF"
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">Input In [10],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Load small english model: https://spacy.io/models</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">nlp</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">nlp</span>
@@ -2481,7 +2513,7 @@ Scotland ---  GPE
     <a class='right-next' id="next-link" href="lab03.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lab 03: Natural Language Processing on Geo-Text</p>
+        <p class="prev-next-title">Lab 03: Indexing and Relevance Ranking on Geo-Texts</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
