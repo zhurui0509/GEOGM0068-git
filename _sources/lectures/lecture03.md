@@ -2,7 +2,7 @@
 # Lecture 03: Spatial Database II
 <!-- TBA -->
 
-In this lecture, we continue discussing theoretical foundations for vector and raster models, and then introduce different ways of collecting (structured) spatial data. In the practical, we continue work on Tutorial 1. 
+In this lecture, we continue discussing theoretical foundations for vector and raster models, and then introduce different ways of collecting (structured) spatial data. In the practical, we continue work on {doc}`../labs/lab01`. 
 
 Slides of the lecture can be found below:
 
