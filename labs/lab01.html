@@ -1,48 +1,60 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Lab 01: Dealing with Spatial Data in Python &#8212; GEOGM0068: Geographic Information Retrieval and Integration</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,61 +62,106 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab01';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Lab 02: Georefereing Location-based Social Media" href="lab02.html" />
     <link rel="prev" title="Lecture 10: Ethics, Summary, and Career" href="../lectures/lecture10.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/unit-logo2.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">GEOGM0068: Geographic Information Retrieval and Integration</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../_static/unit-logo2.png" class="logo__image only-light" alt="GEOGM0068: Geographic Information Retrieval and Integration - Home"/>
+    <script>document.write(`<img src="../_static/unit-logo2.png" class="logo__image only-dark" alt="GEOGM0068: Geographic Information Retrieval and Integration - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -113,498 +170,255 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Lecture
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture01.html">
-   Lecture 01: Introduction and Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture02.html">
-   Lecture 02: Spatial Database I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture03.html">
-   Lecture 03: Spatial Database II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture04.html">
-   Lecture 04: Georeferencing I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture05.html">
-   Lecture 05: Georeferencing II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture06.html">
-   Lecture 06: Spatial Indexing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture07.html">
-   Lecture 07: Spatial Ranking
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture08.html">
-   Lecture 08: Geospatial Semantics I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture09.html">
-   Lecture 09: Geospatial Semantics II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture10.html">
-   Lecture 10: Ethics, Summary, and Career
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture01.html">Lecture 01: Introduction and Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture02.html">Lecture 02: Spatial Database I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture03.html">Lecture 03: Spatial Database II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture04.html">Lecture 04: Georeferencing I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture05.html">Lecture 05: Georeferencing II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture06.html">Lecture 06: Spatial Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture07.html">Lecture 07: Spatial Ranking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture08.html">Lecture 08: Geospatial Semantics I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture09.html">Lecture 09: Geospatial Semantics II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture10.html">Lecture 10: Ethics, Summary, and Career</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Lab
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lab</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Lab 01: Dealing with Spatial Data in Python
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lab02.html">
-   Lab 02: Georefereing Location-based Social Media
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lab03.html">
-   Lab 03: Indexing and Relevance Ranking on Geo-Texts
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lab04.html">
-   Lab 04: Neural Network Embedding for Places
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 01: Dealing with Spatial Data in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab02.html">Lab 02: Georefereing Location-based Social Media</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab03.html">Lab 03: Indexing and Relevance Ranking on Geo-Texts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab04.html">Lab 04: Neural Network Embedding for Places</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
-
-
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/zhurui0509/GEOGM0068-git/master?urlpath=tree/docs/labs/lab01.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
   
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/zhurui0509/GEOGM0068-git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/zhurui0509/GEOGM0068-git/issues/new?title=Issue%20on%20page%20%2Flabs/lab01.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/labs/lab01.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
 
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/zhurui0509/GEOGM0068-git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/zhurui0509/GEOGM0068-git/issues/new?title=Issue%20on%20page%20%2Flabs/lab01.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/labs/lab01.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">
-   Basics in Pandas (for non-spatial data)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-a-dataframe-from-scratch">
-     Create a dataframe from scratch
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-data">
-     Loading data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#viewing-your-data">
-     Viewing your data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">
-     Querying (selecting, slicing, extracting) Dataframe
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#select-by-column">
-       Select by column
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#select-by-row">
-       Select by row
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#conditional-selection">
-       Conditional selection
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#geopandas-for-spatial-data">
-   GeoPandas for Spatial Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-spatial-data">
-     Loading spatial data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#saving-spatial-data">
-     Saving spatial data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">
-     Retrieving data directly from OSM
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">
-     Coordinate Reference System for GeoDataFrame
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computation-on-geodataframe">
-     Computation on GeoDataFrame
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spatial-join">
-     Spatial join
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualization">
-     Visualization
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Lab 01: Dealing with Spatial Data in Python</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">
-   Basics in Pandas (for non-spatial data)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#create-a-dataframe-from-scratch">
-     Create a dataframe from scratch
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-data">
-     Loading data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#viewing-your-data">
-     Viewing your data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">
-     Querying (selecting, slicing, extracting) Dataframe
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#select-by-column">
-       Select by column
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#select-by-row">
-       Select by row
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#conditional-selection">
-       Conditional selection
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#geopandas-for-spatial-data">
-   GeoPandas for Spatial Data
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-spatial-data">
-     Loading spatial data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#saving-spatial-data">
-     Saving spatial data
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">
-     Retrieving data directly from OSM
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">
-     Coordinate Reference System for GeoDataFrame
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computation-on-geodataframe">
-     Computation on GeoDataFrame
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spatial-join">
-     Spatial join
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#visualization">
-     Visualization
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 01: Dealing with Spatial Data in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">Basics in Pandas (for non-spatial data)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-dataframe-from-scratch">Create a dataframe from scratch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viewing-your-data">Viewing your data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">Querying (selecting, slicing, extracting) Dataframe</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#select-by-column">Select by column</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#select-by-row">Select by row</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-selection">Conditional selection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geopandas-for-spatial-data">GeoPandas for Spatial Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-spatial-data">Loading spatial data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-spatial-data">Saving spatial data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">Retrieving data directly from OSM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">Coordinate Reference System for GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-on-geodataframe">Computation on GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-join">Spatial join</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="lab-01-dealing-with-spatial-data-in-python">
-<h1>Lab 01: Dealing with Spatial Data in Python<a class="headerlink" href="#lab-01-dealing-with-spatial-data-in-python" title="Permalink to this headline">#</a></h1>
+<h1>Lab 01: Dealing with Spatial Data in Python<a class="headerlink" href="#lab-01-dealing-with-spatial-data-in-python" title="Permalink to this heading">#</a></h1>
 <p>In this tutorial, we will work on dealing with non-spatial and spatial data using Python libraries: pandas and geopandas. Many concepts/techniques will be echoed to the ones you have learned from <a class="reference internal" href="../lectures/lecture02.html#lecture02"><span class="std std-ref">Lecture 02: Spatial Database I</span></a>.</p>
 <p>To follow this tutorial, you should have installed <a class="reference external" href="https://jupyter.org/install">Jupyter Notebook</a> (or Jupyter Lab) on your own computer (note: computers in the lab should have already installed it).</p>
 <p>Requred packages include:</p>
@@ -618,12 +432,12 @@ title="Print to PDF"
 </ul>
 <p>Mostly, you can use the commond like <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pandas</span></code> to install the package.</p>
 <section id="basics-in-pandas-for-non-spatial-data">
-<h2>Basics in Pandas (for non-spatial data)<a class="headerlink" href="#basics-in-pandas-for-non-spatial-data" title="Permalink to this headline">#</a></h2>
+<h2>Basics in Pandas (for non-spatial data)<a class="headerlink" href="#basics-in-pandas-for-non-spatial-data" title="Permalink to this heading">#</a></h2>
 <p>Pandas is currently the mostly important tool for data scientists working in Python. It is the backbone of many state-of-the-art techniques like machine learning and visualization. Here we cover the basics of using Pandas. For more comprehensive tutorial, follow <a class="reference external" href="https://www.youtube.com/watch?v=5rNu16O3YNE">this video</a> and/or <a class="reference external" href="https://www.learndatasci.com/tutorials/python-pandas-tutorial-complete-introduction-for-beginners/">this post</a></p>
 <p>First of all, the two key components in Pandas are <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. A <code class="docutils literal notranslate"><span class="pre">Series</span></code> is essentially a column, and a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is a multi-dimensional table made up of a collection of <code class="docutils literal notranslate"><span class="pre">Series</span></code>. These two components are quite similar in that many operations that you can do with one, you can do with the other too, such as filling in null values and calculating the mean.</p>
 <p><img alt="Series and DataFrame" src="../_images/lab1-fig1.png" /></p>
 <section id="create-a-dataframe-from-scratch">
-<h3>Create a dataframe from scratch<a class="headerlink" href="#create-a-dataframe-from-scratch" title="Permalink to this headline">#</a></h3>
+<h3>Create a dataframe from scratch<a class="headerlink" href="#create-a-dataframe-from-scratch" title="Permalink to this heading">#</a></h3>
 <p>There are many ways to create a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> from scratch, but a great option is to just use a simple <code class="docutils literal notranslate"><span class="pre">dict</span></code> (this is a common data structure called dictionary, which is composed by a <code class="docutils literal notranslate"><span class="pre">key:value</span></code> pair). Each <code class="docutils literal notranslate"><span class="pre">key:value</span></code> pair corresponds to a column in the resulting <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
 <p>Let’s say we have a fruit stand that sells apples and oranges. We want to have a column for each fruit and a row for each customer purchase. To organize this as a dictionary for pandas we could do something like:</p>
 <div class="cell docutils container">
@@ -639,50 +453,62 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s1">&#39;apples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s1">&#39;oranges&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">}</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">purchases</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">del</span> <span class="n">hard_dependencies</span><span class="p">,</span> <span class="n">dependency</span><span class="p">,</span> <span class="n">missing_dependencies</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># numpy compat</span>
-<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">pandas.compat</span> <span class="kn">import</span> <span class="n">is_numpy_dev</span> <span class="k">as</span> <span class="n">_is_numpy_dev</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="kn">from</span> <span class="nn">pandas._libs</span> <span class="kn">import</span> <span class="n">hashtable</span> <span class="k">as</span> <span class="n">_hashtable</span><span class="p">,</span> <span class="n">lib</span> <span class="k">as</span> <span class="n">_lib</span><span class="p">,</span> <span class="n">tslib</span> <span class="k">as</span> <span class="n">_tslib</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">compat</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">import</span> <span class="nn">platform</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">import</span> <span class="nn">sys</span>
-<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">pandas._typing</span> <span class="kn">import</span> <span class="n">F</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">pandas.compat.numpy</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>     <span class="n">is_numpy_dev</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">np_version_under1p19</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">np_version_under1p20</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">pandas.compat.pyarrow</span> <span class="kn">import</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">pa_version_under1p01</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">pa_version_under2p0</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">pa_version_under3p0</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">pa_version_under4p0</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="p">)</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">_typing</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">78</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="n">npt</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="c1"># array-like</span>
-<span class="ne">---&gt; </span><span class="mi">78</span> <span class="n">ArrayLike</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;ExtensionArray&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="n">AnyArrayLike</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot;Index&quot;</span><span class="p">,</span> <span class="s2">&quot;Series&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="c1"># scalars</span>
-
-<span class="ne">AttributeError</span>: module &#39;numpy&#39; has no attribute &#39;ndarray&#39;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_12358/2875102215.py:1: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
 </pre></div>
 </div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>apples</th>
+      <th>oranges</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>The Index of this DataFrame was given to us as the numbers 0-3. We could also create our own when we initialize the DataFrame.</p>
 <div class="cell docutils container">
@@ -757,7 +583,7 @@ Name: June, dtype: int64
 </div>
 </section>
 <section id="loading-data">
-<h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this headline">#</a></h3>
+<h3>Loading data<a class="headerlink" href="#loading-data" title="Permalink to this heading">#</a></h3>
 <p>We can also load in data with formats like <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">txt</span></code>, and so on. For example, if you downloaded <code class="docutils literal notranslate"><span class="pre">purchase.csv</span></code> to your local directory, you should be able to load the data by running:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -882,7 +708,7 @@ Name: June, dtype: int64
 </div>
 </section>
 <section id="viewing-your-data">
-<h3>Viewing your data<a class="headerlink" href="#viewing-your-data" title="Permalink to this headline">#</a></h3>
+<h3>Viewing your data<a class="headerlink" href="#viewing-your-data" title="Permalink to this heading">#</a></h3>
 <p>There are many operations to view/describe your data. For example, you can use <code class="docutils literal notranslate"><span class="pre">.head()</span></code> to check the first several rows of your dataframe, <code class="docutils literal notranslate"><span class="pre">.tail()</span></code> to see the last severl rows, <code class="docutils literal notranslate"><span class="pre">.info()</span></code> to have a list of information about your dataframe (you are suggested to always run it first after your data is loaded), <code class="docutils literal notranslate"><span class="pre">.shape</span></code> to see the dimension of your dataframe (i.e., how many rows and columns are there?), etc. Let’s try <code class="docutils literal notranslate"><span class="pre">.info()</span></code> here and you could also try the others yourself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -908,10 +734,10 @@ memory usage: 96.0+ bytes
 <p><img alt="dtype_pandas" src="../_images/lab1-fig2.png" /></p>
 </section>
 <section id="querying-selecting-slicing-extracting-dataframe">
-<h3>Querying (selecting, slicing, extracting) Dataframe<a class="headerlink" href="#querying-selecting-slicing-extracting-dataframe" title="Permalink to this headline">#</a></h3>
+<h3>Querying (selecting, slicing, extracting) Dataframe<a class="headerlink" href="#querying-selecting-slicing-extracting-dataframe" title="Permalink to this heading">#</a></h3>
 <p>Similar to the complex DBMS, Pandas also support selecting, slicing or extracting data from the <code class="docutils literal notranslate"><span class="pre">Dataframe</span></code>.</p>
 <section id="select-by-column">
-<h4>Select by column<a class="headerlink" href="#select-by-column" title="Permalink to this headline">#</a></h4>
+<h4>Select by column<a class="headerlink" href="#select-by-column" title="Permalink to this heading">#</a></h4>
 <p>We can extract a column using square brackets like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -959,7 +785,7 @@ Name: apples, dtype: int64
 </div>
 </section>
 <section id="select-by-row">
-<h4>Select by row<a class="headerlink" href="#select-by-row" title="Permalink to this headline">#</a></h4>
+<h4>Select by row<a class="headerlink" href="#select-by-row" title="Permalink to this heading">#</a></h4>
 <p>For rows, we can use two ways to extract data:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">loc</span></code>: locates by name</p></li>
@@ -983,7 +809,7 @@ Name: June, dtype: int64
 </div>
 </section>
 <section id="conditional-selection">
-<h4>Conditional selection<a class="headerlink" href="#conditional-selection" title="Permalink to this headline">#</a></h4>
+<h4>Conditional selection<a class="headerlink" href="#conditional-selection" title="Permalink to this heading">#</a></h4>
 <p>So far, We’ve gone over how to select columns and rows, but what if we want to make a conditional selection?</p>
 <p>For example, what if we want to filter our <code class="docutils literal notranslate"><span class="pre">purchases_loaded</span></code> DataFrame to show only people who bought apples less than 2?</p>
 <p>To do that, we take a column from the DataFrame and apply a Boolean condition to it. Here’s an example of a Boolean condition:</p>
@@ -1010,11 +836,11 @@ Name: apples, dtype: bool
 </section>
 </section>
 <section id="geopandas-for-spatial-data">
-<h2>GeoPandas for Spatial Data<a class="headerlink" href="#geopandas-for-spatial-data" title="Permalink to this headline">#</a></h2>
+<h2>GeoPandas for Spatial Data<a class="headerlink" href="#geopandas-for-spatial-data" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Geopandas</span></code> is designed to process spatial data in Python. <code class="docutils literal notranslate"><span class="pre">Geopandas</span></code> combines the capabilities of data processing library <code class="docutils literal notranslate"><span class="pre">pandas</span></code> with other packages like <code class="docutils literal notranslate"><span class="pre">shapely</span></code> and <code class="docutils literal notranslate"><span class="pre">fiona</span></code> for managing and visualizing spatial data. The main data structures in geopandas are <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> which extend the capabilities of <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> from <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, but with spatial speciality.</p>
 <p>The key difference between <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> is that a <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> contains at least one column as geometry so that the data entry is spatially referenced. By default, the name of this column is <code class="docutils literal notranslate"><span class="pre">'geometry'</span></code>. The geometry column is a <code class="docutils literal notranslate"><span class="pre">GeoSeries</span></code> which contains the geometries (points, lines, polygons, multipolygons etc.) as <code class="docutils literal notranslate"><span class="pre">shapely</span></code> objects.</p>
 <section id="loading-spatial-data">
-<h3>Loading spatial data<a class="headerlink" href="#loading-spatial-data" title="Permalink to this headline">#</a></h3>
+<h3>Loading spatial data<a class="headerlink" href="#loading-spatial-data" title="Permalink to this heading">#</a></h3>
 <p>Spatial data that are in the format of <code class="docutils literal notranslate"><span class="pre">geojson</span></code>, <code class="docutils literal notranslate"><span class="pre">shp</span></code>, etc. can all be loaded as GeoPandas’ Dataframe (<code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code>) by using the function <code class="docutils literal notranslate"><span class="pre">read_file()</span></code>. Let’s use a shapefile (<code class="docutils literal notranslate"><span class="pre">shp</span></code>) downloaded from <a class="reference external" href="http://download.geofabrik.de/">OpenStreetMap</a> as an example here. You can also find the specific data (building in Bristol) from Blackboard.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1142,19 +968,19 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<img alt="../_images/lab01_31_1.png" src="../_images/lab01_31_1.png" />
+<img alt="../_images/f2413d24c42e2d81d1cc727cb441ef05b9229100d9e2be0eea45b5b94f36bd5c.png" src="../_images/f2413d24c42e2d81d1cc727cb441ef05b9229100d9e2be0eea45b5b94f36bd5c.png" />
 </div>
 </div>
 </section>
 <section id="saving-spatial-data">
-<h3>Saving spatial data<a class="headerlink" href="#saving-spatial-data" title="Permalink to this headline">#</a></h3>
-<p>Once you are done with your process/analysis, you can also save your <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> into files (e.g., <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.geojson</span></code>, etc). Here, since we loaded data from <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, let’s now try to save our data to <code class="docutils literal notranslate"><span class="pre">.geojson</span></code>:</p>
+<h3>Saving spatial data<a class="headerlink" href="#saving-spatial-data" title="Permalink to this heading">#</a></h3>
+<p>Once you are done with your process/analysis, you can also save your <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code> into files (e.g., <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.geojson</span></code>, etc). Here, since we loaded data from <code class="docutils literal notranslate"><span class="pre">.shp</span></code>, let’s now try to save our data to <code class="docutils literal notranslate"><span class="pre">.geojson</span></code> (in the example below, we only save a subset of <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;osm_bristol_buildings.geojson&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bristol_building</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span><span class="s1">&#39;osm_bristol_buildings.geojson&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span> 
 <span class="c1">## this will save your data to the current directory same to this notebook. </span>
 <span class="c1">## you can check the current directory by ruing cwd = os.getcwd()</span>
 </pre></div>
@@ -1163,14 +989,13 @@ memory usage: 6.9+ MB
 </div>
 </section>
 <section id="retrieving-data-directly-from-osm">
-<h3>Retrieving data directly from OSM<a class="headerlink" href="#retrieving-data-directly-from-osm" title="Permalink to this headline">#</a></h3>
+<h3>Retrieving data directly from OSM<a class="headerlink" href="#retrieving-data-directly-from-osm" title="Permalink to this heading">#</a></h3>
 <p>We have so far seen how to read spatial data from your computer disk (i.e., the data is downloaded and saved on your local directory). Next, let’s see how we can retrieve data from OSM directly using a library called <code class="docutils literal notranslate"><span class="pre">pyrosm</span></code>. With <code class="docutils literal notranslate"><span class="pre">pyrosm</span></code>, you can easily retrieve data from anywhere in the world based on <code class="docutils literal notranslate"><span class="pre">OSM.PBF</span></code> files (a specific data format for OSM) that are distributed by <a class="reference external" href="http://download.geofabrik.de/">Geofabrik</a>. In fact, this is where the Bristol buildings data were downloaded. The package aims to be a more efficient way to parse OSM data covering large geographical areas (such as countries and cities).</p>
 <p>Note that if you would like to be flexible about your download, e.g., selecting a bounding box by yourself rather than by administrative regions, you can consider using <a class="reference external" href="https://osmnx.readthedocs.io/en/stable/"><code class="docutils literal notranslate"><span class="pre">OSMnx</span></code></a> library.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrosm</span> <span class="kn">import</span> <span class="n">OSM</span><span class="p">,</span> <span class="n">get_data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrosm</span> <span class="kn">import</span> <span class="n">OSM</span><span class="p">,</span> <span class="n">get_data</span><span class="c1"># Download data for Bristol</span>
 
-<span class="c1"># Download data for Bristol</span>
 <span class="n">bristol</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="s2">&quot;bristol&quot;</span><span class="p">)</span>
 
 <span class="c1"># Initialize the reader object for Bristol</span>
@@ -1198,26 +1023,26 @@ memory usage: 6.9+ MB
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [37],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">bristol_roadnetwork</span> <span class="o">=</span> <span class="n">osm</span><span class="o">.</span><span class="n">get_network</span><span class="p">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/pyrosm.py:205,</span> in <span class="ni">OSM.get_network</span><span class="nt">(self, network_type, extra_attributes, nodes)</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_read_pbf</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">204</span> <span class="c1"># Filter network data with given filter</span>
-<span class="ne">--&gt; </span><span class="mi">205</span> <span class="n">edges</span><span class="p">,</span> <span class="n">node_gdf</span> <span class="o">=</span> <span class="n">get_network_data</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_node_coordinates</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_way_records</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">208</span>     <span class="n">tags_as_columns</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">209</span>     <span class="n">network_filter</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">210</span>     <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">211</span>     <span class="n">slice_to_segments</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">212</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">214</span> <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">215</span>     <span class="c1"># Add metadata</span>
-<span class="g g-Whitespace">    </span><span class="mi">216</span>     <span class="n">edges</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network_type</span><span class="p">)</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/pyrosm.py:249,</span> in <span class="ni">OSM.get_network</span><span class="nt">(self, network_type, extra_attributes, nodes, timestamp)</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_pbf</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span> <span class="c1"># Filter network data with given filter</span>
+<span class="ne">--&gt; </span><span class="mi">249</span> <span class="n">edges</span><span class="p">,</span> <span class="n">node_gdf</span> <span class="o">=</span> <span class="n">get_network_data</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_node_coordinates</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_way_records</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>     <span class="n">tags_as_columns</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="n">network_filter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span>     <span class="bp">self</span><span class="o">.</span><span class="n">bounding_box</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span>     <span class="n">slice_to_segments</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="k">if</span> <span class="n">edges</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span>     <span class="c1"># Add metadata</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="n">edges</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network_type</span><span class="p">)</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/networks.py:37,</span> in <span class="ni">get_network_data</span><span class="nt">(node_coordinates, way_records, tags_as_columns, network_filter, bounding_box, slice_to_segments)</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/networks.py:37,</span> in <span class="ni">get_network_data</span><span class="nt">(node_coordinates, way_records, tags_as_columns, network_filter, bounding_box, slice_to_segments)</span>
 <span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 <span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="c1"># Prepare GeoDataFrame</span>
 <span class="ne">---&gt; </span><span class="mi">37</span> <span class="n">edges</span><span class="p">,</span> <span class="n">nodes</span> <span class="o">=</span> <span class="n">prepare_geodataframe</span><span class="p">(</span>
@@ -1233,60 +1058,19 @@ memory usage: 6.9+ MB
 <span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">49</span> <span class="k">return</span> <span class="n">edges</span><span class="p">,</span> <span class="n">nodes</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/frames.pyx:134,</span> in <span class="ni">pyrosm.frames.prepare_geodataframe</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:136,</span> in <span class="ni">pyrosm.frames.prepare_geodataframe</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/frames.pyx:141,</span> in <span class="ni">pyrosm.frames.prepare_geodataframe</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:143,</span> in <span class="ni">pyrosm.frames.prepare_geodataframe</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/frames.pyx:71,</span> in <span class="ni">pyrosm.frames.prepare_way_gdf</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:54,</span> in <span class="ni">pyrosm.frames.prepare_way_gdf</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/geodataframe.py:189,</span> in <span class="ni">GeoDataFrame.__init__</span><span class="nt">(self, data, geometry, crs, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span>     <span class="k">if</span> <span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">182</span>         <span class="nb">hasattr</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="s2">&quot;crs&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">183</span>         <span class="ow">and</span> <span class="n">geometry</span><span class="o">.</span><span class="n">crs</span>
-<span class="g g-Whitespace">    </span><span class="mi">184</span>         <span class="ow">and</span> <span class="n">crs</span>
-<span class="g g-Whitespace">    </span><span class="mi">185</span>         <span class="ow">and</span> <span class="ow">not</span> <span class="n">geometry</span><span class="o">.</span><span class="n">crs</span> <span class="o">==</span> <span class="n">crs</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">187</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">crs_mismatch_error</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">189</span>     <span class="bp">self</span><span class="o">.</span><span class="n">set_geometry</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span> <span class="k">if</span> <span class="n">geometry</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">crs</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">193</span>         <span class="s2">&quot;Assigning CRS to a GeoDataFrame without a geometry column is not &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">194</span>         <span class="s2">&quot;supported. Supply geometry using the &#39;geometry=&#39; keyword argument, &quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span>         <span class="s2">&quot;or by providing a DataFrame with column name &#39;geometry&#39;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span>     <span class="p">)</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:433,</span> in <span class="ni">pyrosm.geometry.create_way_geometries</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/geodataframe.py:347,</span> in <span class="ni">GeoDataFrame.set_geometry</span><span class="nt">(self, col, drop, inplace, crs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">344</span>     <span class="n">level</span><span class="o">.</span><span class="n">crs</span> <span class="o">=</span> <span class="n">crs</span>
-<span class="g g-Whitespace">    </span><span class="mi">346</span> <span class="c1"># Check that we are using a listlike of geometries</span>
-<span class="ne">--&gt; </span><span class="mi">347</span> <span class="n">level</span> <span class="o">=</span> <span class="n">_ensure_geometry</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">348</span> <span class="n">frame</span><span class="p">[</span><span class="n">geo_column_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">level</span>
-<span class="g g-Whitespace">    </span><span class="mi">349</span> <span class="n">frame</span><span class="o">.</span><span class="n">_geometry_column_name</span> <span class="o">=</span> <span class="n">geo_column_name</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:399,</span> in <span class="ni">pyrosm.geometry._create_way_geometries</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/geodataframe.py:59,</span> in <span class="ni">_ensure_geometry</span><span class="nt">(data, crs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">58</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Series</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">59</span>         <span class="n">out</span> <span class="o">=</span> <span class="n">from_shapely</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">60</span>         <span class="k">return</span> <span class="n">GeoSeries</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">61</span>     <span class="k">else</span><span class="p">:</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:300,</span> in <span class="ni">pyrosm.geometry.create_linestring_geometry</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/array.py:150,</span> in <span class="ni">from_shapely</span><span class="nt">(data, crs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span> <span class="k">def</span> <span class="nf">from_shapely</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span>     <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span><span class="sd">     Convert a list or array of shapely objects to a GeometryArray.</span>
-<span class="g g-Whitespace">    </span><span class="mi">137</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">148</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">150</span>     <span class="k">return</span> <span class="n">GeometryArray</span><span class="p">(</span><span class="n">vectorized</span><span class="o">.</span><span class="n">from_shapely</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/geopandas/_vectorized.py:137,</span> in <span class="ni">from_shapely</span><span class="nt">(data)</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span>         <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">136</span>     <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">137</span>         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input must be valid geometry objects: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">geom</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">139</span> <span class="k">if</span> <span class="n">compat</span><span class="o">.</span><span class="n">USE_PYGEOS</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-
-<span class="ne">TypeError</span>: Input must be valid geometry objects: MULTILINESTRING ((-2.61 51.366, -2.61 51.366), (-2.61 51.366, -2.609 51.365), (-2.609 51.365, -2.609 51.365), (-2.609 51.365, -2.609 51.365), (-2.609 51.365, -2.608 51.365), (-2.608 51.365, -2.608 51.365), (-2.608 51.365, -2.608 51.365))
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1299,7 +1083,7 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>147
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>102212
 </pre></div>
 </div>
 </div>
@@ -1332,65 +1116,65 @@ memory usage: 6.9+ MB
       <th>id</th>
       <th>timestamp</th>
       <th>version</th>
-      <th>changeset</th>
+      <th>length</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>1.470000e+02</td>
-      <td>147.0</td>
-      <td>147.0</td>
-      <td>147.0</td>
+      <td>1.022120e+05</td>
+      <td>102212.0</td>
+      <td>102212.0</td>
+      <td>102212.000000</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>1.677797e+09</td>
+      <td>4.555495e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>108.314650</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>1.904702e+09</td>
+      <td>3.824359e+08</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.0</td>
+      <td>193.418633</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>4.164150e+05</td>
+      <td>1.900000e+02</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>1.043786e+09</td>
+      <td>8.795292e+07</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>20.000000</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>1.154697e+09</td>
+      <td>3.684994e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>48.000000</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>1.455953e+09</td>
+      <td>7.817397e+08</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>111.000000</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.427456e+10</td>
+      <td>1.245598e+09</td>
       <td>0.0</td>
       <td>-1.0</td>
-      <td>0.0</td>
+      <td>7572.000000</td>
     </tr>
   </tbody>
 </table>
@@ -1399,7 +1183,7 @@ memory usage: 6.9+ MB
 <p>Likewise, we can also plot it. Please try it yourself.</p>
 </section>
 <section id="coordinate-reference-system-for-geodataframe">
-<h3>Coordinate Reference System for GeoDataFrame<a class="headerlink" href="#coordinate-reference-system-for-geodataframe" title="Permalink to this headline">#</a></h3>
+<h3>Coordinate Reference System for GeoDataFrame<a class="headerlink" href="#coordinate-reference-system-for-geodataframe" title="Permalink to this heading">#</a></h3>
 <p>Another difference between <code class="docutils literal notranslate"><span class="pre">GeoDataFrames</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> is that the former has intrinsic coordinate reference system (CRS) as it has the <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column. To check this information, we can call its attribute <code class="docutils literal notranslate"><span class="pre">crs</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1432,14 +1216,14 @@ Datum: World Geodetic System 1984 ensemble
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Derived Projected CRS: EPSG:27700&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Projected CRS: EPSG:27700&gt;
 Name: OSGB36 / British National Grid
 Axis Info [cartesian]:
 - E[east]: Easting (metre)
 - N[north]: Northing (metre)
 Area of Use:
 - name: United Kingdom (UK) - offshore to boundary of UKCS within 49°45&#39;N to 61°N and 9°W to 2°E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore.
-- bounds: (-9.0, 49.75, 2.01, 61.01)
+- bounds: (-9.01, 49.75, 2.01, 61.01)
 Coordinate Operation:
 - name: British National Grid
 - method: Transverse Mercator
@@ -1463,10 +1247,10 @@ Datum: Ordnance Survey of Great Britain 1936
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Orig:
- MULTILINESTRING ((-2.6097212 51.3657117, -2.6095465 51.3656477), (-2.6095465 51.3656477, -2.6092646 51.3654812), (-2.6092646 51.3654812, -2.6088734 51.3653167), (-2.6088734 51.3653167, -2.6085088 51.3650842), (-2.6085088 51.3650842, -2.6083427 51.3649802), (-2.6083427 51.3649802, -2.6081261 51.3648105), (-2.6081261 51.3648105, -2.6078208 51.3645815)) 
+ MULTILINESTRING ((-2.6097211837768555 51.3657112121582, -2.609546422958374 51.36564636230469), (-2.609546422958374 51.36564636230469, -2.609264612197876 51.365482330322266), (-2.609264612197876 51.365482330322266, -2.6088733673095703 51.365318298339844), (-2.6088733673095703 51.365318298339844, -2.608508825302124 51.36508560180664), (-2.608508825302124 51.36508560180664, -2.6083426475524902 51.3649787902832), (-2.6083426475524902 51.3649787902832, -2.608126163482666 51.364810943603516), (-2.608126163482666 51.364810943603516, -2.607820749282837 51.36458206176758)) 
 
 Proj:
- MULTILINESTRING ((357648.823472627 163137.45959180896, 357660.9265108949 163130.24084904365), (357660.9265108949 163130.24084904365, 357680.3978917962 163111.560813186), (357680.3978917962 163111.560813186, 357707.480545406 163093.04007779417), (357707.480545406 163093.04007779417, 357732.64877296326 163066.97239782498), (357732.64877296326 163066.97239782498, 357744.11646257003 163055.31031830708), (357744.11646257003 163055.31031830708, 357759.0393570516 163036.31243119104), (357759.0393570516 163036.31243119104, 357780.08292435773 163010.6684798217))
+ MULTILINESTRING ((357648.974429959 163137.70370458602, 357661.0804417359 163130.39013390895), (357661.0804417359 163130.39013390895, 357680.5471925497 163111.98427999223), (357680.5471925497 163111.98427999223, 357707.6323758529 163093.51498389826), (357707.6323758529 163093.51498389826, 357732.79552590376 163067.42507962266), (357732.79552590376 163067.42507962266, 357744.2656479743 163055.45009858347), (357744.2656479743 163055.45009858347, 357759.1817168629 163036.65820931632), (357759.1817168629 163036.65820931632, 357780.23268873093 163011.0270668068))
 </pre></div>
 </div>
 </div>
@@ -1479,7 +1263,7 @@ Proj:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/lab01_49_0.svg" src="../_images/lab01_49_0.svg" /></div>
+<img alt="../_images/49644894b983545672944919fd63489d2809182b8e0f0685a70f25c123bfa2bc.svg" src="../_images/49644894b983545672944919fd63489d2809182b8e0f0685a70f25c123bfa2bc.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1488,7 +1272,7 @@ Proj:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/lab01_50_0.svg" src="../_images/lab01_50_0.svg" /></div>
+<img alt="../_images/b8e23c4440a34129d85e504efe15607a51662e609a1ca9e13a516f02df9dd646.svg" src="../_images/b8e23c4440a34129d85e504efe15607a51662e609a1ca9e13a516f02df9dd646.svg" /></div>
 </div>
 <p>As you can see, the shape of the two road segments are quite different (e.g., the lenth, where the curve occures, etc.). This is exactly due to the difference between the two CRSs.</p>
 <p>It is also worth noting here, the data type, MultiLineString, of the variables <code class="docutils literal notranslate"><span class="pre">orig_geom</span></code> and <code class="docutils literal notranslate"><span class="pre">projected_geom</span></code> are defined by <code class="docutils literal notranslate"><span class="pre">shapely</span></code>. It enables us to conduct these kind of spatial operations and visializations.</p>
@@ -1506,7 +1290,7 @@ Proj:
 </div>
 </section>
 <section id="computation-on-geodataframe">
-<h3>Computation on GeoDataFrame<a class="headerlink" href="#computation-on-geodataframe" title="Permalink to this headline">#</a></h3>
+<h3>Computation on GeoDataFrame<a class="headerlink" href="#computation-on-geodataframe" title="Permalink to this heading">#</a></h3>
 <p>There are many operations embeded in GeoDataFrame that can be directly called to do some spatial computations. For example, we can get the area of buildings for our <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> dataframe:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1516,7 +1300,7 @@ Proj:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_98855/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_11376/2251981216.py:1: UserWarning: Geometry is in a geographic CRS. Results from &#39;area&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
 
   bristol_building[&quot;building_area&quot;] = bristol_building.area
 </pre></div>
@@ -1534,12 +1318,12 @@ Name: building_area, dtype: float64
 </div>
 </div>
 </div>
-<p>Here, you can see a warning that WGS is a geographic CRS, hence the results of area mighht not be accurate. Can you project the dataframe to a projected coordicate reference system (e.g.,EPSG:27700 in our case)? After your projection, do the area computation again. What do the results look like? What is the unit of the area?</p>
+<p>Here, you can see a warning that the current Geometry is in a geographic CRS, hence the results of computing area mighht not be accurate. Can you project the dataframe to a projected coordicate reference system (e.g.,EPSG:27700 in our case)? After your projection, do the area computation again. What do the results look like? What is the unit of the area?</p>
 </section>
 <section id="spatial-join">
-<h3>Spatial join<a class="headerlink" href="#spatial-join" title="Permalink to this headline">#</a></h3>
-<p>As we discussed in the lecture, joining tables using keys is a core operation for DBMS. Regarding spatial data, spatial join is somewhat similar to table join but with the operation being based on geometries.</p>
-<p>In this tutorial, we will try to conduct a spatial join and merge information between two GeoDataFrames. First, let’s read all restaurants (a type of Point of Interests (POI)) at Bristol from the OSM. Then, we combine information from restaurants to the underlying building (restaurants typically are within buildings). We will again use pyrosm for reading the data, but this time we will use the <code class="docutils literal notranslate"><span class="pre">get_pois()</span></code> function:</p>
+<h3>Spatial join<a class="headerlink" href="#spatial-join" title="Permalink to this heading">#</a></h3>
+<p>As we have discussed in the lecture, joining tables using keys is a core operation for DBMS. Regarding spatial data, spatial join is somewhat similar to table join but with the operation being based on geometries rather than keys.</p>
+<p>In this tutorial, we will try to conduct a spatial join and merge information between two <code class="docutils literal notranslate"><span class="pre">GeoDataFrames</span></code>. First, let’s read all restaurants (a type of Point of Interests (POI)) at Bristol from the OSM. Then, we combine information from restaurants to the underlying building (restaurants typically are within buildings). We will again use <code class="docutils literal notranslate"><span class="pre">pyrosm</span></code> for reading the data, but this time we will use the <code class="docutils literal notranslate"><span class="pre">get_pois()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read Points of Interest (POI) using the same OSM reader object that was initialized earlier</span>
@@ -1550,14 +1334,10 @@ Name: building_area, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/pyrosm/pyrosm.py:576: ShapelyDeprecationWarning: The array interface is deprecated and will no longer work in Shapely 2.0. Convert the &#39;.coords&#39; to a numpy array instead.
-  gdf = get_poi_data(
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
-</pre></div>
-</div>
-<img alt="../_images/lab01_57_2.png" src="../_images/lab01_57_2.png" />
+<img alt="../_images/4fb72d58722a4a9de5bb16daa79988cedf3348ae52a02af8e034452904e04efc.png" src="../_images/4fb72d58722a4a9de5bb16daa79988cedf3348ae52a02af8e034452904e04efc.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1568,48 +1348,49 @@ Name: building_area, dtype: float64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
-RangeIndex: 642 entries, 0 to 641
-Data columns (total 30 columns):
+RangeIndex: 677 entries, 0 to 676
+Data columns (total 31 columns):
  #   Column            Non-Null Count  Dtype   
 ---  ------            --------------  -----   
- 0   lat               138 non-null    float32 
- 1   tags              610 non-null    object  
- 2   timestamp         642 non-null    int64   
- 3   changeset         139 non-null    float64 
- 4   version           642 non-null    int8    
- 5   lon               138 non-null    float32 
- 6   id                642 non-null    int64   
- 7   addr:city         482 non-null    object  
- 8   addr:country      52 non-null     object  
- 9   addr:housenumber  456 non-null    object  
- 10  addr:housename    100 non-null    object  
- 11  addr:postcode     590 non-null    object  
- 12  addr:place        29 non-null     object  
- 13  addr:street       549 non-null    object  
- 14  email             24 non-null     object  
- 15  name              641 non-null    object  
- 16  opening_hours     83 non-null     object  
- 17  operator          10 non-null     object  
- 18  phone             94 non-null     object  
- 19  website           226 non-null    object  
- 20  amenity           642 non-null    object  
- 21  internet_access   5 non-null      object  
- 22  source            21 non-null     object  
- 23  start_date        4 non-null      object  
- 24  geometry          642 non-null    geometry
- 25  osm_type          642 non-null    object  
- 26  bar               2 non-null      object  
- 27  building          494 non-null    object  
- 28  building:levels   71 non-null     object  
- 29  wikipedia         5 non-null      object  
-dtypes: float32(2), float64(1), geometry(1), int64(2), int8(1), object(23)
-memory usage: 141.2+ KB
+ 0   id                677 non-null    int64   
+ 1   timestamp         677 non-null    uint32  
+ 2   tags              640 non-null    object  
+ 3   changeset         143 non-null    float64 
+ 4   lon               142 non-null    float32 
+ 5   version           677 non-null    int32   
+ 6   visible           676 non-null    object  
+ 7   lat               142 non-null    float32 
+ 8   addr:city         501 non-null    object  
+ 9   addr:country      53 non-null     object  
+ 10  addr:housenumber  488 non-null    object  
+ 11  addr:housename    101 non-null    object  
+ 12  addr:postcode     620 non-null    object  
+ 13  addr:place        27 non-null     object  
+ 14  addr:street       583 non-null    object  
+ 15  email             29 non-null     object  
+ 16  name              672 non-null    object  
+ 17  opening_hours     103 non-null    object  
+ 18  operator          14 non-null     object  
+ 19  phone             107 non-null    object  
+ 20  website           258 non-null    object  
+ 21  amenity           677 non-null    object  
+ 22  bar               4 non-null      object  
+ 23  internet_access   10 non-null     object  
+ 24  source            20 non-null     object  
+ 25  geometry          677 non-null    geometry
+ 26  osm_type          677 non-null    object  
+ 27  building          524 non-null    object  
+ 28  building:levels   75 non-null     object  
+ 29  start_date        3 non-null      object  
+ 30  wikipedia         3 non-null      object  
+dtypes: float32(2), float64(1), geometry(1), int32(1), int64(1), object(24), uint32(1)
+memory usage: 153.5+ KB
 </pre></div>
 </div>
 </div>
 </div>
-<p>From the <code class="docutils literal notranslate"><span class="pre">info()</span></code>, we can see that there are 642 restaurants in Bristol according to OSM. Note. that OSM is a valunteered geographic information platform. So the quality, accuracy, and completness of the data might be low.
-Next, let’s join data from <code class="docutils literal notranslate"><span class="pre">bristol_buildings</span></code> to the <code class="docutils literal notranslate"><span class="pre">bristol_restaurants</span></code> using <code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> function from geopandas:</p>
+<p>From the <code class="docutils literal notranslate"><span class="pre">info()</span></code>, we can see that there are 676 restaurants in Bristol according to OSM (you might see a different number depending on which version of OSM data you have downloaded). Note that OSM is a valunteered geographic information platform. So the quality, accuracy, and completness of the data might be low.
+Next, let’s join data from <code class="docutils literal notranslate"><span class="pre">bristol_buildings</span></code> to  bristol_restaurants<code class="docutils literal notranslate"><span class="pre">using</span></code>sjoin()` function from geopandas:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Join information from buildings to restaurants</span>
@@ -1624,13 +1405,13 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;lat&#39;, &#39;tags&#39;, &#39;timestamp&#39;, &#39;changeset&#39;, &#39;version&#39;, &#39;lon&#39;, &#39;id&#39;,
-       &#39;addr:city&#39;, &#39;addr:country&#39;, &#39;addr:housenumber&#39;, &#39;addr:housename&#39;,
-       &#39;addr:postcode&#39;, &#39;addr:place&#39;, &#39;addr:street&#39;, &#39;email&#39;, &#39;name_left&#39;,
-       &#39;opening_hours&#39;, &#39;operator&#39;, &#39;phone&#39;, &#39;website&#39;, &#39;amenity&#39;,
-       &#39;internet_access&#39;, &#39;source&#39;, &#39;start_date&#39;, &#39;geometry&#39;, &#39;osm_type&#39;,
-       &#39;bar&#39;, &#39;building&#39;, &#39;building:levels&#39;, &#39;wikipedia&#39;, &#39;index_right&#39;,
-       &#39;osm_id&#39;, &#39;code&#39;, &#39;fclass&#39;, &#39;name_right&#39;, &#39;type&#39;, &#39;building_area&#39;],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;id&#39;, &#39;timestamp&#39;, &#39;tags&#39;, &#39;changeset&#39;, &#39;lon&#39;, &#39;version&#39;, &#39;visible&#39;,
+       &#39;lat&#39;, &#39;addr:city&#39;, &#39;addr:country&#39;, &#39;addr:housenumber&#39;,
+       &#39;addr:housename&#39;, &#39;addr:postcode&#39;, &#39;addr:place&#39;, &#39;addr:street&#39;, &#39;email&#39;,
+       &#39;name_left&#39;, &#39;opening_hours&#39;, &#39;operator&#39;, &#39;phone&#39;, &#39;website&#39;, &#39;amenity&#39;,
+       &#39;bar&#39;, &#39;internet_access&#39;, &#39;source&#39;, &#39;geometry&#39;, &#39;osm_type&#39;, &#39;building&#39;,
+       &#39;building:levels&#39;, &#39;start_date&#39;, &#39;wikipedia&#39;, &#39;index_right&#39;, &#39;osm_id&#39;,
+       &#39;code&#39;, &#39;fclass&#39;, &#39;name_right&#39;, &#39;type&#39;, &#39;building_area&#39;],
       dtype=&#39;object&#39;)
 </pre></div>
 </div>
@@ -1652,19 +1433,19 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>lat</th>
-      <th>tags</th>
-      <th>timestamp</th>
-      <th>changeset</th>
-      <th>version</th>
-      <th>lon</th>
       <th>id</th>
+      <th>timestamp</th>
+      <th>tags</th>
+      <th>changeset</th>
+      <th>lon</th>
+      <th>version</th>
+      <th>visible</th>
+      <th>lat</th>
       <th>addr:city</th>
       <th>addr:country</th>
-      <th>addr:housenumber</th>
       <th>...</th>
-      <th>building</th>
       <th>building:levels</th>
+      <th>start_date</th>
       <th>wikipedia</th>
       <th>index_right</th>
       <th>osm_id</th>
@@ -1677,16 +1458,16 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
   </thead>
   <tbody>
     <tr>
-      <th>9</th>
+      <th>8</th>
+      <td>853556896</td>
+      <td>0</td>
+      <td>None</td>
+      <td>0.0</td>
+      <td>-2.611020</td>
+      <td>0</td>
+      <td>False</td>
       <td>51.458733</td>
       <td>None</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>-2.611020</td>
-      <td>853556896</td>
-      <td>None</td>
-      <td>None</td>
       <td>None</td>
       <td>...</td>
       <td>NaN</td>
@@ -1701,39 +1482,15 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>9.942395e-09</td>
     </tr>
     <tr>
-      <th>74</th>
-      <td>51.458771</td>
-      <td>{"addr:suburb":"Clifton","contact:facebook":"h...</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>-2.610929</td>
-      <td>4375465482</td>
-      <td>Bristol</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>24609</td>
-      <td>451622999</td>
-      <td>1500</td>
-      <td>building</td>
-      <td>The Clifton</td>
-      <td>None</td>
-      <td>9.942395e-09</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>51.453415</td>
-      <td>None</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>-2.625203</td>
+      <th>10</th>
       <td>1207448023</td>
+      <td>0</td>
       <td>None</td>
+      <td>0.0</td>
+      <td>-2.625203</td>
+      <td>0</td>
+      <td>False</td>
+      <td>51.453415</td>
       <td>None</td>
       <td>None</td>
       <td>...</td>
@@ -1749,17 +1506,17 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>8.777610e-08</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>51.455570</td>
-      <td>None</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>-2.619858</td>
+      <th>12</th>
       <td>1386051923</td>
+      <td>0</td>
+      <td>None</td>
+      <td>0.0</td>
+      <td>-2.619858</td>
+      <td>0</td>
+      <td>False</td>
+      <td>51.455570</td>
       <td>Bristol</td>
       <td>None</td>
-      <td>4</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1773,16 +1530,16 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>2.753519e-08</td>
     </tr>
     <tr>
-      <th>18</th>
-      <td>51.451546</td>
-      <td>{"cuisine":"regional","outdoor_seating":"yes",...</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0</td>
-      <td>-2.585233</td>
+      <th>17</th>
       <td>1881624837</td>
+      <td>0</td>
+      <td>{"cuisine":"regional","outdoor_seating":"yes",...</td>
+      <td>0.0</td>
+      <td>-2.585233</td>
+      <td>0</td>
+      <td>False</td>
+      <td>51.451546</td>
       <td>Bristol</td>
-      <td>None</td>
       <td>None</td>
       <td>...</td>
       <td>NaN</td>
@@ -1795,6 +1552,30 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>Hilton Garden Inn Bristol City Centre</td>
       <td>None</td>
       <td>1.725836e-07</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2900424207</td>
+      <td>0</td>
+      <td>{"cuisine":"pizza"}</td>
+      <td>0.0</td>
+      <td>-2.589893</td>
+      <td>0</td>
+      <td>False</td>
+      <td>51.456440</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1945</td>
+      <td>124113904</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>The Galleries</td>
+      <td>None</td>
+      <td>6.674781e-07</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1821,91 +1602,115 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>...</td>
     </tr>
     <tr>
-      <th>632</th>
-      <td>NaN</td>
-      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
+      <th>671</th>
+      <td>1069613264</td>
       <td>0</td>
+      <td>{"house":"terraced"}</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>-1</td>
+      <td>False</td>
       <td>NaN</td>
-      <td>822257659</td>
       <td>Bristol</td>
       <td>None</td>
-      <td>323</td>
       <td>...</td>
-      <td>yes</td>
+      <td>2</td>
       <td>None</td>
       <td>None</td>
-      <td>114096</td>
-      <td>822257660</td>
+      <td>145381</td>
+      <td>1069613265</td>
       <td>1500</td>
       <td>building</td>
       <td>None</td>
-      <td>None</td>
-      <td>8.170520e-09</td>
+      <td>house</td>
+      <td>5.491100e-09</td>
     </tr>
     <tr>
-      <th>632</th>
-      <td>NaN</td>
-      <td>{"addr:suburb":"Saint George","brand":"Pizza H...</td>
+      <th>671</th>
+      <td>1069613264</td>
       <td>0</td>
+      <td>{"house":"terraced"}</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>-1</td>
+      <td>False</td>
       <td>NaN</td>
-      <td>822257659</td>
       <td>Bristol</td>
       <td>None</td>
-      <td>323</td>
       <td>...</td>
-      <td>yes</td>
+      <td>2</td>
       <td>None</td>
       <td>None</td>
-      <td>114095</td>
-      <td>822257659</td>
+      <td>145380</td>
+      <td>1069613264</td>
       <td>1500</td>
       <td>building</td>
-      <td>Pizza Hut</td>
       <td>None</td>
-      <td>1.050200e-08</td>
+      <td>house</td>
+      <td>6.423220e-09</td>
     </tr>
     <tr>
-      <th>641</th>
+      <th>674</th>
+      <td>1188184241</td>
+      <td>0</td>
+      <td>{"addr:suburb":"Clifton","fhrs:id":"1584632"}</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>10652</td>
+      <td>275376189</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Ruby &amp; White</td>
+      <td>None</td>
+      <td>1.343296e-08</td>
+    </tr>
+    <tr>
+      <th>674</th>
+      <td>1188184241</td>
+      <td>0</td>
+      <td>{"addr:suburb":"Clifton","fhrs:id":"1584632"}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-1</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>Bristol</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>10640</td>
+      <td>275376177</td>
+      <td>1500</td>
+      <td>building</td>
+      <td>Everyman</td>
+      <td>None</td>
+      <td>1.508399e-07</td>
+    </tr>
+    <tr>
+      <th>676</th>
+      <td>13571356292</td>
+      <td>0</td>
       <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>0</td>
       <td>0.0</td>
+      <td>NaN</td>
       <td>-1</td>
       <td>NaN</td>
-      <td>13721513418</td>
+      <td>NaN</td>
       <td>Bristol</td>
       <td>NaN</td>
-      <td>12</td>
       <td>...</td>
-      <td>yes</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>10989</td>
-      <td>279457775</td>
-      <td>1500</td>
-      <td>building</td>
-      <td>None</td>
-      <td>None</td>
-      <td>4.035725e-09</td>
-    </tr>
-    <tr>
-      <th>641</th>
-      <td>NaN</td>
-      <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>NaN</td>
-      <td>13721513418</td>
-      <td>Bristol</td>
-      <td>NaN</td>
-      <td>12</td>
-      <td>...</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>138593</td>
@@ -1916,41 +1721,17 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
       <td>None</td>
       <td>1.037321e-08</td>
     </tr>
-    <tr>
-      <th>641</th>
-      <td>NaN</td>
-      <td>{"addr:suburb":"Clifton","cuisine":"indian","f...</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>-1</td>
-      <td>NaN</td>
-      <td>13721513418</td>
-      <td>Bristol</td>
-      <td>NaN</td>
-      <td>12</td>
-      <td>...</td>
-      <td>yes</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>138594</td>
-      <td>1003617567</td>
-      <td>1500</td>
-      <td>building</td>
-      <td>Clifton Community Bookshop</td>
-      <td>None</td>
-      <td>5.714835e-09</td>
-    </tr>
   </tbody>
 </table>
-<p>1034 rows × 37 columns</p>
+<p>862 rows × 38 columns</p>
 </div></div></div>
 </div>
-<p>Now with this joined table, you can check which building each restaurant is locatd in. Note that after have joining information from the buildings to restaurants. The geometries of the left GeoDataFrame, i.e. restaurants, were kept by default as the geometries. So if we plot <code class="docutils literal notranslate"><span class="pre">bristol_join</span></code>, you will only see restaurants, rather than buildings + restaurant. Please try!</p>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> use the topological relation intersects. You can also specify this parameter (i.e., contains and within) in the function. More details can be found at: <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html">https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html</a></p>
+<p>Now with this joined table, you can check which building each restaurant is locatd in. Note that after joining information from the buildings to restaurants, geometries of the left-side <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code>, i.e. restaurants, were kept by as the default geometries. So if we plot <code class="docutils literal notranslate"><span class="pre">bristol_join</span></code>, you will only see restaurants, rather than buildings + restaurant. Please try!</p>
+<p>Also by default, <code class="docutils literal notranslate"><span class="pre">sjoin()</span></code> use the topological relation - intersects. You can also specify this parameter as other types of topological relatoons (e.g., contains and within) in the function. More details can be found at: <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html">https://geopandas.org/en/stable/docs/reference/api/geopandas.sjoin.html</a></p>
 </section>
 <section id="visualization">
-<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">#</a></h3>
-<p>So far, we simply used the <code class="docutils literal notranslate"><span class="pre">plot()</span></code> function to visualize GeoDataFrame. These maps are less appealing compared to the ones generated via GIS softwares. In fact, the package: <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is very powerful in providing us beautiful visualization in Python. Let’s try it.</p>
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this heading">#</a></h3>
+<p>So far, we simply used the <code class="docutils literal notranslate"><span class="pre">plot()</span></code> function to visualize <code class="docutils literal notranslate"><span class="pre">GeoDataFrame</span></code>. These maps are less appealing compared to the ones generated via GIS softwares. In fact, the package: <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is very powerful in providing us beautiful visualization in Python. Let’s try it.</p>
 <p>First, let’s add some legends to the <code class="docutils literal notranslate"><span class="pre">bristol_building</span></code> data using its building type:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1959,10 +1740,10 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/lab01_63_0.png" src="../_images/lab01_63_0.png" />
+<img alt="../_images/76baecf1e398b8d24fe40babf2b8caf11952eddfb145bdc7a708da7dfd8d83a8.png" src="../_images/76baecf1e398b8d24fe40babf2b8caf11952eddfb145bdc7a708da7dfd8d83a8.png" />
 </div>
 </div>
-<p>Here, we used the parameter <code class="docutils literal notranslate"><span class="pre">column</span></code> to specify the attribute that is used to specify the color for each building (can be categorical or continuous). We used <code class="docutils literal notranslate"><span class="pre">cmap</span></code> to specify the colormap for the categories and we added the legend by specifying <code class="docutils literal notranslate"><span class="pre">legend=True</span></code>. Note that since the type of buildings for Bristol is very diverse, we see a long list of legend. There are ways to make it into two columns, for example. Can you explore it? Feel free to use Google search!</p>
+<p>Here, we used the parameter <code class="docutils literal notranslate"><span class="pre">column</span></code> to specify the attribute that is used to specify the color for each building (it can be categorical or continuous). We then used <code class="docutils literal notranslate"><span class="pre">cmap</span></code> to specify the colormap for the categories and we added the legend by specifying <code class="docutils literal notranslate"><span class="pre">legend=True</span></code>. Note that since the type of buildings for Bristol is very diverse, we see a long list of legend. There are ways to make it into two columns, for example. Can you explore how to achieve it? Feel free to use Google search!</p>
 <p>Another issue is that the map is in a very large map scale. Next, we would like to zoom in a little bit. To do so, we can use <code class="docutils literal notranslate"><span class="pre">set_xlim()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_ylim()</span></code> functions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1985,11 +1766,11 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51.44, 51.48)
 </pre></div>
 </div>
-<img alt="../_images/lab01_65_1.png" src="../_images/lab01_65_1.png" />
+<img alt="../_images/960fadaac49e19bd132f080f7537a3db02651aa3a76555319d1fcd7e027b74cb.png" src="../_images/960fadaac49e19bd132f080f7537a3db02651aa3a76555319d1fcd7e027b74cb.png" />
 </div>
 </div>
 <p>As you can see, we now zoomed in to the city center quite a lot. You can adjust the parameters yourself and test more!</p>
-<p>Meanwhile, you may wonder whether we can overlay multiple dataframes into the map? The answer is yes. Here is a sample code:</p>
+<p>Meanwhile, you may wonder whether we can overlay multiple <code class="docutils literal notranslate"><span class="pre">dataframes</span></code> into the map? The answer is yes. Here is a sample code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Zoom into city center by specifying X and Y coordinate extent</span>
@@ -2013,15 +1794,16 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(51.44, 51.48)
 </pre></div>
 </div>
-<img alt="../_images/lab01_67_1.png" src="../_images/lab01_67_1.png" />
+<img alt="../_images/a77c70f95883e52e1115fbe1223e19a0be0b1bc75c95618abecbaaa6e181e08d.png" src="../_images/a77c70f95883e52e1115fbe1223e19a0be0b1bc75c95618abecbaaa6e181e08d.png" />
 </div>
 </div>
 <p>Congrats! You have now finished the very first lab of using Python to process spatial data. I hope you enjoyed it and have seen the power of GeoPandas, and Python in general, for processing and studying spatial data. It is also worth highlighting that the functions introduced in this tutorial are selective. There are way more interesting and useful functions provided by these aforementioned packages. I highly recommended you to explore them by yourself. Learning never stops!</p>
 <p>Finally, let’s go back to the task of asking you to figure out how to better organize the long legend box. Below is the solution I found. There might be other ways of doing it. How is yours?</p>
-<p>Basically, I used the parameter ‘legend_kwds’ to set up the number of columns (‘ncol’) to be 4. For more details, check its <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.plot.html">official documentation</a>. Note that knowing how to read these kinds of documentations would be very helpful, so it is an important skill you should develop.</p>
+<p>Basically, I used the parameter <code class="docutils literal notranslate"><span class="pre">legend_kwds</span></code> to set up the number of columns (<code class="docutils literal notranslate"><span class="pre">ncol</span></code>) to be <code class="docutils literal notranslate"><span class="pre">4</span></code>. For more details, check its <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoDataFrame.plot.html">official documentation</a>. Note that knowing how to read these kinds of documentations would be very helpful for your programming, so it is an important skill/experience you should develop.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.65</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.55</span>
 <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mf">51.44</span><span class="p">,</span> <span class="mf">51.48</span>
@@ -2046,7 +1828,7 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/lab01_70_0.png" src="../_images/lab01_70_0.png" />
+<img alt="../_images/a458a0b012495b3690ffe50d709afe86479d8d2044c26bdd3a14d9e55adb9e8a.png" src="../_images/a458a0b012495b3690ffe50d709afe86479d8d2044c26bdd3a14d9e55adb9e8a.png" />
 </div>
 </div>
 </section>
@@ -2062,61 +1844,135 @@ Next, let’s join data from <code class="docutils literal notranslate"><span cl
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "ox"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "ox",
             path: "./labs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'ox'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../lectures/lecture10.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Lecture 10: Ethics, Summary, and Career</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../lectures/lecture10.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 10: Ethics, Summary, and Career</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="lab02.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="lab02.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Lab 02: Georefereing Location-based Social Media</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-in-pandas-for-non-spatial-data">Basics in Pandas (for non-spatial data)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-dataframe-from-scratch">Create a dataframe from scratch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viewing-your-data">Viewing your data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-selecting-slicing-extracting-dataframe">Querying (selecting, slicing, extracting) Dataframe</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#select-by-column">Select by column</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#select-by-row">Select by row</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-selection">Conditional selection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geopandas-for-spatial-data">GeoPandas for Spatial Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-spatial-data">Loading spatial data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-spatial-data">Saving spatial data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-data-directly-from-osm">Retrieving data directly from OSM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coordinate-reference-system-for-geodataframe">Coordinate Reference System for GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-on-geodataframe">Computation on GeoDataFrame</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-join">Spatial join</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Dr. Rui Zhu<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Dr. Rui Zhu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

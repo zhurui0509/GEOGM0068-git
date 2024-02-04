@@ -1,48 +1,60 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Lab 02: Georefereing Location-based Social Media &#8212; GEOGM0068: Geographic Information Retrieval and Integration</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,61 +62,106 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'labs/lab02';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Lab 03: Indexing and Relevance Ranking on Geo-Texts" href="lab03.html" />
     <link rel="prev" title="Lab 01: Dealing with Spatial Data in Python" href="lab01.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-    
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
 
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/unit-logo2.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">GEOGM0068: Geographic Information Retrieval and Integration</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../_static/unit-logo2.png" class="logo__image only-light" alt="GEOGM0068: Geographic Information Retrieval and Integration - Home"/>
+    <script>document.write(`<img src="../_static/unit-logo2.png" class="logo__image only-dark" alt="GEOGM0068: Geographic Information Retrieval and Integration - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -113,356 +170,236 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Lecture
- </span>
-</p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture01.html">
-   Lecture 01: Introduction and Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture02.html">
-   Lecture 02: Spatial Database I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture03.html">
-   Lecture 03: Spatial Database II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture04.html">
-   Lecture 04: Georeferencing I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture05.html">
-   Lecture 05: Georeferencing II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture06.html">
-   Lecture 06: Spatial Indexing
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture07.html">
-   Lecture 07: Spatial Ranking
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture08.html">
-   Lecture 08: Geospatial Semantics I
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture09.html">
-   Lecture 09: Geospatial Semantics II
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../lectures/lecture10.html">
-   Lecture 10: Ethics, Summary, and Career
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture01.html">Lecture 01: Introduction and Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture02.html">Lecture 02: Spatial Database I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture03.html">Lecture 03: Spatial Database II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture04.html">Lecture 04: Georeferencing I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture05.html">Lecture 05: Georeferencing II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture06.html">Lecture 06: Spatial Indexing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture07.html">Lecture 07: Spatial Ranking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture08.html">Lecture 08: Geospatial Semantics I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture09.html">Lecture 09: Geospatial Semantics II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/lecture10.html">Lecture 10: Ethics, Summary, and Career</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Lab
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lab</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="lab01.html">
-   Lab 01: Dealing with Spatial Data in Python
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Lab 02: Georefereing Location-based Social Media
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lab03.html">
-   Lab 03: Indexing and Relevance Ranking on Geo-Texts
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lab04.html">
-   Lab 04: Neural Network Embedding for Places
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="lab01.html">Lab 01: Dealing with Spatial Data in Python</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 02: Georefereing Location-based Social Media</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab03.html">Lab 03: Indexing and Relevance Ranking on Geo-Texts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab04.html">Lab 04: Neural Network Embedding for Places</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
-
-
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/zhurui0509/GEOGM0068-git/master?urlpath=tree/docs/labs/lab02.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
   
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
+  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/zhurui0509/GEOGM0068-git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/zhurui0509/GEOGM0068-git/issues/new?title=Issue%20on%20page%20%2Flabs/lab02.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/labs/lab02.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
 
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/zhurui0509/GEOGM0068-git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="https://github.com/zhurui0509/GEOGM0068-git/issues/new?title=Issue%20on%20page%20%2Flabs/lab02.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/labs/lab02.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">
-   Part 1: Extracting (geo)text from Twitter
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">
-   Part 2: Basic Natural Language Processing and Geoparsing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">
-   Part 3: Geocoding the recognized place names
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Lab 02: Georefereing Location-based Social Media</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">
-   Part 1: Extracting (geo)text from Twitter
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">
-   Part 2: Basic Natural Language Processing and Geoparsing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">
-   Part 3: Geocoding the recognized place names
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 02: Georefereing Location-based Social Media</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">Part 1: Extracting (geo)text from Twitter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">Part 2: Basic Natural Language Processing and Geoparsing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">Part 3: Geocoding the recognized place names</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="lab-02-georefereing-location-based-social-media">
-<h1>Lab 02: Georefereing Location-based Social Media<a class="headerlink" href="#lab-02-georefereing-location-based-social-media" title="Permalink to this headline">#</a></h1>
+<h1>Lab 02: Georefereing Location-based Social Media<a class="headerlink" href="#lab-02-georefereing-location-based-social-media" title="Permalink to this heading">#</a></h1>
 <p>In this tutorial, we will learn:</p>
 <ul class="simple">
 <li><p>How to extract information (e.g., tweets) from location-based social media (e.g., Twitter)</p></li>
@@ -476,7 +413,7 @@ title="Print to PDF"
 <li><p><a class="reference external" href="https://pypi.org/project/spacy-dbpedia-spotlight/">spacy-dbpedia-spotlight</a>: a small library that annotate recognized entities from spaCy to DBpedia enities.</p></li>
 </ul>
 <section id="part-1-extracting-geo-text-from-twitter">
-<h2>Part 1: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-extracting-geo-text-from-twitter" title="Permalink to this headline">#</a></h2>
+<h2>Part 1: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-extracting-geo-text-from-twitter" title="Permalink to this heading">#</a></h2>
 <p>This part explains how to extract text-based unstructured information from the social media Twitter via its API. Similar pipline can be used to extract information from other types of social media/Web services (e.g., Foursquare, Yelp, Flickr, etc.).</p>
 <p>Twitter is a useful data source for studying the social impacts of events and activities. In this part, we are going to learn how to collect Twitter data using its API. Specifically, we are going to focus on geotagged Twitter data.</p>
 <p>First, Twitter requires the users of Twitter API to be authenticated by the system. One simple approach to obtain such authentication is by registering a Twitter account. This is the approach we are going to take in this tutorial.</p>
@@ -496,6 +433,18 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;tweepy&#39;
 </pre></div>
 </div>
 </div>
@@ -538,39 +487,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">Forbidden</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">Input In [4],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Post a tweet from Python</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46,</span> in <span class="ni">payload.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_list</span>
-<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;payload_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload_type</span>
-<span class="ne">---&gt; </span><span class="mi">46</span> <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136,</span> in <span class="ni">API.update_status</span><span class="nt">(self, status, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1133</span> <span class="k">if</span> <span class="s1">&#39;media_ids&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1134</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_to_csv</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;media_ids&#39;</span><span class="p">])</span>
-<span class="ne">-&gt; </span><span class="mi">1136</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;statuses/update&#39;</span><span class="p">,</span> <span class="n">endpoint_parameters</span><span class="o">=</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1138</span>         <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_status_id&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1139</span>         <span class="s1">&#39;auto_populate_reply_metadata&#39;</span><span class="p">,</span> <span class="s1">&#39;exclude_reply_user_ids&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1140</span>         <span class="s1">&#39;attachment_url&#39;</span><span class="p">,</span> <span class="s1">&#39;media_ids&#39;</span><span class="p">,</span> <span class="s1">&#39;possibly_sensitive&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1141</span>         <span class="s1">&#39;long&#39;</span><span class="p">,</span> <span class="s1">&#39;place_id&#39;</span><span class="p">,</span> <span class="s1">&#39;display_coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;trim_user&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1142</span>         <span class="s1">&#39;card_uri&#39;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1143</span>     <span class="p">),</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">   </span><span class="mi">1144</span> <span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259,</span> in <span class="ni">API.request</span><span class="nt">(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">257</span>     <span class="k">raise</span> <span class="n">Unauthorized</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">403</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">259</span>     <span class="k">raise</span> <span class="n">Forbidden</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">261</span>     <span class="k">raise</span> <span class="n">NotFound</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-
-<span class="ne">Forbidden</span>: 403 Forbidden
-<span class="mi">453</span> <span class="o">-</span> <span class="n">You</span> <span class="n">currently</span> <span class="n">have</span> <span class="n">access</span> <span class="n">to</span> <span class="n">a</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">Twitter</span> <span class="n">API</span> <span class="n">v2</span> <span class="n">endpoints</span> <span class="ow">and</span> <span class="n">limited</span> <span class="n">v1</span><span class="mf">.1</span> <span class="n">endpoints</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">media</span> <span class="n">post</span><span class="p">,</span> <span class="n">oauth</span><span class="p">)</span> <span class="n">only</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">need</span> <span class="n">access</span> <span class="n">to</span> <span class="n">this</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">you</span> <span class="n">may</span> <span class="n">need</span> <span class="n">a</span> <span class="n">different</span> <span class="n">access</span> <span class="n">level</span><span class="o">.</span> <span class="n">You</span> <span class="n">can</span> <span class="n">learn</span> <span class="n">more</span> <span class="n">here</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">developer</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">portal</span><span class="o">/</span><span class="n">product</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;created_at&#39;: &#39;Wed Oct 19 22:55:47 +0000 2022&#39;, &#39;id&#39;: 1582868138827296768, &#39;id_str&#39;: &#39;1582868138827296768&#39;, &#39;text&#39;: &quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, &#39;truncated&#39;: False, &#39;entities&#39;: {&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, &#39;source&#39;: &#39;&lt;a href=&quot;https://ruizhugeographer.com/&quot; rel=&quot;nofollow&quot;&gt;GEOGM0068-Zhu&lt;/a&gt;&#39;, &#39;in_reply_to_status_id&#39;: None, &#39;in_reply_to_status_id_str&#39;: None, &#39;in_reply_to_user_id&#39;: None, &#39;in_reply_to_user_id_str&#39;: None, &#39;in_reply_to_screen_name&#39;: None, &#39;user&#39;: {&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, &#39;geo&#39;: None, &#39;coordinates&#39;: None, &#39;place&#39;: None, &#39;contributors&#39;: None, &#39;is_quote_status&#39;: False, &#39;retweet_count&#39;: 0, &#39;favorite_count&#39;: 0, &#39;favorited&#39;: False, &#39;retweeted&#39;: False, &#39;lang&#39;: &#39;en&#39;}, created_at=datetime.datetime(2022, 10, 19, 22, 55, 47, tzinfo=datetime.timezone.utc), id=1582868138827296768, id_str=&#39;1582868138827296768&#39;, text=&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, truncated=False, entities={&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, source=&#39;GEOGM0068-Zhu&#39;, source_url=&#39;https://ruizhugeographer.com/&#39;, in_reply_to_status_id=None, in_reply_to_status_id_str=None, in_reply_to_user_id=None, in_reply_to_user_id_str=None, in_reply_to_screen_name=None, author=User(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=0, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=1, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), user=User(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=0, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=1, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), geo=None, coordinates=None, place=None, contributors=None, is_quote_status=False, retweet_count=0, favorite_count=0, favorited=False, retweeted=False, lang=&#39;en&#39;)
 </pre></div>
 </div>
 </div>
@@ -771,7 +688,7 @@ title="Print to PDF"
 <p>To learn more about the key function <code class="docutils literal notranslate"><span class="pre">search_tweets()</span></code>, check its webpage <a class="reference external" href="https://docs.tweepy.org/en/stable/api.html#tweepy.API.search_tweets">here</a>. Please try yourself to set up some other parameters to see what you can get.</p>
 </section>
 <section id="part-2-basic-natural-language-processing-and-geoparsing">
-<h2>Part 2: Basic Natural Language Processing and Geoparsing<a class="headerlink" href="#part-2-basic-natural-language-processing-and-geoparsing" title="Permalink to this headline">#</a></h2>
+<h2>Part 2: Basic Natural Language Processing and Geoparsing<a class="headerlink" href="#part-2-basic-natural-language-processing-and-geoparsing" title="Permalink to this heading">#</a></h2>
 <p>To extract places (or other categories) from text-based (unstructured) data, we need to do some basic Natural Language Processing (NLP), such as tokenization and Part-of-Speech analysis. All these operations can be done through the library <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>.</p>
 <p>Ideally, you can use the tweets you got from Part 1 to do the experiment. But since sometimes the tweets you get might be very heterogenous and noisy, here we use a clean example (you can also get it from some long news online) to show how to use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> in order to make sure all the knowledge points are covered in one example.</p>
 <p>First make sure you have intsalled and imported <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>:</p>
@@ -817,7 +734,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">    </span><span class="mi">172</span>     <span class="k">return</span> <span class="n">load_model_from_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
 
 <span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:191,</span> in <span class="ni">load_model_from_package</span><span class="nt">(name, **overrides)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span> <span class="sd">&quot;&quot;&quot;Load a model from an installed package.&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Load a model from an installed package.&quot;&quot;&quot;</span>
 <span class="g g-Whitespace">    </span><span class="mi">190</span> <span class="bp">cls</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 <span class="ne">--&gt; </span><span class="mi">191</span> <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
 
@@ -841,7 +758,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 <span class="g g-Whitespace">    </span><span class="mi">150</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">make_doc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span>
 <span class="g g-Whitespace">    </span><span class="mi">151</span> <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span>     <span class="sd">&quot;&quot;&quot;Initialise a Language object.</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Initialise a Language object.</span>
 <span class="g g-Whitespace">    </span><span class="mi">153</span><span class="sd"> </span>
 <span class="g g-Whitespace">    </span><span class="mi">154</span><span class="sd">     vocab (Vocab): A `Vocab` object. If `True`, a vocab is created via</span>
 <span class="sd">   (...)</span>
@@ -867,7 +784,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">    </span><span class="mi">128</span> <span class="k">return</span> <span class="n">result</span>
 
 <span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/setuptools/_vendor/importlib_metadata/__init__.py:194,</span> in <span class="ni">EntryPoint.load</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span> <span class="sd">&quot;&quot;&quot;Load the entry point from its definition. If only a module</span>
+<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Load the entry point from its definition. If only a module</span>
 <span class="g g-Whitespace">    </span><span class="mi">190</span><span class="sd"> is indicated by the value, return that module. Otherwise,</span>
 <span class="g g-Whitespace">    </span><span class="mi">191</span><span class="sd"> return the named object.</span>
 <span class="g g-Whitespace">    </span><span class="mi">192</span><span class="sd"> &quot;&quot;&quot;</span>
@@ -918,7 +835,7 @@ title="Print to PDF"
 <span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="s1">&#39;debug&#39;</span><span class="p">:</span> <span class="kc">False</span>
 <span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="p">})</span>
 <span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">def</span> <span class="nf">dbpedia_spotlight_factory</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language_code</span><span class="p">,</span> <span class="n">dbpedia_rest_endpoint</span><span class="p">,</span> <span class="n">process</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">sparql</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">span_group</span><span class="p">,</span> <span class="n">overwrite_ents</span><span class="p">,</span> <span class="n">raise_http_errors</span><span class="p">,</span> <span class="n">debug</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="sd">&#39;&#39;&#39;Factory of the pipeline stage `dbpedia_spotlight`.</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span><span class="w">     </span><span class="sd">&#39;&#39;&#39;Factory of the pipeline stage `dbpedia_spotlight`.</span>
 <span class="g g-Whitespace">     </span><span class="mi">36</span><span class="sd">     Parameters:</span>
 <span class="g g-Whitespace">     </span><span class="mi">37</span><span class="sd">     - `language_code`: which language to use for entity linking. Possible values are listed in EntityLinker.supported_languages. If the parameter is left as None, the language code is matched with the nlp object currently used.</span>
 <span class="sd">   (...)</span>
@@ -1275,7 +1192,7 @@ French ---  NORP
 <p>So far, you have learnt the basics of retrieving information from social media like Twitter, as well as basic NLP operations and named entity recognition (geoparsing is part of it). I suggest you to play with what you have learnt so far by using new data to experiment these functions, changing the parameters of function, combining these skills with what you have learn in Tutorial 1 (e.g., geopandas), etc.</p>
 </section>
 <section id="part-3-geocoding-the-recognized-place-names">
-<h2>Part 3: Geocoding the recognized place names<a class="headerlink" href="#part-3-geocoding-the-recognized-place-names" title="Permalink to this headline">#</a></h2>
+<h2>Part 3: Geocoding the recognized place names<a class="headerlink" href="#part-3-geocoding-the-recognized-place-names" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">spaCy</span></code> helps us recognize different categories of tokens from a text, including place names (with tag <code class="docutils literal notranslate"><span class="pre">GPE</span></code> or <code class="docutils literal notranslate"><span class="pre">LOC</span></code>), but have not refer these place names into geographical locations on the surface of the earth. In this part, we will explore ways of geocoding text-based place names to geographic coordinates. There are several cool libraries/packages there for us to directly use, which we will cover some in this tutorial. But before that, let’s develop our own geocoding tool first. We might not use it in the future due to its simplicity, but it will help us understand the fundementals behind those technologies, which we have highlighted in our lectures.</p>
 <p>First, let’s create a variable storing the text that we want to georeference. The text below is copied from the Physical Geography section from the wikipedia page about the UK. We then use <code class="docutils literal notranslate"><span class="pre">nlp()</span></code> to convert the text into a <code class="docutils literal notranslate"><span class="pre">nlp</span></code> object defined by <code class="docutils literal notranslate"><span class="pre">spacy</span></code>. Having this object, we can then extract place names using the label <code class="docutils literal notranslate"><span class="pre">LOC</span></code> and <code class="docutils literal notranslate"><span class="pre">GPE</span></code>. Here we use a <code class="docutils literal notranslate"><span class="pre">for-loop</span></code> to go through all the tokens and only get those that have the two location-related labels, and then save them all into a list <code class="docutils literal notranslate"><span class="pre">locations</span></code>. Then we transfer such a list into a <code class="docutils literal notranslate"><span class="pre">panda</span></code> dataframe.</p>
 <div class="cell docutils container">
@@ -2488,7 +2405,7 @@ Scotland ---  GPE
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./labs"
         },
         predefinedOutput: true
@@ -2496,50 +2413,105 @@ Scotland ---  GPE
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="lab01.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Lab 01: Dealing with Spatial Data in Python</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lab01.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 01: Dealing with Spatial Data in Python</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="lab03.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="lab03.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Lab 03: Indexing and Relevance Ranking on Geo-Texts</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">Part 1: Extracting (geo)text from Twitter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">Part 2: Basic Natural Language Processing and Geoparsing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">Part 3: Geocoding the recognized place names</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Dr. Rui Zhu<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Dr. Rui Zhu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

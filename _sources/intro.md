@@ -45,7 +45,7 @@ This unit is part of the curriculum of MSc in [Geographic Data Science and Spati
 
 ## Office Hour 
 
-Wednesday 3 pm - 5 pm (or by appointment) @ Room 2.21N
+Wednesday 3 pm - 5 pm (or by appointment) @ GEOG 2.21N
 
 <!-- ```{tableofcontents}
 ``` -->
