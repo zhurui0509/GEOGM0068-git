@@ -384,7 +384,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">Part 1: Extracting (geo)text from Twitter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-1-retrieving-data-from-location-based-social-media">Part 1-1: Retrieving data from location-based social media</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-2-extracting-geo-text-from-twitter">Part 1-2: Extracting (geo)text from Twitter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">Part 2: Basic Natural Language Processing and Geoparsing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">Part 3: Geocoding the recognized place names</a></li>
 </ul>
@@ -412,10 +413,675 @@ document.write(`
 <li><p><a class="reference external" href="https://spacy.io/usage">spaCy</a>: this is the library to do natural lanuguage processing</p></li>
 <li><p><a class="reference external" href="https://pypi.org/project/spacy-dbpedia-spotlight/">spacy-dbpedia-spotlight</a>: a small library that annotate recognized entities from spaCy to DBpedia enities.</p></li>
 </ul>
-<section id="part-1-extracting-geo-text-from-twitter">
-<h2>Part 1: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-extracting-geo-text-from-twitter" title="Permalink to this heading">#</a></h2>
-<p>This part explains how to extract text-based unstructured information from the social media Twitter via its API. Similar pipline can be used to extract information from other types of social media/Web services (e.g., Foursquare, Yelp, Flickr, etc.).</p>
-<p>Twitter is a useful data source for studying the social impacts of events and activities. In this part, we are going to learn how to collect Twitter data using its API. Specifically, we are going to focus on geotagged Twitter data.</p>
+<section id="part-1-1-retrieving-data-from-location-based-social-media">
+<h2>Part 1-1: Retrieving data from location-based social media<a class="headerlink" href="#part-1-1-retrieving-data-from-location-based-social-media" title="Permalink to this heading">#</a></h2>
+<p>We can retrieve information from many location-based social media, such as Foursqure, Tweeter, Google Places, Yelp, and so. The key technique of doing so is through API (Application Programming Interface), which helps to bridge your program with the database these services develop. In this practice, we learn to access data from two social media – <a class="reference external" href="https://location.foursquare.com/docs/">Foursquare</a> and <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api">Twitter (X)</a>. Note that since X changed their API policy in 2023 charging for accessing their data, this practice only provides you the code. You are also not required to run through it by paying yourself. The code is provided for your future reference in case you want to use it in your career.</p>
+<p>To use API in python, we need to install the <a class="reference external" href="https://pypi.org/project/requests/"><code class="docutils literal notranslate"><span class="pre">requests</span></code></a> library. The common way of using it is shown below. First, you need to define the endpoint url where the data is served at (usually you can find this information from the API’s documentation, e.g., <a class="reference external" href="https://location.foursquare.com/developer/reference/place-search">Foursquare Place</a>). Then you need to set up the parameters using the variable <code class="docutils literal notranslate"><span class="pre">params</span></code> for your query (again, you can find potential parameter variables in the documentation). Finally, you need to setup the <code class="docutils literal notranslate"><span class="pre">headers</span></code> of your request, which defines the data format of the response <code class="docutils literal notranslate"><span class="pre">Accept</span></code>, and your API <code class="docutils literal notranslate"><span class="pre">Authorization</span></code>. Where to get the authorization? Different APIs have different ways, for Foursquare, please check this <a class="reference external" href="https://location.foursquare.com/developer/reference/places-api-get-started">documentation</a>.</p>
+<p>No matter which API you use, the logic/processes are mostly the same, as shown below. But details on how to set up the parameters, the url, and authorization process can be quite different. Lucily, most of these APIs provide detailed documentations with examples.</p>
+<p>Now, please read the <a class="reference external" href="https://location.foursquare.com/developer/reference/foursquare-apis-overview">Foursqure Place</a> documentation, follow the instruction to create an account/authorization, and then replicate the following steps.</p>
+<p>The following code basically query coffees that are within 500 meters of School of Geographic Science building, and rank them in the order of distance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span> <span class="c1"># library to handle requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># library for data analsysis</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># library to handle data in a vectorized manner</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="c1"># library for random number generation</span>
+
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.foursquare.com/v3/places/search&quot;</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;coffee&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;ll&quot;</span><span class="p">:</span> <span class="s2">&quot;51.45712270688956,-2.605159893254094&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;radius&quot;</span><span class="p">:</span> <span class="s2">&quot;500&quot;</span><span class="p">,</span>  
+  <span class="s2">&quot;sort&quot;</span><span class="p">:</span><span class="s2">&quot;DISTANCE&quot;</span>
+<span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;fsq3o8iIO/yZccIR5QzSI1Jmz0RX3vJ2HXCkuJVDwk9o6rQ=&quot;</span> <span class="c1"># please change it to your own Authorization</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_49362/3946376676.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd # library for data analsysis
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&quot;results&quot;:[{&quot;fsq_id&quot;:&quot;4b058836f964a520ceb822e3&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13035,&quot;name&quot;:&quot;Coffee Shop&quot;,&quot;short_name&quot;:&quot;Coffee Shop&quot;,&quot;plural_name&quot;:&quot;Coffee Shops&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:231,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.455219,&quot;longitude&quot;:-2.603972},&quot;roof&quot;:{&quot;latitude&quot;:51.455219,&quot;longitude&quot;:-2.603972}},&quot;link&quot;:&quot;/v3/places/4b058836f964a520ceb822e3&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;75 Park St&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;formatted_address&quot;:&quot;75 Park St, Bristol, BS1 5PF&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS1 5PF&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Boston Tea Party&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;557d9e15498e3fc4dda1ec92&quot;,&quot;categories&quot;:[{&quot;id&quot;:13002,&quot;name&quot;:&quot;Bakery&quot;,&quot;short_name&quot;:&quot;Bakery&quot;,&quot;plural_name&quot;:&quot;Bakeries&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/bakery_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:350,&quot;geocodes&quot;:{&quot;drop_off&quot;:{&quot;latitude&quot;:51.455446,&quot;longitude&quot;:-2.600694},&quot;main&quot;:{&quot;latitude&quot;:51.45533,&quot;longitude&quot;:-2.600682},&quot;roof&quot;:{&quot;latitude&quot;:51.45533,&quot;longitude&quot;:-2.600682}},&quot;link&quot;:&quot;/v3/places/557d9e15498e3fc4dda1ec92&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;16 Park Row&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;16 Park Row, Bristol, BS1 5LJ&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS1 5LJ&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Sotiris Bakery&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;517e90a0e4b0f7d859cc9578&quot;,&quot;categories&quot;:[{&quot;id&quot;:13036,&quot;name&quot;:&quot;Tea Room&quot;,&quot;short_name&quot;:&quot;Tea Room&quot;,&quot;plural_name&quot;:&quot;Tea Rooms&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/tearoom_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:360,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.456274,&quot;longitude&quot;:-2.610294},&quot;roof&quot;:{&quot;latitude&quot;:51.456274,&quot;longitude&quot;:-2.610294}},&quot;link&quot;:&quot;/v3/places/517e90a0e4b0f7d859cc9578&quot;,&quot;location&quot;:{&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;&quot;},&quot;name&quot;:&quot;Ross&#39; Tea Corner&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;4b6447c0f964a5200ca82ae3&quot;,&quot;categories&quot;:[{&quot;id&quot;:12010,&quot;name&quot;:&quot;Adult Education&quot;,&quot;short_name&quot;:&quot;Adult Education&quot;,&quot;plural_name&quot;:&quot;Adult Education&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/building/school_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:406,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.45419,&quot;longitude&quot;:-2.602153},&quot;roof&quot;:{&quot;latitude&quot;:51.45419,&quot;longitude&quot;:-2.602153}},&quot;link&quot;:&quot;/v3/places/4b6447c0f964a5200ca82ae3&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;40a Park St&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;40a Park St, Bristol, BS1 5JG&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS1 5JG&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Bristol Folk House&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;5e6235421381060008b18679&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13035,&quot;name&quot;:&quot;Coffee Shop&quot;,&quot;short_name&quot;:&quot;Coffee Shop&quot;,&quot;plural_name&quot;:&quot;Coffee Shops&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;Unsure&quot;,&quot;distance&quot;:428,&quot;geocodes&quot;:{&quot;drop_off&quot;:{&quot;latitude&quot;:51.459369,&quot;longitude&quot;:-2.609964},&quot;main&quot;:{&quot;latitude&quot;:51.459152,&quot;longitude&quot;:-2.609873},&quot;roof&quot;:{&quot;latitude&quot;:51.459152,&quot;longitude&quot;:-2.609873}},&quot;link&quot;:&quot;/v3/places/5e6235421381060008b18679&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;St Pauls Rd&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;St Pauls Rd, Bristol, BS8 1LX&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS8 1LX&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Caffe Clifton&quot;,&quot;related_places&quot;:{&quot;parent&quot;:{&quot;fsq_id&quot;:&quot;4b058834f964a5204bb822e3&quot;,&quot;categories&quot;:[{&quot;id&quot;:19014,&quot;name&quot;:&quot;Hotel&quot;,&quot;short_name&quot;:&quot;Hotel&quot;,&quot;plural_name&quot;:&quot;Hotels&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/travel/hotel_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;name&quot;:&quot;The Clifton Hotel&quot;}},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;4ce3baeea3c6721ed2df11cf&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:440,&quot;geocodes&quot;:{&quot;drop_off&quot;:{&quot;latitude&quot;:51.458888,&quot;longitude&quot;:-2.611066},&quot;main&quot;:{&quot;latitude&quot;:51.458696,&quot;longitude&quot;:-2.61096},&quot;roof&quot;:{&quot;latitude&quot;:51.458696,&quot;longitude&quot;:-2.61096}},&quot;link&quot;:&quot;/v3/places/4ce3baeea3c6721ed2df11cf&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;St Paul&#39;s Rd&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;St Paul&#39;s Rd, Bristol&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Caffe Clifton&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;59bd2120da5ede2141070f99&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13040,&quot;name&quot;:&quot;Dessert Shop&quot;,&quot;short_name&quot;:&quot;Desserts&quot;,&quot;plural_name&quot;:&quot;Dessert Shops&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/dessert_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:458,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.453793,&quot;longitude&quot;:-2.601547},&quot;roof&quot;:{&quot;latitude&quot;:51.453793,&quot;longitude&quot;:-2.601547}},&quot;link&quot;:&quot;/v3/places/59bd2120da5ede2141070f99&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;20 Park St&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;20 Park St, Bristol, BS1 5JA&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS1 5JA&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Mrs. Potts Chocolate House&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;4c3469ed3ffc952179da90f5&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13035,&quot;name&quot;:&quot;Coffee Shop&quot;,&quot;short_name&quot;:&quot;Coffee Shop&quot;,&quot;plural_name&quot;:&quot;Coffee Shops&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:462,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.460572,&quot;longitude&quot;:-2.60179},&quot;roof&quot;:{&quot;latitude&quot;:51.460572,&quot;longitude&quot;:-2.60179}},&quot;link&quot;:&quot;/v3/places/4c3469ed3ffc952179da90f5&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;135 St. Michaels Hill&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;at Highbury Villas&quot;,&quot;formatted_address&quot;:&quot;135 St. Michaels Hill (at Highbury Villas), Bristol, BS2 8BS&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS2 8BS&quot;},&quot;name&quot;:&quot;Twoday Coffee Roasters&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;4b058837f964a520deb822e3&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13035,&quot;name&quot;:&quot;Coffee Shop&quot;,&quot;short_name&quot;:&quot;Coffee Shop&quot;,&quot;plural_name&quot;:&quot;Coffee Shops&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13065,&quot;name&quot;:&quot;Restaurant&quot;,&quot;short_name&quot;:&quot;Restaurant&quot;,&quot;plural_name&quot;:&quot;Restaurants&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/default_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;VeryLikelyOpen&quot;,&quot;distance&quot;:464,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.453685,&quot;longitude&quot;:-2.601516},&quot;roof&quot;:{&quot;latitude&quot;:51.453685,&quot;longitude&quot;:-2.601516}},&quot;link&quot;:&quot;/v3/places/4b058837f964a520deb822e3&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;18 Park St&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;18 Park St, Bristol, BS1 5JA&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS1 5JA&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;Woodes&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;},{&quot;fsq_id&quot;:&quot;59ac098a86bc494d39e6effc&quot;,&quot;categories&quot;:[{&quot;id&quot;:13034,&quot;name&quot;:&quot;Café&quot;,&quot;short_name&quot;:&quot;Café&quot;,&quot;plural_name&quot;:&quot;Cafés&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/food/cafe_&quot;,&quot;suffix&quot;:&quot;.png&quot;}},{&quot;id&quot;:13003,&quot;name&quot;:&quot;Bar&quot;,&quot;short_name&quot;:&quot;Bar&quot;,&quot;plural_name&quot;:&quot;Bars&quot;,&quot;icon&quot;:{&quot;prefix&quot;:&quot;https://ss3.4sqi.net/img/categories_v2/nightlife/pub_&quot;,&quot;suffix&quot;:&quot;.png&quot;}}],&quot;chains&quot;:[],&quot;closed_bucket&quot;:&quot;LikelyOpen&quot;,&quot;distance&quot;:469,&quot;geocodes&quot;:{&quot;main&quot;:{&quot;latitude&quot;:51.457739,&quot;longitude&quot;:-2.612143},&quot;roof&quot;:{&quot;latitude&quot;:51.457739,&quot;longitude&quot;:-2.612143}},&quot;link&quot;:&quot;/v3/places/59ac098a86bc494d39e6effc&quot;,&quot;location&quot;:{&quot;address&quot;:&quot;99 Queens Rd&quot;,&quot;admin_region&quot;:&quot;England&quot;,&quot;country&quot;:&quot;GB&quot;,&quot;cross_street&quot;:&quot;&quot;,&quot;formatted_address&quot;:&quot;99 Queens Rd, Bristol, BS8 1LW&quot;,&quot;locality&quot;:&quot;Bristol&quot;,&quot;post_town&quot;:&quot;Bristol&quot;,&quot;postcode&quot;:&quot;BS8 1LW&quot;,&quot;region&quot;:&quot;Bristol&quot;},&quot;name&quot;:&quot;99 Queens&quot;,&quot;related_places&quot;:{},&quot;timezone&quot;:&quot;Europe/London&quot;}],&quot;context&quot;:{&quot;geo_bounds&quot;:{&quot;circle&quot;:{&quot;center&quot;:{&quot;latitude&quot;:51.45712270688956,&quot;longitude&quot;:-2.605159893254094},&quot;radius&quot;:500}}}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen, the <code class="docutils literal notranslate"><span class="pre">response</span></code> is a messy chunk of text that is hard to interpret. We can then organize it using <code class="docutils literal notranslate"><span class="pre">json</span></code>’s structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="n">json_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;results&#39;: [{&#39;fsq_id&#39;: &#39;4b058836f964a520ceb822e3&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13035,
+     &#39;name&#39;: &#39;Coffee Shop&#39;,
+     &#39;short_name&#39;: &#39;Coffee Shop&#39;,
+     &#39;plural_name&#39;: &#39;Coffee Shops&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 231,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.455219, &#39;longitude&#39;: -2.603972},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.455219, &#39;longitude&#39;: -2.603972}},
+   &#39;link&#39;: &#39;/v3/places/4b058836f964a520ceb822e3&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;75 Park St&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;formatted_address&#39;: &#39;75 Park St, Bristol, BS1 5PF&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS1 5PF&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Boston Tea Party&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;557d9e15498e3fc4dda1ec92&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13002,
+     &#39;name&#39;: &#39;Bakery&#39;,
+     &#39;short_name&#39;: &#39;Bakery&#39;,
+     &#39;plural_name&#39;: &#39;Bakeries&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/bakery_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 350,
+   &#39;geocodes&#39;: {&#39;drop_off&#39;: {&#39;latitude&#39;: 51.455446, &#39;longitude&#39;: -2.600694},
+    &#39;main&#39;: {&#39;latitude&#39;: 51.45533, &#39;longitude&#39;: -2.600682},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.45533, &#39;longitude&#39;: -2.600682}},
+   &#39;link&#39;: &#39;/v3/places/557d9e15498e3fc4dda1ec92&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;16 Park Row&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;16 Park Row, Bristol, BS1 5LJ&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS1 5LJ&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Sotiris Bakery&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;517e90a0e4b0f7d859cc9578&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13036,
+     &#39;name&#39;: &#39;Tea Room&#39;,
+     &#39;short_name&#39;: &#39;Tea Room&#39;,
+     &#39;plural_name&#39;: &#39;Tea Rooms&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/tearoom_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 360,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.456274, &#39;longitude&#39;: -2.610294},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.456274, &#39;longitude&#39;: -2.610294}},
+   &#39;link&#39;: &#39;/v3/places/517e90a0e4b0f7d859cc9578&#39;,
+   &#39;location&#39;: {&#39;country&#39;: &#39;GB&#39;, &#39;cross_street&#39;: &#39;&#39;, &#39;formatted_address&#39;: &#39;&#39;},
+   &#39;name&#39;: &quot;Ross&#39; Tea Corner&quot;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;4b6447c0f964a5200ca82ae3&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 12010,
+     &#39;name&#39;: &#39;Adult Education&#39;,
+     &#39;short_name&#39;: &#39;Adult Education&#39;,
+     &#39;plural_name&#39;: &#39;Adult Education&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/building/school_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 406,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.45419, &#39;longitude&#39;: -2.602153},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.45419, &#39;longitude&#39;: -2.602153}},
+   &#39;link&#39;: &#39;/v3/places/4b6447c0f964a5200ca82ae3&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;40a Park St&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;40a Park St, Bristol, BS1 5JG&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS1 5JG&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Bristol Folk House&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;5e6235421381060008b18679&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13035,
+     &#39;name&#39;: &#39;Coffee Shop&#39;,
+     &#39;short_name&#39;: &#39;Coffee Shop&#39;,
+     &#39;plural_name&#39;: &#39;Coffee Shops&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;Unsure&#39;,
+   &#39;distance&#39;: 428,
+   &#39;geocodes&#39;: {&#39;drop_off&#39;: {&#39;latitude&#39;: 51.459369, &#39;longitude&#39;: -2.609964},
+    &#39;main&#39;: {&#39;latitude&#39;: 51.459152, &#39;longitude&#39;: -2.609873},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.459152, &#39;longitude&#39;: -2.609873}},
+   &#39;link&#39;: &#39;/v3/places/5e6235421381060008b18679&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;St Pauls Rd&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;St Pauls Rd, Bristol, BS8 1LX&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS8 1LX&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Caffe Clifton&#39;,
+   &#39;related_places&#39;: {&#39;parent&#39;: {&#39;fsq_id&#39;: &#39;4b058834f964a5204bb822e3&#39;,
+     &#39;categories&#39;: [{&#39;id&#39;: 19014,
+       &#39;name&#39;: &#39;Hotel&#39;,
+       &#39;short_name&#39;: &#39;Hotel&#39;,
+       &#39;plural_name&#39;: &#39;Hotels&#39;,
+       &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/travel/hotel_&#39;,
+        &#39;suffix&#39;: &#39;.png&#39;}}],
+     &#39;name&#39;: &#39;The Clifton Hotel&#39;}},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;4ce3baeea3c6721ed2df11cf&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 440,
+   &#39;geocodes&#39;: {&#39;drop_off&#39;: {&#39;latitude&#39;: 51.458888, &#39;longitude&#39;: -2.611066},
+    &#39;main&#39;: {&#39;latitude&#39;: 51.458696, &#39;longitude&#39;: -2.61096},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.458696, &#39;longitude&#39;: -2.61096}},
+   &#39;link&#39;: &#39;/v3/places/4ce3baeea3c6721ed2df11cf&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &quot;St Paul&#39;s Rd&quot;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &quot;St Paul&#39;s Rd, Bristol&quot;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Caffe Clifton&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;59bd2120da5ede2141070f99&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13040,
+     &#39;name&#39;: &#39;Dessert Shop&#39;,
+     &#39;short_name&#39;: &#39;Desserts&#39;,
+     &#39;plural_name&#39;: &#39;Dessert Shops&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/dessert_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 458,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.453793, &#39;longitude&#39;: -2.601547},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.453793, &#39;longitude&#39;: -2.601547}},
+   &#39;link&#39;: &#39;/v3/places/59bd2120da5ede2141070f99&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;20 Park St&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;20 Park St, Bristol, BS1 5JA&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS1 5JA&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Mrs. Potts Chocolate House&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;4c3469ed3ffc952179da90f5&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13035,
+     &#39;name&#39;: &#39;Coffee Shop&#39;,
+     &#39;short_name&#39;: &#39;Coffee Shop&#39;,
+     &#39;plural_name&#39;: &#39;Coffee Shops&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 462,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.460572, &#39;longitude&#39;: -2.60179},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.460572, &#39;longitude&#39;: -2.60179}},
+   &#39;link&#39;: &#39;/v3/places/4c3469ed3ffc952179da90f5&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;135 St. Michaels Hill&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;at Highbury Villas&#39;,
+    &#39;formatted_address&#39;: &#39;135 St. Michaels Hill (at Highbury Villas), Bristol, BS2 8BS&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS2 8BS&#39;},
+   &#39;name&#39;: &#39;Twoday Coffee Roasters&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;4b058837f964a520deb822e3&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13035,
+     &#39;name&#39;: &#39;Coffee Shop&#39;,
+     &#39;short_name&#39;: &#39;Coffee Shop&#39;,
+     &#39;plural_name&#39;: &#39;Coffee Shops&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/coffeeshop_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13065,
+     &#39;name&#39;: &#39;Restaurant&#39;,
+     &#39;short_name&#39;: &#39;Restaurant&#39;,
+     &#39;plural_name&#39;: &#39;Restaurants&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/default_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;VeryLikelyOpen&#39;,
+   &#39;distance&#39;: 464,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.453685, &#39;longitude&#39;: -2.601516},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.453685, &#39;longitude&#39;: -2.601516}},
+   &#39;link&#39;: &#39;/v3/places/4b058837f964a520deb822e3&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;18 Park St&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;18 Park St, Bristol, BS1 5JA&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS1 5JA&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;Woodes&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;},
+  {&#39;fsq_id&#39;: &#39;59ac098a86bc494d39e6effc&#39;,
+   &#39;categories&#39;: [{&#39;id&#39;: 13034,
+     &#39;name&#39;: &#39;Café&#39;,
+     &#39;short_name&#39;: &#39;Café&#39;,
+     &#39;plural_name&#39;: &#39;Cafés&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/food/cafe_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}},
+    {&#39;id&#39;: 13003,
+     &#39;name&#39;: &#39;Bar&#39;,
+     &#39;short_name&#39;: &#39;Bar&#39;,
+     &#39;plural_name&#39;: &#39;Bars&#39;,
+     &#39;icon&#39;: {&#39;prefix&#39;: &#39;https://ss3.4sqi.net/img/categories_v2/nightlife/pub_&#39;,
+      &#39;suffix&#39;: &#39;.png&#39;}}],
+   &#39;chains&#39;: [],
+   &#39;closed_bucket&#39;: &#39;LikelyOpen&#39;,
+   &#39;distance&#39;: 469,
+   &#39;geocodes&#39;: {&#39;main&#39;: {&#39;latitude&#39;: 51.457739, &#39;longitude&#39;: -2.612143},
+    &#39;roof&#39;: {&#39;latitude&#39;: 51.457739, &#39;longitude&#39;: -2.612143}},
+   &#39;link&#39;: &#39;/v3/places/59ac098a86bc494d39e6effc&#39;,
+   &#39;location&#39;: {&#39;address&#39;: &#39;99 Queens Rd&#39;,
+    &#39;admin_region&#39;: &#39;England&#39;,
+    &#39;country&#39;: &#39;GB&#39;,
+    &#39;cross_street&#39;: &#39;&#39;,
+    &#39;formatted_address&#39;: &#39;99 Queens Rd, Bristol, BS8 1LW&#39;,
+    &#39;locality&#39;: &#39;Bristol&#39;,
+    &#39;post_town&#39;: &#39;Bristol&#39;,
+    &#39;postcode&#39;: &#39;BS8 1LW&#39;,
+    &#39;region&#39;: &#39;Bristol&#39;},
+   &#39;name&#39;: &#39;99 Queens&#39;,
+   &#39;related_places&#39;: {},
+   &#39;timezone&#39;: &#39;Europe/London&#39;}],
+ &#39;context&#39;: {&#39;geo_bounds&#39;: {&#39;circle&#39;: {&#39;center&#39;: {&#39;latitude&#39;: 51.45712270688956,
+     &#39;longitude&#39;: -2.605159893254094},
+    &#39;radius&#39;: 500}}}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, to convert <code class="docutils literal notranslate"><span class="pre">json</span></code> format to tables (i.e. <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>), we can use a <code class="docutils literal notranslate"><span class="pre">for-loop</span></code>. Note that there are many other ways of executing such a conversion.</p>
+<p>In the code below, we only extract the id, name, address, and coordinates of the places.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">places</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">place</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]:</span>
+    <span class="n">fsq_id</span> <span class="o">=</span> <span class="n">place</span><span class="p">[</span><span class="s1">&#39;fsq_id&#39;</span><span class="p">]</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">place</span><span class="p">[</span><span class="s1">&#39;geocodes&#39;</span><span class="p">][</span><span class="s1">&#39;main&#39;</span><span class="p">]</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">place</span><span class="p">[</span><span class="s1">&#39;location&#39;</span><span class="p">][</span><span class="s1">&#39;formatted_address&#39;</span><span class="p">]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">place</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+    <span class="n">places</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fsq_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">coords</span><span class="p">))</span>
+    
+<span class="n">places_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">places</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Address&#39;</span><span class="p">,</span> <span class="s1">&#39;Coords&#39;</span><span class="p">])</span>
+<span class="n">places_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Coords</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4b058836f964a520ceb822e3</td>
+      <td>Boston Tea Party</td>
+      <td>75 Park St, Bristol, BS1 5PF</td>
+      <td>{'latitude': 51.455219, 'longitude': -2.603972}</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>557d9e15498e3fc4dda1ec92</td>
+      <td>Sotiris Bakery</td>
+      <td>16 Park Row, Bristol, BS1 5LJ</td>
+      <td>{'latitude': 51.45533, 'longitude': -2.600682}</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>517e90a0e4b0f7d859cc9578</td>
+      <td>Ross' Tea Corner</td>
+      <td></td>
+      <td>{'latitude': 51.456274, 'longitude': -2.610294}</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4b6447c0f964a5200ca82ae3</td>
+      <td>Bristol Folk House</td>
+      <td>40a Park St, Bristol, BS1 5JG</td>
+      <td>{'latitude': 51.45419, 'longitude': -2.602153}</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5e6235421381060008b18679</td>
+      <td>Caffe Clifton</td>
+      <td>St Pauls Rd, Bristol, BS8 1LX</td>
+      <td>{'latitude': 51.459152, 'longitude': -2.609873}</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>4ce3baeea3c6721ed2df11cf</td>
+      <td>Caffe Clifton</td>
+      <td>St Paul's Rd, Bristol</td>
+      <td>{'latitude': 51.458696, 'longitude': -2.61096}</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>59bd2120da5ede2141070f99</td>
+      <td>Mrs. Potts Chocolate House</td>
+      <td>20 Park St, Bristol, BS1 5JA</td>
+      <td>{'latitude': 51.453793, 'longitude': -2.601547}</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4c3469ed3ffc952179da90f5</td>
+      <td>Twoday Coffee Roasters</td>
+      <td>135 St. Michaels Hill (at Highbury Villas), Br...</td>
+      <td>{'latitude': 51.460572, 'longitude': -2.60179}</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4b058837f964a520deb822e3</td>
+      <td>Woodes</td>
+      <td>18 Park St, Bristol, BS1 5JA</td>
+      <td>{'latitude': 51.453685, 'longitude': -2.601516}</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>59ac098a86bc494d39e6effc</td>
+      <td>99 Queens</td>
+      <td>99 Queens Rd, Bristol, BS8 1LW</td>
+      <td>{'latitude': 51.457739, 'longitude': -2.612143}</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can further get more information about the place. One example is to extract the description (unstructured text) of each place using the following code. Again, we <code class="docutils literal notranslate"><span class="pre">request</span></code> to the API by setting up some parameters here: to include <code class="docutils literal notranslate"><span class="pre">fsq_id</span></code> in the <code class="docutils literal notranslate"><span class="pre">url</span></code>, and pass the parameter <code class="docutils literal notranslate"><span class="pre">fields</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">description_list</span> <span class="o">=</span> <span class="p">[]</span> 
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">places_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">fsq_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.foursquare.com/v3/places/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fsq_id</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;fields&quot;</span><span class="p">:</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="c1"># you can also get &quot;tips&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;fsq3o8iIO/yZccIR5QzSI1Jmz0RX3vJ2HXCkuJVDwk9o6rQ=&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">description_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">description</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">description_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<p>One question: why we write a <code class="docutils literal notranslate"><span class="pre">try:</span>&#160; <span class="pre">except:</span></code> block here?</p>
+<p>Finally, we can add the extracted description to the data frame: <code class="docutils literal notranslate"><span class="pre">places_df</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">places_df</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">description_list</span>
+<span class="n">places_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Coords</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4b058836f964a520ceb822e3</td>
+      <td>Boston Tea Party</td>
+      <td>75 Park St, Bristol, BS1 5PF</td>
+      <td>{'latitude': 51.455219, 'longitude': -2.603972}</td>
+      <td>This is our first &amp; flagship café. Opened in 1...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>557d9e15498e3fc4dda1ec92</td>
+      <td>Sotiris Bakery</td>
+      <td>16 Park Row, Bristol, BS1 5LJ</td>
+      <td>{'latitude': 51.45533, 'longitude': -2.600682}</td>
+      <td>Specialists in Greek Pastries and Pies. Specia...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>517e90a0e4b0f7d859cc9578</td>
+      <td>Ross' Tea Corner</td>
+      <td></td>
+      <td>{'latitude': 51.456274, 'longitude': -2.610294}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4b6447c0f964a5200ca82ae3</td>
+      <td>Bristol Folk House</td>
+      <td>40a Park St, Bristol, BS1 5JG</td>
+      <td>{'latitude': 51.45419, 'longitude': -2.602153}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5e6235421381060008b18679</td>
+      <td>Caffe Clifton</td>
+      <td>St Pauls Rd, Bristol, BS8 1LX</td>
+      <td>{'latitude': 51.459152, 'longitude': -2.609873}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>4ce3baeea3c6721ed2df11cf</td>
+      <td>Caffe Clifton</td>
+      <td>St Paul's Rd, Bristol</td>
+      <td>{'latitude': 51.458696, 'longitude': -2.61096}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>59bd2120da5ede2141070f99</td>
+      <td>Mrs. Potts Chocolate House</td>
+      <td>20 Park St, Bristol, BS1 5JA</td>
+      <td>{'latitude': 51.453793, 'longitude': -2.601547}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4c3469ed3ffc952179da90f5</td>
+      <td>Twoday Coffee Roasters</td>
+      <td>135 St. Michaels Hill (at Highbury Villas), Br...</td>
+      <td>{'latitude': 51.460572, 'longitude': -2.60179}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4b058837f964a520deb822e3</td>
+      <td>Woodes</td>
+      <td>18 Park St, Bristol, BS1 5JA</td>
+      <td>{'latitude': 51.453685, 'longitude': -2.601516}</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>59ac098a86bc494d39e6effc</td>
+      <td>99 Queens</td>
+      <td>99 Queens Rd, Bristol, BS8 1LW</td>
+      <td>{'latitude': 51.457739, 'longitude': -2.612143}</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="part-1-2-extracting-geo-text-from-twitter">
+<h2>Part 1-2: Extracting (geo)text from Twitter<a class="headerlink" href="#part-1-2-extracting-geo-text-from-twitter" title="Permalink to this heading">#</a></h2>
+<p>This part explains how to extract text-based unstructured information from the social media Twitter via its API. Similar pipline can be used to extract information from other types of social media/Web services (e.g., Foursquare, Yelp, Flickr, Google Places, etc.).</p>
+<p>Twitter is a useful data source for studying the social impact of events and activities. In this part, we are going to learn how to collect Twitter data using its API. Specifically, we are going to focus on geotagged Twitter data.</p>
 <p>First, Twitter requires the users of Twitter API to be authenticated by the system. One simple approach to obtain such authentication is by registering a Twitter account. This is the approach we are going to take in this tutorial.</p>
 <p>Go to the website of Twitter: <a class="reference external" href="https://twitter.com/">https://twitter.com/</a> , and click “Sign up” at the upper right corner. You can skip this step if you already have a Twitter account.</p>
 <p>After you have registered/logged in to your Twitter account, we are going to obtain the keys that are necessary to use Twitter API. Go to <a class="reference external" href="https://apps.twitter.com/">https://apps.twitter.com/</a> , and sign in using the Twitter account you have just created
@@ -425,7 +1091,7 @@ document.write(`
 <p><img alt="Get Keys from Twitter Developer" src="../_images/lab2-fig1.png" /></p>
 <p>Click <code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">keys</span></code>. It will then generated API Key, API Key Secret, and Bearer Token (see below for an example). Make sure you copy and paste them into a safe place (e.g., a text editor). We need these authentications later.</p>
 <p><img alt="Authentication Example" src="../_images/lab2-fig2.png" /></p>
-<p>Next, we also need to obtain the Access Token and its key. To do so, go to the <code class="docutils literal notranslate"><span class="pre">Projects</span> <span class="pre">&amp;</span> <span class="pre">Apps</span></code>–&gt; Select your App. Then click <code class="docutils literal notranslate"><span class="pre">Keys</span> <span class="pre">and</span> <span class="pre">tokens</span></code>, and then click <code class="docutils literal notranslate"><span class="pre">Generate</span></code> on the right of <code class="docutils literal notranslate"><span class="pre">Access</span> <span class="pre">Token</span> <span class="pre">ane</span> <span class="pre">Secret</span></code> (see below). Again, make sure you record them in a safe place. We need them later. Note that if for some reasons, you lose your tokens and secrets, this page is where you regenerate them.</p>
+<p>Next, we also need to obtain the Access Token and its key. To do so, go to the <code class="docutils literal notranslate"><span class="pre">Projects</span> <span class="pre">&amp;</span> <span class="pre">Apps</span></code>–&gt; Select your App. Then click <code class="docutils literal notranslate"><span class="pre">Keys</span> <span class="pre">and</span> <span class="pre">tokens</span></code>, and then click <code class="docutils literal notranslate"><span class="pre">Generate</span></code> on the right of <code class="docutils literal notranslate"><span class="pre">Access</span> <span class="pre">Token</span> <span class="pre">and</span> <span class="pre">Secret</span></code> (see below). Again, make sure you record them in a safe place. We need them later. Note that if for some reasons, you lose your tokens and secrets, this page is where you regenerate them.</p>
 <p><img alt="Access Token Example" src="../_images/lab2-fig3.png" /></p>
 <p>Once you have your Twitter app set-up, you are ready to access tweets in Python. Begin by importing the necessary Python libraries.</p>
 <div class="cell docutils container">
@@ -439,7 +1105,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -457,60 +1123,34 @@ document.write(`
 <li><p>access token secret</p></li>
 </ul>
 <p>Below I put in my authentications. You should use yours! But remember to not share these with anyone else because these values are specific to your App.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">api_key</span><span class="o">=</span> <span class="s1">&#39;5TX6isrDz92kOC1s7qsTFWq5F&#39;</span>
-<span class="n">api_key_secret</span><span class="o">=</span> <span class="s1">&#39;DL4Gw2WLNo2bK538lL5GeNYCtiwlsuYUHOlW8NCSQszK3ac101&#39;</span>
-<span class="n">access_token</span><span class="o">=</span> <span class="s1">&#39;1582847729486684180-VH5N9AEb2zyyFyLOj5BuD8I9ca0ils&#39;</span>
-<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s1">&#39;e0cvkxJz9AWvu9dq0Fb48r61vkmIaA1JqLLyhEhms5FGt&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">api_key</span><span class="o">=</span> <span class="s1">&#39;ADsWr3cgAce13adabpK0aVKh5&#39;</span>
+<span class="n">api_key_secret</span><span class="o">=</span> <span class="s1">&#39;9EPHVN4OdcsnizwMIu5zvNarbWfybuXMQou6Mz0WDEZehTynMz&#39;</span>
+<span class="n">access_token</span><span class="o">=</span> <span class="s1">&#39;1582847729486684180-FqKFjuAorSXQlLcQ8f8niWK7HyDWMN&#39;</span>
+<span class="n">access_token_secret</span> <span class="o">=</span> <span class="s1">&#39;TSjdYCWluaenbiXb2cxSA6rR7AxTkEPzDJ1Znd8J4225q&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>With these authentications, we can next build an API variable in Python that build the connection between this Jupyter program and Twitter:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_key_secret</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_key_secret</span><span class="p">)</span>
 <span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
 <span class="n">api</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">wait_on_rate_limit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>For example, now we can send tweets using your API access. Note that your tweet needs to be 280 characters or less:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Post a tweet from Python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Post a tweet from Python</span>
 <span class="n">api</span><span class="o">.</span><span class="n">update_status</span><span class="p">(</span><span class="s2">&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;</span><span class="p">)</span>
 <span class="c1"># Your tweet has been posted!</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Status(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;created_at&#39;: &#39;Wed Oct 19 22:55:47 +0000 2022&#39;, &#39;id&#39;: 1582868138827296768, &#39;id_str&#39;: &#39;1582868138827296768&#39;, &#39;text&#39;: &quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, &#39;truncated&#39;: False, &#39;entities&#39;: {&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, &#39;source&#39;: &#39;&lt;a href=&quot;https://ruizhugeographer.com/&quot; rel=&quot;nofollow&quot;&gt;GEOGM0068-Zhu&lt;/a&gt;&#39;, &#39;in_reply_to_status_id&#39;: None, &#39;in_reply_to_status_id_str&#39;: None, &#39;in_reply_to_user_id&#39;: None, &#39;in_reply_to_user_id_str&#39;: None, &#39;in_reply_to_screen_name&#39;: None, &#39;user&#39;: {&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, &#39;geo&#39;: None, &#39;coordinates&#39;: None, &#39;place&#39;: None, &#39;contributors&#39;: None, &#39;is_quote_status&#39;: False, &#39;retweet_count&#39;: 0, &#39;favorite_count&#39;: 0, &#39;favorited&#39;: False, &#39;retweeted&#39;: False, &#39;lang&#39;: &#39;en&#39;}, created_at=datetime.datetime(2022, 10, 19, 22, 55, 47, tzinfo=datetime.timezone.utc), id=1582868138827296768, id_str=&#39;1582868138827296768&#39;, text=&quot;Hello Twitter, I&#39;m sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience&quot;, truncated=False, entities={&#39;hashtags&#39;: [{&#39;text&#39;: &#39;DataScience&#39;, &#39;indices&#39;: [92, 104]}], &#39;symbols&#39;: [], &#39;user_mentions&#39;: [], &#39;urls&#39;: []}, source=&#39;GEOGM0068-Zhu&#39;, source_url=&#39;https://ruizhugeographer.com/&#39;, in_reply_to_status_id=None, in_reply_to_status_id_str=None, in_reply_to_user_id=None, in_reply_to_user_id_str=None, in_reply_to_screen_name=None, author=User(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=0, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=1, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), user=User(_api=&lt;tweepy.api.API object at 0x7fe4200e7700&gt;, _json={&#39;id&#39;: 1582847729486684180, &#39;id_str&#39;: &#39;1582847729486684180&#39;, &#39;name&#39;: &#39;Richard Chu&#39;, &#39;screen_name&#39;: &#39;GEOGM0068&#39;, &#39;location&#39;: &#39;&#39;, &#39;description&#39;: &#39;&#39;, &#39;url&#39;: None, &#39;entities&#39;: {&#39;description&#39;: {&#39;urls&#39;: []}}, &#39;protected&#39;: False, &#39;followers_count&#39;: 0, &#39;friends_count&#39;: 1, &#39;listed_count&#39;: 0, &#39;created_at&#39;: &#39;Wed Oct 19 21:35:04 +0000 2022&#39;, &#39;favourites_count&#39;: 0, &#39;utc_offset&#39;: None, &#39;time_zone&#39;: None, &#39;geo_enabled&#39;: False, &#39;verified&#39;: False, &#39;statuses_count&#39;: 1, &#39;lang&#39;: None, &#39;contributors_enabled&#39;: False, &#39;is_translator&#39;: False, &#39;is_translation_enabled&#39;: False, &#39;profile_background_color&#39;: &#39;F5F8FA&#39;, &#39;profile_background_image_url&#39;: None, &#39;profile_background_image_url_https&#39;: None, &#39;profile_background_tile&#39;: False, &#39;profile_image_url&#39;: &#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_image_url_https&#39;: &#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, &#39;profile_link_color&#39;: &#39;1DA1F2&#39;, &#39;profile_sidebar_border_color&#39;: &#39;C0DEED&#39;, &#39;profile_sidebar_fill_color&#39;: &#39;DDEEF6&#39;, &#39;profile_text_color&#39;: &#39;333333&#39;, &#39;profile_use_background_image&#39;: True, &#39;has_extended_profile&#39;: True, &#39;default_profile&#39;: True, &#39;default_profile_image&#39;: False, &#39;following&#39;: False, &#39;follow_request_sent&#39;: False, &#39;notifications&#39;: False, &#39;translator_type&#39;: &#39;none&#39;, &#39;withheld_in_countries&#39;: []}, id=1582847729486684180, id_str=&#39;1582847729486684180&#39;, name=&#39;Richard Chu&#39;, screen_name=&#39;GEOGM0068&#39;, location=&#39;&#39;, description=&#39;&#39;, url=None, entities={&#39;description&#39;: {&#39;urls&#39;: []}}, protected=False, followers_count=0, friends_count=1, listed_count=0, created_at=datetime.datetime(2022, 10, 19, 21, 35, 4, tzinfo=datetime.timezone.utc), favourites_count=0, utc_offset=None, time_zone=None, geo_enabled=False, verified=False, statuses_count=1, lang=None, contributors_enabled=False, is_translator=False, is_translation_enabled=False, profile_background_color=&#39;F5F8FA&#39;, profile_background_image_url=None, profile_background_image_url_https=None, profile_background_tile=False, profile_image_url=&#39;http://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_image_url_https=&#39;https://pbs.twimg.com/profile_images/1582847827062972431/-8c67lsJ_normal.png&#39;, profile_link_color=&#39;1DA1F2&#39;, profile_sidebar_border_color=&#39;C0DEED&#39;, profile_sidebar_fill_color=&#39;DDEEF6&#39;, profile_text_color=&#39;333333&#39;, profile_use_background_image=True, has_extended_profile=True, default_profile=True, default_profile_image=False, following=False, follow_request_sent=False, notifications=False, translator_type=&#39;none&#39;, withheld_in_countries=[]), geo=None, coordinates=None, place=None, contributors=None, is_quote_status=False, retweet_count=0, favorite_count=0, favorited=False, retweeted=False, lang=&#39;en&#39;)
-</pre></div>
-</div>
-</div>
 </div>
 <p>If you go to your Twitter account and check Profile, you will see the tweet being posted! Congrats for your first post via Python!</p>
 <p>Note that if you see errors like “453 - You currently have Essential access which includes access to Twitter API v2 endpoints only. If you need access to this endpoint, you’ll need to apply for Elevated access via the Developer Portal. You can learn more here: <a class="reference external" href="https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve">https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#v2-access-leve</a>”. It means you need to elevate your access. What you need to do is (1). Go to Products –&gt; Twitter API v2; (2). click the tab “Elevated” (or “Academic Research” if you need it for your dissertation later); (3). Click <code class="docutils literal notranslate"><span class="pre">Apply</span></code>, then file the form (you can choose No for many of the questions). See screenshot below for (1) and (2):</p>
 <p><img alt="Elevate your access" src="../_images/lab2-fig4.png" /></p>
 <p>Next, let’s retrieve (search) some tweets that are about <code class="docutils literal notranslate"><span class="pre">#energycrisis</span></code> that are posted currently in English. There are going to be many posts returned. To make it easy to illustrate and to save some request (note you have a limited number of requests via this API), we only request 5 from the list.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">search_words</span> <span class="o">=</span> <span class="s2">&quot;#energycrisis&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">search_words</span> <span class="o">=</span> <span class="s2">&quot;#energycrisis&quot;</span>
 <span class="n">tweets</span> <span class="o">=</span> <span class="n">tw</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">search_tweets</span><span class="p">,</span>
               <span class="n">q</span><span class="o">=</span><span class="n">search_words</span><span class="p">,</span>
               <span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">tweets</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tweepy.cursor.ItemIterator at 0x7fe4101d0f10&gt;
-</pre></div>
-</div>
-</div>
 </div>
 <p>Here, you see a  an object that you can iterate (i.e. <code class="docutils literal notranslate"><span class="pre">ItemIterator</span></code>) or loop over to access the data collected. Each item in the iterator has various attributes that you can access to get information about each tweet including:</p>
 <ul class="simple">
@@ -519,9 +1159,7 @@ document.write(`
 <li><p>the date the tweet was sent</p></li>
 </ul>
 <p>and more. The code below loops through the object and save the time of the tweet, the user who posted the tweet, the text of the tweet, as well ast the user location to a pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># create dataframe</span>
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="s1">&#39;Tweet&#39;</span><span class="p">,</span> <span class="s1">&#39;Location&#39;</span><span class="p">]</span>
@@ -531,166 +1169,26 @@ document.write(`
     <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tweet</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">tweet</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">location</span><span class="p">])</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">df</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Time</th>
-      <th>User</th>
-      <th>Tweet</th>
-      <th>Location</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2022-10-19 23:58:43+00:00</td>
-      <td>wildbluethistle</td>
-      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2022-10-19 23:58:12+00:00</td>
-      <td>DrowerR</td>
-      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
-      <td>Melbourne, Victoria</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2022-10-19 23:57:48+00:00</td>
-      <td>grahamtfn</td>
-      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
-      <td>Glasgow, Scotland</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2022-10-19 23:57:16+00:00</td>
-      <td>SocEntEdinburgh</td>
-      <td>RT @socialprintandc: For further details on ho...</td>
-      <td>Edinburgh</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2022-10-19 23:53:03+00:00</td>
-      <td>lindakillian</td>
-      <td>RT @LevittFlisser: High electric bill poised t...</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>We can further save the dataframe to a local csv file (structured data):</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tweets_example.csv&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tweets_example.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
 <p>Note that there is another way of writing the query to Twitter API, which might be more intuitive to some users. For example, you can replace <code class="docutils literal notranslate"><span class="pre">tweets</span> <span class="pre">=</span> <span class="pre">tw.Cursor(api.search_tweets,q=search_words,lang=&quot;en&quot;).items(5)</span></code> to something like:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tweets2</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search_tweets</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">search_words</span><span class="p">,</span><span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="s2">&quot;5&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tweets2</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search_tweets</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">search_words</span><span class="p">,</span><span class="n">lang</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="s2">&quot;5&quot;</span><span class="p">)</span>
 <span class="n">data2</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">tweet2</span> <span class="ow">in</span> <span class="n">tweets2</span><span class="p">:</span>
     <span class="n">data2</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tweet2</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">tweet2</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">location</span><span class="p">])</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">df2</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Time</th>
-      <th>User</th>
-      <th>Tweet</th>
-      <th>Location</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2022-10-20 00:00:59+00:00</td>
-      <td>WhosFibbing</td>
-      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
-      <td>Everywhere</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2022-10-19 23:59:12+00:00</td>
-      <td>SocEntEdinburgh</td>
-      <td>RT @socialprintandc: For further details on ho...</td>
-      <td>Edinburgh</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2022-10-19 23:58:43+00:00</td>
-      <td>wildbluethistle</td>
-      <td>Lonely inside https://t.co/XFcwiIFhXa #goodmus...</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2022-10-19 23:58:12+00:00</td>
-      <td>DrowerR</td>
-      <td>RT @DaveDavos2: @Bowenchris That will NEVER de...</td>
-      <td>Melbourne, Victoria</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2022-10-19 23:57:48+00:00</td>
-      <td>grahamtfn</td>
-      <td>RT @lucycowan83: We're encouraging voluntary o...</td>
-      <td>Glasgow, Scotland</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>To learn more about the key function <code class="docutils literal notranslate"><span class="pre">search_tweets()</span></code>, check its webpage <a class="reference external" href="https://docs.tweepy.org/en/stable/api.html#tweepy.API.search_tweets">here</a>. Please try yourself to set up some other parameters to see what you can get.</p>
 </section>
 <section id="part-2-basic-natural-language-processing-and-geoparsing">
 <h2>Part 2: Basic Natural Language Processing and Geoparsing<a class="headerlink" href="#part-2-basic-natural-language-processing-and-geoparsing" title="Permalink to this heading">#</a></h2>
 <p>To extract places (or other categories) from text-based (unstructured) data, we need to do some basic Natural Language Processing (NLP), such as tokenization and Part-of-Speech analysis. All these operations can be done through the library <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>.</p>
-<p>Ideally, you can use the tweets you got from Part 1 to do the experiment. But since sometimes the tweets you get might be very heterogenous and noisy, here we use a clean example (you can also get it from some long news online) to show how to use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> in order to make sure all the knowledge points are covered in one example.</p>
+<p>Ideally, you can use the tweets you got from Part 1 to do the experiment. But since sometimes the tweets you get might be very heterogenous and noisy, here we use a clean example (you can also get it from some long news online) to show how to use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> in order to make sure all important points are covered in one example.</p>
 <p>First make sure you have intsalled and imported <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -704,146 +1202,15 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load small english model: https://spacy.io/models</span>
+<span class="c1"># If you see errors like &quot;OSError: [E050] Can&#39;t find model &#39;en_core_web_sm&#39;. It doesn&#39;t seem to be a shortcut link, a Python package or a valid path to a data directory.&quot;, it means your system has not installed the corresponding language models yet. </span>
+<span class="c1"># Use the commond to install it: python -m spacy download en </span>
 <span class="n">nlp</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
 <span class="n">nlp</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:275: UserWarning: [W031] Model &#39;en_core_web_sm&#39; (3.4.0) requires spaCy v3.4 and is incompatible with the current spaCy version (2.3.8). This may lead to unexpected results or runtime errors. To resolve this, download a newer compatible model or retrain your custom model with the current spaCy version. For more details and available updates, run: python -m spacy validate
-  warnings.warn(warn_msg)
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">Input In [2],</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Load small english model: https://spacy.io/models</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">nlp</span><span class="o">=</span><span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">nlp</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/__init__.py:30,</span> in <span class="ni">load</span><span class="nt">(name, **overrides)</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="k">if</span> <span class="n">depr_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">Warnings</span><span class="o">.</span><span class="n">W001</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">depr_path</span><span class="p">),</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">30</span> <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:170,</span> in <span class="ni">load_model</span><span class="nt">(name, **overrides)</span>
-<span class="g g-Whitespace">    </span><span class="mi">168</span>     <span class="k">return</span> <span class="n">load_model_from_link</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">169</span> <span class="k">if</span> <span class="n">is_package</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>  <span class="c1"># installed as package</span>
-<span class="ne">--&gt; </span><span class="mi">170</span>     <span class="k">return</span> <span class="n">load_model_from_package</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">171</span> <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>  <span class="c1"># path to model data directory</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span>     <span class="k">return</span> <span class="n">load_model_from_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:191,</span> in <span class="ni">load_model_from_package</span><span class="nt">(name, **overrides)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Load a model from an installed package.&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span> <span class="bp">cls</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">191</span> <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/en_core_web_sm/__init__.py:10,</span> in <span class="ni">load</span><span class="nt">(**overrides)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="o">**</span><span class="n">overrides</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="k">return</span> <span class="n">load_model_from_init_py</span><span class="p">(</span><span class="vm">__file__</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:239,</span> in <span class="ni">load_model_from_init_py</span><span class="nt">(init_file, **overrides)</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">model_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">238</span>     <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">Errors</span><span class="o">.</span><span class="n">E052</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path2str</span><span class="p">(</span><span class="n">data_path</span><span class="p">)))</span>
-<span class="ne">--&gt; </span><span class="mi">239</span> <span class="k">return</span> <span class="n">load_model_from_path</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/util.py:203,</span> in <span class="ni">load_model_from_path</span><span class="nt">(model_path, meta, **overrides)</span>
-<span class="g g-Whitespace">    </span><span class="mi">201</span> <span class="n">lang</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lang_factory&quot;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">])</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span> <span class="bp">cls</span> <span class="o">=</span> <span class="n">get_lang_class</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">203</span> <span class="n">nlp</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">204</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pipeline&quot;</span><span class="p">,</span> <span class="p">[])</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="n">factories</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;factories&quot;</span><span class="p">,</span> <span class="p">{})</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/spacy/language.py:171,</span> in <span class="ni">Language.__init__</span><span class="nt">(self, vocab, make_doc, max_length, meta, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span>     <span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">make_doc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span>
-<span class="g g-Whitespace">    </span><span class="mi">151</span> <span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Initialise a Language object.</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">154</span><span class="sd">     vocab (Vocab): A `Vocab` object. If `True`, a vocab is created via</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">169</span><span class="sd">     RETURNS (Language): The newly constructed object.</span>
-<span class="g g-Whitespace">    </span><span class="mi">170</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">171</span>     <span class="n">user_factories</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">factories</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span>     <span class="bp">self</span><span class="o">.</span><span class="n">factories</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">user_factories</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">173</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/catalogue/__init__.py:112,</span> in <span class="ni">Registry.get_all</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span> <span class="n">result</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_points</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">112</span>     <span class="n">result</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_entry_points</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span> <span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">REGISTRY</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">114</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">namespace</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-<span class="nn">    115         self.namespace[i] == keys[i] for i</span> in <span class="ni">range(len</span><span class="nt">(self.namespace))</span>
-<span class="g g-Whitespace">    </span><span class="mi">116</span>     <span class="p">):</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/catalogue/__init__.py:127,</span> in <span class="ni">Registry.get_entry_points</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span> <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span> <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_entry_points</span><span class="p">():</span>
-<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="n">result</span><span class="p">[</span><span class="n">entry_point</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">128</span> <span class="k">return</span> <span class="n">result</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/site-packages/setuptools/_vendor/importlib_metadata/__init__.py:194,</span> in <span class="ni">EntryPoint.load</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Load the entry point from its definition. If only a module</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span><span class="sd"> is indicated by the value, return that module. Otherwise,</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span><span class="sd"> return the named object.</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">193</span> <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">194</span> <span class="n">module</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;module&#39;</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span> <span class="n">attrs</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;attr&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="nb">getattr</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
-
-<span class="nn">File ~/opt/anaconda3/lib/python3.9/importlib/__init__.py:127,</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span>             <span class="k">break</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span>         <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="ne">--&gt; </span><span class="mi">127</span> <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1030,</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:1007,</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:986,</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:680,</span> in <span class="ni">_load_unlocked</span><span class="nt">(spec)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap_external&gt;:850,</span> in <span class="ni">exec_module</span><span class="nt">(self, module)</span>
-
-<span class="nn">File &lt;frozen importlib._bootstrap&gt;:228,</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">spacy_dbpedia_spotlight</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">spacy.language</span> <span class="kn">import</span> <span class="n">Language</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">spacy.util</span> <span class="kn">import</span> <span class="n">load_model_from_init_py</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">entity_linker</span><span class="p">,</span> <span class="n">util</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.entity_linker</span> <span class="kn">import</span> <span class="n">EntityLinker</span><span class="p">,</span> <span class="n">create</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">__version__</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">pkg_meta</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
-
-<span class="n">File</span> <span class="o">~/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda3</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.9</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">spacy_dbpedia_spotlight</span><span class="o">/</span><span class="n">entity_linker</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">Span</span><span class="o">.</span><span class="n">set_extension</span><span class="p">(</span><span class="s2">&quot;dbpedia_raw_result&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">Doc</span><span class="o">.</span><span class="n">set_extension</span><span class="p">(</span><span class="s2">&quot;dbpedia_raw_result&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">20</span> <span class="nd">@Language</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="s1">&#39;dbpedia_spotlight&#39;</span><span class="p">,</span> <span class="n">default_config</span><span class="o">=</span><span class="p">{</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="s1">&#39;language_code&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="s1">&#39;dbpedia_rest_endpoint&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="s1">&#39;process&#39;</span><span class="p">:</span> <span class="s1">&#39;annotate&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="s1">&#39;support&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="s1">&#39;types&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="s1">&#39;sparql&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="s1">&#39;policy&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="s1">&#39;span_group&#39;</span><span class="p">:</span> <span class="s1">&#39;dbpedia_spotlight&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="s1">&#39;overwrite_ents&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="s1">&#39;raise_http_errors&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="s1">&#39;debug&#39;</span><span class="p">:</span> <span class="kc">False</span>
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="p">})</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">def</span> <span class="nf">dbpedia_spotlight_factory</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">language_code</span><span class="p">,</span> <span class="n">dbpedia_rest_endpoint</span><span class="p">,</span> <span class="n">process</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">sparql</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">span_group</span><span class="p">,</span> <span class="n">overwrite_ents</span><span class="p">,</span> <span class="n">raise_http_errors</span><span class="p">,</span> <span class="n">debug</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span><span class="w">     </span><span class="sd">&#39;&#39;&#39;Factory of the pipeline stage `dbpedia_spotlight`.</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span><span class="sd">     Parameters:</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="sd">     - `language_code`: which language to use for entity linking. Possible values are listed in EntityLinker.supported_languages. If the parameter is left as None, the language code is matched with the nlp object currently used.</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">     </span><span class="mi">48</span><span class="sd">     - `debug`: prints several debug information to stdout</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span><span class="sd">     &#39;&#39;&#39;</span>
-<span class="g g-Whitespace">     </span><span class="mi">50</span>     <span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
-
-<span class="ne">AttributeError</span>: type object &#39;Language&#39; has no attribute &#39;factory&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;spacy.lang.en.English at 0x114e404d0&gt;
 </pre></div>
 </div>
 </div>
@@ -870,12 +1237,12 @@ document.write(`
 </div>
 </div>
 </div>
-<p>Hmmm, it is a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object. But wait, what exactly is a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object?</p>
-<p>It is a sequence of tokens that contains not just the original text but all the results produced by the <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> model after processing the text. Useful information such as the lemma of the text, whether it is a stop word or not, named entities, the word vector of the text and so on are pre-computed and readily stored in the <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object.</p>
+<p>Hmmm, it is a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object. But wait, what is exactly a <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object?</p>
+<p>It is a sequence of tokens that contains not just the original text but all the results produced by the <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> model after processing the text. Useful information such as the lemma of the text, whether it is a stop word or not, named entities, the word vector of the text, and so on are pre-computed and readily stored in the <code class="docutils literal notranslate"><span class="pre">Doc</span></code> object.</p>
 <p>So first, what is a token?</p>
 <p>As you have learnt from the lecture. Tokens are individual textual entities that make up the text. Typically a token can be the words, punctuation, spaces, etc. Tokenization is the process of converting a text into smaller sub-texts, based on certain predefined rules. For example, sentences are tokenized to words (and punctuation optionally). And paragraphs into sentences, depending on the context.</p>
 <p>Each token in <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> has different attributes that tell us a great deal of information.</p>
-<p>Let’s see the token texts on <code class="docutils literal notranslate"><span class="pre">my_doc</span></code>. The string which the token represents can be accessed through the <code class="docutils literal notranslate"><span class="pre">token.text</span></code> attribute.</p>
+<p>Let’s see the token texts on <code class="docutils literal notranslate"><span class="pre">my_doc</span></code>. The string, which the token represents, can be accessed through the <code class="docutils literal notranslate"><span class="pre">token.text</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Printing the tokens of a doc</span>
@@ -1016,7 +1383,7 @@ cost -- False --- False
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Removing StopWords and punctuations</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Removing stop words and punctuations</span>
 <span class="n">my_doc_cleaned</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_stop</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_punct</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">token</span><span class="o">.</span><span class="n">is_space</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc_cleaned</span><span class="p">:</span>
@@ -1092,7 +1459,7 @@ cost ----  NOUN
 </div>
 </div>
 </div>
-<p>You will see each word (token) now is associated with a POS tag, whether it is a Noun, a Adj, a Verb, or so on … POS often can help us disambiguate the meaning of words (or places in GIR).</p>
+<p>You will see each word (token) now is associated with a POS tag, whether it is a NOUN, a ADJ, a VERB, or so on … POS often can help us disambiguate the meaning of words (or places in GIR).</p>
 <p>Btw, if you don’t know what “ADJ” means, you can use code like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1106,7 +1473,7 @@ cost ----  NOUN
 </div>
 </div>
 </div>
-<p>You can also use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> to do some Named Entity Recognition (including place name identification or geoparsing). For you instance:</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">spaCy</span></code> to do some Named Entity Recognition (including place name identification or geoparsing). For instance:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Tony Stark owns the company StarkEnterprises . Emily Clark works at Microsoft and lives in Manchester. She loves to read the Bible and learn French&#39;</span>
@@ -1124,7 +1491,7 @@ Emily Clark ---  PERSON
 Microsoft ---  ORG
 Manchester ---  GPE
 Bible ---  WORK_OF_ART
-French ---  NORP
+French ---  LANGUAGE
 </pre></div>
 </div>
 </div>
@@ -1142,7 +1509,7 @@ French ---  NORP
 </div>
 </div>
 </div>
-<p>spaCy also provides special visualization for NER through displacy. Using <code class="docutils literal notranslate"><span class="pre">displacy.render()</span></code> function, you can set the <code class="docutils literal notranslate"><span class="pre">style='ent'</span></code> to visualize.</p>
+<p>spaCy also provides special visualization for NER through displacy. Using <code class="docutils literal notranslate"><span class="pre">displacy.render()</span></code> function, you can set the <code class="docutils literal notranslate"><span class="pre">style='ent'</span></code> to visualize. For more interesting visualizations, check <a class="reference external" href="https://spacy.io/usage/visualizers">displacy documentation</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using displacy for visualizing NER</span>
@@ -1183,21 +1550,22 @@ French ---  NORP
     <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">WORK_OF_ART</span>
 </mark>
  and learn 
-<mark class="entity" style="background: #c887fb; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+<mark class="entity" style="background: #ff8197; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
     French
-    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">NORP</span>
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">LANGUAGE</span>
 </mark>
 </div></span></div></div>
 </div>
-<p>So far, you have learnt the basics of retrieving information from social media like Twitter, as well as basic NLP operations and named entity recognition (geoparsing is part of it). I suggest you to play with what you have learnt so far by using new data to experiment these functions, changing the parameters of function, combining these skills with what you have learn in Tutorial 1 (e.g., geopandas), etc.</p>
+<p>So far, you have learnt the basics of retrieving information from social media like Twitter, as well as basic NLP operations and named entity recognition (geoparsing is part of it). I suggest you to play with what you have learnt so far by using new data (maybe through different APIs) to experiment these functions, changing the parameters of function, combining these skills with what you have learn in Tutorial 1 (e.g., <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>), etc.</p>
 </section>
 <section id="part-3-geocoding-the-recognized-place-names">
 <h2>Part 3: Geocoding the recognized place names<a class="headerlink" href="#part-3-geocoding-the-recognized-place-names" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">spaCy</span></code> helps us recognize different categories of tokens from a text, including place names (with tag <code class="docutils literal notranslate"><span class="pre">GPE</span></code> or <code class="docutils literal notranslate"><span class="pre">LOC</span></code>), but have not refer these place names into geographical locations on the surface of the earth. In this part, we will explore ways of geocoding text-based place names to geographic coordinates. There are several cool libraries/packages there for us to directly use, which we will cover some in this tutorial. But before that, let’s develop our own geocoding tool first. We might not use it in the future due to its simplicity, but it will help us understand the fundementals behind those technologies, which we have highlighted in our lectures.</p>
-<p>First, let’s create a variable storing the text that we want to georeference. The text below is copied from the Physical Geography section from the wikipedia page about the UK. We then use <code class="docutils literal notranslate"><span class="pre">nlp()</span></code> to convert the text into a <code class="docutils literal notranslate"><span class="pre">nlp</span></code> object defined by <code class="docutils literal notranslate"><span class="pre">spacy</span></code>. Having this object, we can then extract place names using the label <code class="docutils literal notranslate"><span class="pre">LOC</span></code> and <code class="docutils literal notranslate"><span class="pre">GPE</span></code>. Here we use a <code class="docutils literal notranslate"><span class="pre">for-loop</span></code> to go through all the tokens and only get those that have the two location-related labels, and then save them all into a list <code class="docutils literal notranslate"><span class="pre">locations</span></code>. Then we transfer such a list into a <code class="docutils literal notranslate"><span class="pre">panda</span></code> dataframe.</p>
+<p>First, let’s create a variable storing the text that we want to georeference. The text below is copied from the Physical Geography section from the wikipedia page about the UK. We then use <code class="docutils literal notranslate"><span class="pre">nlp()</span></code> to convert the text into a <code class="docutils literal notranslate"><span class="pre">nlp</span></code> object defined by <code class="docutils literal notranslate"><span class="pre">spacy</span></code>. Having this object, we can then extract place names using the label <code class="docutils literal notranslate"><span class="pre">LOC</span></code> and/or <code class="docutils literal notranslate"><span class="pre">GPE</span></code>. Here we use a <code class="docutils literal notranslate"><span class="pre">for-loop</span></code> to go through all the tokens and only get those that have the two location-related labels, and then save them all into a list called <code class="docutils literal notranslate"><span class="pre">locations</span></code>. Finally, we transfer such a list into a <code class="docutils literal notranslate"><span class="pre">panda</span></code> dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UK_physicalGeo</span> <span class="o">=</span> <span class="s2">&quot;The physical geography of the UK varies greatly. England consists of mostly lowland terrain, with upland or mountainous terrain only found north-west of the Tees-Exe line. The upland areas include the Lake District, the Pennines, North York Moors, Exmoor and Dartmoor. The lowland areas are typically traversed by ranges of low hills, frequently composed of chalk, and flat plains. Scotland is the most mountainous country in the UK and its physical geography is distinguished by the Highland Boundary Fault which traverses the Scottish mainland from Helensburgh to Stonehaven. The faultline separates the two distinctively different regions of the Highlands to the north and west, and the Lowlands to the south and east. The Highlands are predominantly mountainous, containing the majority of Scotland&#39;s mountainous landscape, while the Lowlands contain flatter land, especially across the Central Lowlands, with upland and mountainous terrain located at the Southern Uplands. Wales is mostly mountainous, though south Wales is less mountainous than north and mid Wales. Northern Ireland consists of mostly hilly landscape and its geography includes the Mourne Mountains as well as Lough Neagh, at 388 square kilometres (150 sq mi), the largest body of water in the UK.[12]The overall geomorphology of the UK was shaped by a combination of forces including tectonics and climate change, in particular glaciation in northern and western areas. The tallest mountain in the UK (and British Isles) is Ben Nevis, in the Grampian Mountains, Scotland. The longest river is the River Severn which flows from Wales into England. The largest lake by surface area is Lough Neagh in Northern Ireland, though Scotland&#39;s Loch Ness has the largest volume.&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">UK_physicalGeo</span> <span class="o">=</span> <span class="s2">&quot;The physical geography of the UK varies greatly. England consists of mostly lowland terrain, with upland or mountainous terrain only found north-west of the Tees-Exe line. The upland areas include the Lake District, the Pennines, North York Moors, Exmoor and Dartmoor. The lowland areas are typically traversed by ranges of low hills, frequently composed of chalk, and flat plains. Scotland is the most mountainous country in the UK and its physical geography is distinguished by the Highland Boundary Fault which traverses the Scottish mainland from Helensburgh to Stonehaven. The faultline separates the two distinctively different regions of the Highlands to the north and west, and the Lowlands to the south and east. The Highlands are predominantly mountainous, containing the majority of Scotland&#39;s mountainous landscape, while the Lowlands contain flatter land, especially across the Central Lowlands, with upland and mountainous terrain located at the Southern Uplands. Wales is mostly mountainous, though south Wales is less mountainous than north and mid Wales. Northern Ireland consists of mostly hilly landscape and its geography includes the Mourne Mountains as well as Lough Neagh, at 388 square kilometres (150 sq mi), the largest body of water in the UK.[12]The overall geomorphology of the UK was shaped by a combination of forces including tectonics and climate change, in particular glaciation in northern and western areas. The tallest mountain in the UK (and British Isles) is Ben Nevis, in the Grampian Mountains, Scotland. The longest river is the River Severn which flows from Wales into England. The largest lake by surface area is Lough Neagh in Northern Ireland, though Scotland&#39;s Loch Ness has the largest volume.&quot;</span>
 <span class="n">UK_physicalGeo_doc</span><span class="o">=</span><span class="n">nlp</span><span class="p">(</span><span class="n">UK_physicalGeo</span><span class="p">)</span>
 
 <span class="n">locations</span> <span class="o">=</span> <span class="p">[]</span> 
@@ -1212,13 +1580,16 @@ French ---  NORP
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UK ---  GPE
+England ---  GPE
 the Lake District ---  LOC
-Pennines ---  LOC
 North York Moors ---  GPE
 Scotland ---  GPE
 UK ---  GPE
 Helensburgh ---  GPE
+south ---  LOC
 Scotland ---  GPE
+Central Lowlands ---  LOC
+the Southern Uplands ---  LOC
 Wales ---  GPE
 Wales ---  GPE
 Northern Ireland ---  GPE
@@ -1227,15 +1598,26 @@ UK ---  GPE
 UK ---  GPE
 the Grampian Mountains ---  LOC
 Scotland ---  GPE
+the River Severn ---  LOC
 Wales ---  GPE
 England ---  GPE
 Northern Ireland ---  GPE
 Scotland ---  GPE
 </pre></div>
 </div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_18715/3670193927.py:1: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+</pre></div>
 </div>
 </div>
-<p>Note that we see many duplicates in the list. What we can do is then to delete those duplicates. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provides a very easy function for us to do it: <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code>:</p>
+</div>
+<p>Note that we see many duplicates in the list. What we can do is to delete those duplicates. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provides a very easy function for us to do it: <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">locations_df</span> <span class="o">=</span> <span class="n">locations_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
@@ -1274,12 +1656,12 @@ Scotland ---  GPE
     </tr>
     <tr>
       <th>1</th>
-      <td>the Lake District</td>
-      <td>LOC</td>
+      <td>England</td>
+      <td>GPE</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Pennines</td>
+      <td>the Lake District</td>
       <td>LOC</td>
     </tr>
     <tr>
@@ -1298,29 +1680,44 @@ Scotland ---  GPE
       <td>GPE</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>7</th>
+      <td>south</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Central Lowlands</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>the Southern Uplands</td>
+      <td>LOC</td>
+    </tr>
+    <tr>
+      <th>11</th>
       <td>Wales</td>
       <td>GPE</td>
     </tr>
     <tr>
-      <th>10</th>
+      <th>13</th>
       <td>Northern Ireland</td>
       <td>GPE</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>14</th>
       <td>the Mourne Mountains</td>
       <td>LOC</td>
     </tr>
     <tr>
-      <th>14</th>
+      <th>17</th>
       <td>the Grampian Mountains</td>
       <td>LOC</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>England</td>
-      <td>GPE</td>
+      <th>19</th>
+      <td>the River Severn</td>
+      <td>LOC</td>
     </tr>
   </tbody>
 </table>
@@ -1328,7 +1725,7 @@ Scotland ---  GPE
 </div>
 <p>In Python, there are often many ways to achieve the same goal. To use what we have done so far as an example, you can also use the code below to achieve the same (creating the <code class="docutils literal notranslate"><span class="pre">locations</span></code> list). Try it yourself!</p>
 <p><code class="docutils literal notranslate"><span class="pre">locations.extend([[entity.text,</span> <span class="pre">entity.label_]</span> <span class="pre">for</span> <span class="pre">entity</span> <span class="pre">in</span> <span class="pre">UK_physicalGeo_doc.ents</span> <span class="pre">if</span> <span class="pre">entity.label_</span> <span class="pre">in</span> <span class="pre">[‘LOC’,</span> <span class="pre">'GPE']]</span></code></p>
-<p>After recognized these place names, we next want to geocode them. First, we want to see how far we can go without using any external geocoding/geoparsing libraries.</p>
+<p>After recognizing (or extracting) these place names, we next want to geocode them. First, we want to see how far we can go without using any external geocoding/geoparsing libraries.</p>
 <p>As we discussed in the lecture, to do geocoding, we need a gazetteer first. Since the example we are using is mostly about the UK, we can use the <a class="reference external" href="https://gazetteer.org.uk/purchase">Gazetteer of British Place Names</a>. Make sure you downloaded the csv file into your local directory, and remember to replace the directory <code class="docutils literal notranslate"><span class="pre">../../LabData/GBPN_14062021.csv</span></code> below to yours.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1341,7 +1738,9 @@ Scotland ---  GPE
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_3617/3736579507.py:4: DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyproj/__init__.py:89: UserWarning: pyproj unable to set database path.
+  _pyproj_global_context_initialize()
+/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_18715/3736579507.py:4: DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
   UK_gazetteer_df = pd.read_csv(&#39;../../LabData/GBPN_14062021.csv&#39;)
 </pre></div>
 </div>
@@ -1469,15 +1868,15 @@ Scotland ---  GPE
 </table>
 </div></div></div>
 </div>
-<p>This is obiviously a spatial data set. Then, we want to represent the data as <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>. To do so, we will convert the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> and <code class="docutils literal notranslate"><span class="pre">Lng</span></code> columns into a new column, which is <code class="docutils literal notranslate"><span class="pre">geometry</span></code>. We also need to assign the coordinate reference system to the data.</p>
-<p>If you started doing so, you will quickly find there might be an error saying something is wrong on the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> column. Don’t be panic! After you understand what the error indicates, you can go back to the csv file, where you will find a cell value on <code class="docutils literal notranslate"><span class="pre">Lat</span></code> is <code class="docutils literal notranslate"><span class="pre">53.20N</span></code>. This is not a standard way of representing geographic coordinates. What we can do is to simply remove that row, then finish the transformation from dataframe to geodataframe:</p>
+<p>This is obiviously a spatial data set as it has two columns <code class="docutils literal notranslate"><span class="pre">Lat</span></code> abd <code class="docutils literal notranslate"><span class="pre">Lng</span></code> that represent the geographic coordinates of the entry. Then, we want to transfer the data as <code class="docutils literal notranslate"><span class="pre">geopandas</span></code>. To do so, we will convert the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> and <code class="docutils literal notranslate"><span class="pre">Lng</span></code> columns into a new column, which is called <code class="docutils literal notranslate"><span class="pre">geometry</span></code>. We also need to assign the right coordinate reference system to the data (we have covered all these in the lectures).</p>
+<p>If you started doing so, you will quickly find there might be an error saying something is wrong on the <code class="docutils literal notranslate"><span class="pre">Lat</span></code> column. Don’t be panic! After you understand what the error indicates, you can go back to the csv file, where you will find a cell value on <code class="docutils literal notranslate"><span class="pre">Lat</span></code> is <code class="docutils literal notranslate"><span class="pre">53.20N</span></code>. This is not a standard way of representing geographic coordinates. What we can do is to simply remove that row, then finish the transformation from <code class="docutils literal notranslate"><span class="pre">dataframe</span></code> to <code class="docutils literal notranslate"><span class="pre">geodataframe</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">UK_gazetteer_df</span><span class="p">[</span><span class="n">UK_gazetteer_df</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;53.20N &#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="n">UK_gazetteer_gpd</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span>
    <span class="n">UK_gazetteer_df</span> <span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">gpd</span><span class="o">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">Lng</span><span class="p">,</span> <span class="n">UK_gazetteer_df</span><span class="o">.</span><span class="n">Lat</span><span class="p">))</span>
-<span class="n">UK_gazetteer_gpd</span><span class="o">.</span><span class="n">set_crs</span><span class="p">(</span><span class="s1">&#39;epsg:4326&#39;</span><span class="p">)</span>
+<span class="c1">#UK_gazetteer_gpd.set_crs(&#39;epsg:4326&#39;)</span>
 <span class="n">UK_gazetteer_gpd</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1683,8 +2082,8 @@ Scotland ---  GPE
     </tr>
     <tr>
       <th>1</th>
-      <td>the Lake District</td>
-      <td>LOC</td>
+      <td>England</td>
+      <td>GPE</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1703,7 +2102,7 @@ Scotland ---  GPE
     </tr>
     <tr>
       <th>2</th>
-      <td>Pennines</td>
+      <td>the Lake District</td>
       <td>LOC</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1863,6 +2262,66 @@ Scotland ---  GPE
     </tr>
     <tr>
       <th>10</th>
+      <td>south</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Central Lowlands</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>the Southern Uplands</td>
+      <td>LOC</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>13</th>
       <td>Wales</td>
       <td>GPE</td>
       <td>47495.0</td>
@@ -1882,7 +2341,7 @@ Scotland ---  GPE
       <td>POINT (-1.28415 53.34108)</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>14</th>
       <td>Wales</td>
       <td>GPE</td>
       <td>47496.0</td>
@@ -1902,7 +2361,7 @@ Scotland ---  GPE
       <td>POINT (-2.59019 51.02019)</td>
     </tr>
     <tr>
-      <th>12</th>
+      <th>15</th>
       <td>Wales</td>
       <td>GPE</td>
       <td>64525.0</td>
@@ -1922,7 +2381,7 @@ Scotland ---  GPE
       <td>POINT (-1.29096 53.34110)</td>
     </tr>
     <tr>
-      <th>13</th>
+      <th>16</th>
       <td>Northern Ireland</td>
       <td>GPE</td>
       <td>NaN</td>
@@ -1942,7 +2401,7 @@ Scotland ---  GPE
       <td>None</td>
     </tr>
     <tr>
-      <th>14</th>
+      <th>17</th>
       <td>the Mourne Mountains</td>
       <td>LOC</td>
       <td>NaN</td>
@@ -1962,7 +2421,7 @@ Scotland ---  GPE
       <td>None</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>18</th>
       <td>the Grampian Mountains</td>
       <td>LOC</td>
       <td>NaN</td>
@@ -1982,9 +2441,9 @@ Scotland ---  GPE
       <td>None</td>
     </tr>
     <tr>
-      <th>16</th>
-      <td>England</td>
-      <td>GPE</td>
+      <th>19</th>
+      <td>the River Severn</td>
+      <td>LOC</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -2108,8 +2567,8 @@ Scotland ---  GPE
 </table>
 </div></div></div>
 </div>
-<p>All these are due to facts that (1). our imported gazetteer is only about places in England, and (2). our simple model is uncapable to capture the context of the text. Do you have better ideas to improve our simple geocoding tool?</p>
-<p>Now it is a great time to introduce you some “fancy” geocoding/geoparsing libraries. Let’s try <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> next. Make sure you have installed it. Assuming we already have the <code class="docutils literal notranslate"><span class="pre">nlp</span></code> objec from previous steps, or you can create a new one like below, below are the code of using the library:</p>
+<p>All these are due to facts that (1) our imported gazetteer is only about places in England, and (2) our simple model is incapable of capturing the context of the text. Do you have better ideas to improve our simple geocoding tool?</p>
+<p>Now it is the right time to introduce you some more “fancy” geocoding/geoparsing libraries. Let’s try <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> here. Make sure you have installed it. Assuming we already have the <code class="docutils literal notranslate"><span class="pre">nlp</span></code> objec from the previous steps, or you can create a new one like below, below are the code of using the library:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacy_dbpedia_spotlight</span>
@@ -2134,8 +2593,9 @@ Scotland ---  GPE
 </div>
 </div>
 </div>
-<p>What the code does is to go through all the tokens in the text and try to find the corresponding entities from DBpedia. The result is a list of tuples. One tuple example is as shown in the box. It includes the text that is parsed, its label (notice how different it is than <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>’s labels), its id in DBpedia (this is very useful as all associated information can be further retrieved using this link. We will cover more about in the future lectures and tutorials), and a score from 0-1 (this is the similarity score of the string matching; the higher it is, the more similar the target text with the candidate).</p>
-<p>Similar to what we did before, we can then transfer this list into a data frame. Note that since we do not have coordinates explicitly listed here, we can simply use <code class="docutils literal notranslate"><span class="pre">pandas</span></code>’s data frame.</p>
+<p>What the code does is to go through all the tokens in the text and try to find the corresponding entities from DBpedia. The result is a list of tuples. One tuple example is as shown in the box. It includes the text that is parsed, its label (notice how different it is than <code class="docutils literal notranslate"><span class="pre">spaCy</span></code>’s labels), its id in DBpedia (this is very useful as all associated information can be further retrieved using this link. We will cover more about it in future lectures (and tutorials), and a score from 0-1 (this is the similarity score of the string matching; the higher it is, the more similar the target text with the candidate).</p>
+<p>Similar to what we did before, we can then transfer this list into a <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>. Note that since we do not have coordinates explicitly listed here, we can simply use <code class="docutils literal notranslate"><span class="pre">pandas</span></code>’s general <code class="docutils literal notranslate"><span class="pre">dataframe</span></code>.</p>
+<p>Check <a class="reference external" href="https://github.com/MartinoMensio/spacy-dbpedia-spotlight">Spacy DBpedia Spotlight</a> for more interesting functions and examples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Text&#39;</span><span class="p">,</span> <span class="s1">&#39;DBpedia Label&#39;</span><span class="p">,</span> <span class="s1">&#39;DBpedia URI&#39;</span><span class="p">,</span> <span class="s1">&#39;Similarity Score&#39;</span><span class="p">]</span>
@@ -2388,7 +2848,57 @@ Scotland ---  GPE
 </div>
 <p>It seems that the coordinate is not extracted from the tool. But if you use the url, for example <a class="reference external" href="https://dbpedia.org/page/Lake_District">https://dbpedia.org/page/Lake_District</a>, you will see a full information about the place, including its geometry and more! See below for instance:
 <img alt="DBpedia-Point" src="../_images/lab2-fig5.png" /></p>
-<p>Again, even thgough <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> has its advantages, as you can see there are still flaws in such a tool. For example, many non-spatial entiteis are also detected and coordinates are not explicitly show. Do you have any idea on addressing these issues? (hint: maybe check this library - <a class="reference external" href="https://github.com/MatteusT/pyDBpedia">pyDBpedia</a> which helps you access the data shown in DBpedia).</p>
+<p>If you wish to extract the geometry of the identified geographic entities automatically in python, below is the example function. Here we used a library <code class="docutils literal notranslate"><span class="pre">SPARQLWrapper</span></code> for us to send a SPARQL query (or called a request) to an endpoint (or called server, here we use DBpedia <code class="docutils literal notranslate"><span class="pre">http://dbpedia.org/sparql</span></code> as an example), and the endpoint will respond by sending the queried information back to your python program.</p>
+<p>Also note that the process is exactly same to using SQL query language. The only difference is that SQL is for tabular data, while SPARQL is for knowledge graphs, which we will discuss in the near future. To learn SQL in Python, I suggest <a class="reference external" href="https://www.datacamp.com/tutorial/tutorial-how-to-execute-sql-queries-in-r-and-python">this post</a>, in which I recommend to check the use <a class="reference external" href="https://docs.python.org/3/library/sqlite3.html">sqlite3</a> library.</p>
+<p>The syntax of SQL and SPARQl are quite similar. Main reasons to focus on SPARQL here are:
+(1) SPARQL is more advanced
+(2) Many knowledge graphs are open, so that we can readily access the endpoint. In contrast, we must first build some relational databases (using MySQL, Postgres, etc.) in order to use SQL in Python</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">SPARQLWrapper</span> <span class="kn">import</span> <span class="n">SPARQLWrapper</span><span class="p">,</span> <span class="n">JSON</span>
+
+<span class="k">def</span> <span class="nf">get_coordinates</span><span class="p">(</span><span class="n">place_url</span><span class="p">):</span>
+    
+    <span class="n">sparql</span> <span class="o">=</span> <span class="n">SPARQLWrapper</span><span class="p">(</span><span class="s2">&quot;http://dbpedia.org/sparql&quot;</span><span class="p">)</span>
+    <span class="n">sparql</span><span class="o">.</span><span class="n">setReturnFormat</span><span class="p">(</span><span class="n">JSON</span><span class="p">)</span>
+    
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;PREFIX db: &lt;http://dbpedia.org/resource/&gt;</span>
+<span class="s2">    PREFIX georss: &lt;http://www.georss.org/georss/&gt;</span>
+<span class="s2">    SELECT ?geom WHERE { &lt;</span><span class="si">%s</span><span class="s2">&gt; georss:point ?geom. } &quot;&quot;&quot;</span><span class="o">%</span><span class="k">place_url</span>
+
+    <span class="n">sparql</span><span class="o">.</span><span class="n">setQuery</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">sparql</span><span class="o">.</span><span class="n">query</span><span class="p">()</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="n">get_coordinates</span><span class="p">(</span><span class="s2">&quot;http://dbpedia.org/resource/Dartmoor&quot;</span><span class="p">)</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;head&#39;: {&#39;link&#39;: [], &#39;vars&#39;: [&#39;geom&#39;]},
+ &#39;results&#39;: {&#39;distinct&#39;: False,
+  &#39;ordered&#39;: True,
+  &#39;bindings&#39;: [{&#39;geom&#39;: {&#39;type&#39;: &#39;literal&#39;,
+     &#39;value&#39;: &#39;50.56666666666667 -4.0&#39;}}]}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result <code class="docutils literal notranslate"><span class="pre">example</span></code> is formated as json (check <a class="reference external" href="https://www.w3schools.com/js/js_json_intro.asp">this documentation</a> if you have not heard about it). We can easily extract the attribute <code class="docutils literal notranslate"><span class="pre">geom</span></code> from it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geom</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="s1">&#39;bindings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;geom&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+<span class="n">geom</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;50.56666666666667 -4.0&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, even thgough <code class="docutils literal notranslate"><span class="pre">spacy_dbpedia_spotlight</span></code> has its advantages for geoparsing, there are still flaws in such a tool. For example, many non-spatial entiteis are also detected and coordinates are not explicitly show (e.g., Moors). Do you have any idea on addressing these issues? (hint: maybe check this library - <a class="reference external" href="https://github.com/MatteusT/pyDBpedia">pyDBpedia</a> which also helps you access the data shown in DBpedia).</p>
 <p>Now, you can also try to use it on your extracted tweets, or other texts you get from the Internet.</p>
 </section>
 </section>
@@ -2402,16 +2912,16 @@ Scotland ---  GPE
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "ox"
         },
         kernelOptions: {
-            name: "python3",
+            name: "ox",
             path: "./labs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'ox'</script>
 
                 </article>
               
@@ -2457,7 +2967,8 @@ Scotland ---  GPE
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-extracting-geo-text-from-twitter">Part 1: Extracting (geo)text from Twitter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-1-retrieving-data-from-location-based-social-media">Part 1-1: Retrieving data from location-based social media</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-2-extracting-geo-text-from-twitter">Part 1-2: Extracting (geo)text from Twitter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-basic-natural-language-processing-and-geoparsing">Part 2: Basic Natural Language Processing and Geoparsing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-geocoding-the-recognized-place-names">Part 3: Geocoding the recognized place names</a></li>
 </ul>
