@@ -448,7 +448,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_49362/3946376676.py:2: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_53963/3946376676.py:2: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -1094,26 +1094,10 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 <p>Next, we also need to obtain the Access Token and its key. To do so, go to the <code class="docutils literal notranslate"><span class="pre">Projects</span> <span class="pre">&amp;</span> <span class="pre">Apps</span></code>–&gt; Select your App. Then click <code class="docutils literal notranslate"><span class="pre">Keys</span> <span class="pre">and</span> <span class="pre">tokens</span></code>, and then click <code class="docutils literal notranslate"><span class="pre">Generate</span></code> on the right of <code class="docutils literal notranslate"><span class="pre">Access</span> <span class="pre">Token</span> <span class="pre">and</span> <span class="pre">Secret</span></code> (see below). Again, make sure you record them in a safe place. We need them later. Note that if for some reasons, you lose your tokens and secrets, this page is where you regenerate them.</p>
 <p><img alt="Access Token Example" src="../_images/lab2-fig3.png" /></p>
 <p>Once you have your Twitter app set-up, you are ready to access tweets in Python. Begin by importing the necessary Python libraries.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">tweepy</span> <span class="k">as</span> <span class="nn">tw</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;tweepy&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <p>To access the Twitter API, you will need four things from your Twitter App page. These keys are located in your Twitter app settings in the Keys and Access Tokens tab.</p>
 <ul class="simple">
@@ -1210,7 +1194,7 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;spacy.lang.en.English at 0x114e404d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;spacy.lang.en.English at 0x16bb349e0&gt;
 </pre></div>
 </div>
 </div>
@@ -1605,16 +1589,6 @@ Northern Ireland ---  GPE
 Scotland ---  GPE
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_18715/3670193927.py:1: DeprecationWarning: 
-Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
-(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
-but was not found to be installed on your system.
-If this would cause problems for you,
-please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
-        
-  import pandas as pd
-</pre></div>
-</div>
 </div>
 </div>
 <p>Note that we see many duplicates in the list. What we can do is to delete those duplicates. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provides a very easy function for us to do it: <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code>:</p>
@@ -1738,9 +1712,7 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyproj/__init__.py:89: UserWarning: pyproj unable to set database path.
-  _pyproj_global_context_initialize()
-/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_18715/3736579507.py:4: DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_53963/3736579507.py:4: DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
   UK_gazetteer_df = pd.read_csv(&#39;../../LabData/GBPN_14062021.csv&#39;)
 </pre></div>
 </div>
