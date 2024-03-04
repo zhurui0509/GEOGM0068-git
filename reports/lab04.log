@@ -17,14 +17,42 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-print(gensim.__version__)
+# load the data 
+import geopandas as gpd
+import pandas as pd
+import json
+from shapely.geometry import shape
+from shapely import wkt
+import gensim # make sure it is in the version of 4.2.0 or later 
+
+
+
+bristol_lsoal_poi_full = pd.read_csv('bristol_lsoal_poi_full.csv', sep = '\t',converters={"fclass": lambda x: x.strip("[]").split(", ")})
+bristol_lsoal_poi_full['geom'] = bristol_lsoal_poi_full['geom'].apply(wkt.loads)
+bristol_lsoal_poi_full = gpd.GeoDataFrame(bristol_lsoal_poi_full,crs="EPSG:4326", geometry= "geom")
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Input [0;32mIn [1][0m, in [0;36m<cell line: 1>[0;34m()[0m
-[0;32m----> 1[0m [38;5;28mprint[39m([43mgensim[49m[38;5;241m.[39m__version__)
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Input [0;32mIn [2][0m, in [0;36m<cell line: 2>[0;34m()[0m
+[1;32m      1[0m [38;5;66;03m# load the data [39;00m
+[0;32m----> 2[0m [38;5;28;01mimport[39;00m [38;5;21;01mgeopandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mgpd[39;00m
+[1;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
+[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mjson[39;00m
 
-[0;31mNameError[0m: name 'gensim' is not defined
-NameError: name 'gensim' is not defined
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/geopandas/__init__.py:3[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_config[39;00m [38;5;28;01mimport[39;00m options
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeoseries[39;00m [38;5;28;01mimport[39;00m GeoSeries
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeodataframe[39;00m [38;5;28;01mimport[39;00m GeoDataFrame
+[1;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01marray[39;00m [38;5;28;01mimport[39;00m points_from_xy
+
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/geopandas/geoseries.py:13[0m, in [0;36m<module>[0;34m[0m
+[1;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mimport[39;00m Series, MultiIndex
+[1;32m     11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01minternals[39;00m [38;5;28;01mimport[39;00m SingleBlockManager
+[0;32m---> 13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyproj[39;00m [38;5;28;01mimport[39;00m CRS
+[1;32m     14[0m [38;5;28;01mimport[39;00m [38;5;21;01mshapely[39;00m
+[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01mshapely[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeometry[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbase[39;00m [38;5;28;01mimport[39;00m BaseGeometry
+
+[0;31mModuleNotFoundError[0m: No module named 'pyproj'
+ModuleNotFoundError: No module named 'pyproj'
 

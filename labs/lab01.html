@@ -453,7 +453,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_13451/2875102215.py:1: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/xg/5n3zc4sn5hlcg8zzz6ysx21m0000gq/T/ipykernel_83912/2875102215.py:1: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -1022,6 +1022,19 @@ memory usage: 6.9+ MB
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/gy22808/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/networks.py:37: FutureWarning: ChainedAssignmentError: behaviour will change in pandas 3.0!
+You are setting values through chained assignment. Currently this works in certain cases, but when using Copy-on-Write (which will become the default behaviour in pandas 3.0) this will never work to update the original DataFrame or Series, because the intermediate object on which we are setting values will behave as a copy.
+A typical example is when you are setting values in a column of a DataFrame, like:
+
+df[&quot;col&quot;][row_indexer] = value
+
+Use `df.loc[row_indexer, &quot;col&quot;] = values` instead, to perform the assignment in a single step and ensure this keeps updating the original `df`.
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+
+  edges, nodes = prepare_geodataframe(
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
@@ -1062,13 +1075,29 @@ memory usage: 6.9+ MB
 
 <span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:143,</span> in <span class="ni">pyrosm.frames.prepare_geodataframe</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:54,</span> in <span class="ni">pyrosm.frames.prepare_way_gdf</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/frames.pyx:72,</span> in <span class="ni">pyrosm.frames.prepare_way_gdf</span><span class="nt">()</span>
 
-<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:433,</span> in <span class="ni">pyrosm.geometry.create_way_geometries</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/distance.py:78,</span> in <span class="ni">calculate_geom_length</span><span class="nt">(geom)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">def</span> <span class="nf">calculate_geom_length</span><span class="p">(</span><span class="n">geom</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">78</span>     <span class="k">return</span> <span class="n">calculate_geom_array_length</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:399,</span> in <span class="ni">pyrosm.geometry._create_way_geometries</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/distance.py:82,</span> in <span class="ni">calculate_geom_array_length</span><span class="nt">(geom_array)</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">def</span> <span class="nf">calculate_geom_array_length</span><span class="p">(</span><span class="n">geom_array</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">82</span>     <span class="n">coords</span> <span class="o">=</span> <span class="n">get_coordinates</span><span class="p">(</span><span class="n">geom_array</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span>     <span class="c1"># Only every second element should be taken from the coordinates</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span>     <span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 
-<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyrosm/geometry.pyx:300,</span> in <span class="ni">pyrosm.geometry.create_linestring_geometry</span><span class="nt">()</span>
+<span class="nn">File ~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/shapely/coordinates.py:136,</span> in <span class="ni">get_coordinates</span><span class="nt">(geometry, include_z, return_index)</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="k">def</span> <span class="nf">get_coordinates</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">include_z</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Gets coordinates from a geometry array as an array of floats.</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span><span class="sd">     The shape of the returned array is (N, 2), with N being the number of</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span><span class="sd">     ([[2.0, 2.0], [4.0, 4.0], [0.0, 0.0]], [0, 0, 1])</span>
+<span class="g g-Whitespace">    </span><span class="mi">135</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">136</span>     <span class="k">return</span> <span class="n">lib</span><span class="o">.</span><span class="n">get_coordinates</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span>         <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object_</span><span class="p">),</span> <span class="n">include_z</span><span class="p">,</span> <span class="n">return_index</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="p">)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

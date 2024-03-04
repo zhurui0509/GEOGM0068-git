@@ -17,39 +17,44 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-## Option 1: use the package pyrosm to access the server and get the data
-from pyrosm import OSM, get_data
-bristol = get_data("bristol")
-osm = OSM(bristol)
-bristol_pois = osm.get_pois()
+import geopandas as gpd
+import pandas as pd
+import json
+from shapely.geometry import shape
+
+
+def parse_geom(geom_str):
+    try:
+        return shape(json.loads(geom_str))
+    except (TypeError, AttributeError):  # Handle NaN and empty strings
+        return None
+
+bristol_lsoal_df = pd.read_csv('../../LabData/Lab3/lsoa110.csv', delimiter=';')
+bristol_lsoal_df["geom"] = bristol_lsoal_df["geo_shape"].apply(parse_geom)
+bristol_lsoal_gdf = gpd.GeoDataFrame(bristol_lsoal_df, geometry="geom")
+print(bristol_lsoal_gdf.head())
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Input [0;32mIn [6][0m, in [0;36m<cell line: 2>[0;34m()[0m
-[1;32m      1[0m [38;5;66;03m## Option 1: use the package pyrosm to access the server and get the data[39;00m
-[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m [38;5;28;01mimport[39;00m OSM, get_data
-[1;32m      3[0m bristol [38;5;241m=[39m get_data([38;5;124m"[39m[38;5;124mbristol[39m[38;5;124m"[39m)
-[1;32m      4[0m osm [38;5;241m=[39m OSM(bristol)
+Input [0;32mIn [1][0m, in [0;36m<cell line: 1>[0;34m()[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mgeopandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mgpd[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
+[1;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mjson[39;00m
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/__init__.py:2[0m, in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdata[39;00m [38;5;28;01mimport[39;00m get_data, get_path  [38;5;66;03m# drop get_path in the future[39;00m
-[0;32m----> 2[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyrosm[39;00m [38;5;28;01mimport[39;00m OSM
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/geopandas/__init__.py:3[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_config[39;00m [38;5;28;01mimport[39;00m options
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeoseries[39;00m [38;5;28;01mimport[39;00m GeoSeries
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeodataframe[39;00m [38;5;28;01mimport[39;00m GeoDataFrame
+[1;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01marray[39;00m [38;5;28;01mimport[39;00m points_from_xy
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/pyrosm.py:5[0m, in [0;36m<module>[0;34m[0m
-[1;32m      3[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpbfreader[39;00m [38;5;28;01mimport[39;00m parse_osm_data
-[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_arrays[39;00m [38;5;28;01mimport[39;00m concatenate_dicts_of_arrays
-[0;32m----> 5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeometry[39;00m [38;5;28;01mimport[39;00m create_node_coordinates_lookup
-[1;32m      6[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mframes[39;00m [38;5;28;01mimport[39;00m create_nodes_gdf
-[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyrosm[39;00m[38;5;21;01m.[39;00m[38;5;21;01mutils[39;00m [38;5;28;01mimport[39;00m (
-[1;32m      8[0m     validate_custom_filter,
-[1;32m      9[0m     validate_osm_keys,
-[0;32m   (...)[0m
-[1;32m     16[0m     get_bounding_box,
-[1;32m     17[0m )
+File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/geopandas/geoseries.py:13[0m, in [0;36m<module>[0;34m[0m
+[1;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mimport[39;00m Series, MultiIndex
+[1;32m     11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpandas[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcore[39;00m[38;5;21;01m.[39;00m[38;5;21;01minternals[39;00m [38;5;28;01mimport[39;00m SingleBlockManager
+[0;32m---> 13[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpyproj[39;00m [38;5;28;01mimport[39;00m CRS
+[1;32m     14[0m [38;5;28;01mimport[39;00m [38;5;21;01mshapely[39;00m
+[1;32m     15[0m [38;5;28;01mfrom[39;00m [38;5;21;01mshapely[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeometry[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbase[39;00m [38;5;28;01mimport[39;00m BaseGeometry
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/pyrosm/geometry.pyx:2[0m, in [0;36minit pyrosm.geometry[0;34m()[0m
-
-[0;31mModuleNotFoundError[0m: No module named 'pygeos'
-ModuleNotFoundError: No module named 'pygeos'
+[0;31mModuleNotFoundError[0m: No module named 'pyproj'
+ModuleNotFoundError: No module named 'pyproj'
 
