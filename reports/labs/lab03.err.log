@@ -24,7 +24,7 @@ tfidf_pd = pd.DataFrame(tfidf_response[0].T.todense(), index=tfidf.get_feature_n
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [0;32mIn[36], line 1[0m
+Cell [0;32mIn[37], line 1[0m
 [0;32m----> 1[0m tfidf_pd [38;5;241m=[39m pd[38;5;241m.[39mDataFrame(tfidf_response[[38;5;241m0[39m][38;5;241m.[39mT[38;5;241m.[39mtodense(), index[38;5;241m=[39m[43mtfidf[49m[38;5;241;43m.[39;49m[43mget_feature_names[49m(), columns[38;5;241m=[39m[[38;5;124m"[39m[38;5;124mTF-IDF[39m[38;5;124m"[39m])
 
 [0;31mAttributeError[0m: 'TfidfVectorizer' object has no attribute 'get_feature_names'
