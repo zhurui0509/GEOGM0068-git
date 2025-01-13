@@ -9,21 +9,21 @@ The unit aims to:
 * Encourage you to design more efficient geographic (spatial) data management strategies in your projects
 * Facilitate you using state-of-the-art techniques to extract and integrate geographic information, especially from unstructured data (e.g., tweets, newspapers, etc.)
 
-## (Tentative) Syllabus - TB2 2023/24
+## (Tentative) Syllabus - TB2 2024/25
 |    <br>Week           |    <br>Topics                                  |    <br>Reading              |    <br>Lab                |
 |-----------------------|------------------------------------------------|-----------------------------|---------------------------|
-| Week 1  (Jan. 23)     | * Unit overview and policy<br>* Basic Concepts | GIR: Chapter 1 and 2<br>    | No   Lab                  |
-| Week 2  (Jan. 30)       | Spatial Database I                             | GIS: Chapter 2 and 3        | Lab 1                   |
-| Week 3  (Feb. 06)      | Spatial Database II                            | GIS: Chapter 4              | Lab 1                   |
-| Week 4  (Feb. 13)      | Georeferencing I                               | GIR: Chapter 4              | Lab 2-1                   |
-| Week 5  (Feb. 20)      | Georeferencing   II                            | GIR: Chapter 4              | Lab 2-2                   |
-| Week 6  (Feb. 27)       | Reading                                        |                             | No Lab (Assessment 1) |
-| Week 7  (Mar. 05)      | Spatial   Indexing                             | GIR: Chapter 5              | Lab 3-1                   |
-| Week 8  (Mar. 12)      | Spatial   Ranking                              | GIR: Chapter 6              | Lab 3-2                   |
-| Week 9  (Mar. 19)      | Geospatial   Semantics I                        | [Kuhn, 2005](https://link.springer.com/chapter/10.1007/11496168_1), [Janowicz et al., 2015](https://ojs.aaai.org/index.php/aimagazine/article/view/2560), [Hu, 2017](https://arxiv.org/abs/1707.03550)                        | Lab 4-1                   |
-| Week 10  (Apr. 16)      | Geospatial Semantics II           | Same to Week 9                         | Lab 4-2                   |
-| Week 11  (Apr. 23)      | Ethics, Summary, and Career                    | -                         | No Lab                    |
-| Week 12  (Apr. 30)     | Reading                                        |                             | No Lab (Assessment 2) |
+| Week 1  (Jan. 15)     | * Unit overview and policy<br>* Basic Concepts | GIR: Chapter 1 and 2<br>    | No   Lab                  |
+| Week 2  (Jan. 22)       | Spatial Database I                             | GIS: Chapter 2 and 3        | Lab 1                   |
+| Week 3  (Jan. 29)      | Spatial Database II                            | GIS: Chapter 4              | Lab 1                   |
+| Week 4  (Feb. 05)      | Georeferencing I                               | GIR: Chapter 4              | Lab 2-1                   |
+| Week 5  (Feb. 12)      | Georeferencing   II                            | GIR: Chapter 4              | Lab 2-2                   |
+| Week 6  (Feb. 19)       | Reading                                        |                             | No Lab |
+| Week 7  (Feb. 26)      | Spatial   Indexing                             | GIR: Chapter 5              | Lab 3-1                   |
+| Week 8  (Mar. 05)      | Spatial   Ranking                              | GIR: Chapter 6              | Lab 3-2                   |
+| Week 9  (Mar. 12)      | Geospatial   Semantics I                        | [Kuhn, 2005](https://link.springer.com/chapter/10.1007/11496168_1), [Janowicz et al., 2015](https://ojs.aaai.org/index.php/aimagazine/article/view/2560), [Hu, 2017](https://arxiv.org/abs/1707.03550)                        | Lab 4-1                   |
+| Week 10  (Mar. 19)      | Geospatial Semantics II           | Same to Week 9                         | Lab 4-2                   |
+| Week 11  (Mar. 26)      | Ethics, Summary, and Career                    | -                         | Assessment Workshop                    |
+| Week 12  (Apr. 02)     | Reading                                        |                             | No Lab  |
 
 ## Data Science, Geographic (Spatial) Data Science, and this unit
 This unit is part of the curriculum of MSc in [Geographic Data Science and Spatial Analytics](https://www.bristol.ac.uk/study/postgraduate/2022/sci/msc-geographic-data-science-and-spatial-analytics/) taught at the [School of Geographic Sciences](http://www.bristol.ac.uk/geography/), [University of Bristol](https://www.bristol.ac.uk/). The concept and theory teaching in this unit are closely related to Geographic (Spatial) Data Science and Data Science more broadly. See the image below for a better landscape of what this unit is about:
@@ -36,7 +36,7 @@ This unit is part of the curriculum of MSc in [Geographic Data Science and Spati
 -	Recommended:
 	- [Principles of Geographical Information Systems. 1998](https://archive.org/details/principles-of-geographical-information-systems/page/52/mode/2up) (GIS)
 	- [Introduction to Information Retrieval. 2008](https://archive.org/details/principles-of-geographical-information-systems/page/52/mode/2up) (IR)
-	- Research articles assigned during the class
+	- Research articles assigned in lectures
 
 ### Learning Python: 
 - [Python Foundation for Spatial Analysis](https://courses.spatialthoughts.com/python-foundation.html) (an online instruction for spatial analysis using Python. Highly recommended if you want to systematically learn Python.)
@@ -45,7 +45,7 @@ This unit is part of the curriculum of MSc in [Geographic Data Science and Spati
 
 ## Office Hour 
 
-Wednesday 3 pm - 5 pm (or by appointment) @ GEOG 2.21N
+Wednesday 3 pm - 5 pm @ GEOG 2.21N (please register at [Book a time with Rui](https://outlook.office.com/bookwithme/user/ff16ff7fee9449f581077ee720abf630%40bristol.ac.uk/meetingtype/gWGAoiuv50mVqdBGZRRGaw2?anonymous))
 
 <!-- ```{tableofcontents}
 ``` -->

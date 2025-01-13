@@ -32,6 +32,15 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-bristol_roadnetwork = osm.get_network()
+import geopandas as gpd
+
+# Filepath
+bristol_building_file = "./bristol-buildings.shp/gis_osm_buildings_a_free_1.shp" # make sure the directory is correct in your case
+
+# Read the file
+bristol_building = gpd.read_file(bristol_building_file)
+
+# How does it look?
+bristol_building.head()
 -------------------
 
