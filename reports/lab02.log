@@ -17,44 +17,83 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Post a tweet from Python
-api.update_status("Hello Twitter, I'm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience")
-# Your tweet has been posted!
+from geopandas import GeoDataFrame
+places_geodf = GeoDataFrame(places_df, crs="EPSG:4326", geometry='geom')
+type(places_geodf)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mForbidden[0m                                 Traceback (most recent call last)
-Input [0;32mIn [4][0m, in [0;36m<cell line: 2>[0;34m()[0m
-[1;32m      1[0m [38;5;66;03m# Post a tweet from Python[39;00m
-[0;32m----> 2[0m [43mapi[49m[38;5;241;43m.[39;49m[43mupdate_status[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mHello Twitter, I[39;49m[38;5;124;43m'[39;49m[38;5;124;43mm sending the first message via Python to you! I learnt it from GEOGM0068. #DataScience[39;49m[38;5;124;43m"[39;49m[43m)[49m
+[0;31mCRSError[0m                                  Traceback (most recent call last)
+Cell [0;32mIn[7], line 2[0m
+[1;32m      1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mgeopandas[39;00m [38;5;28;01mimport[39;00m GeoDataFrame
+[0;32m----> 2[0m places_geodf [38;5;241m=[39m [43mGeoDataFrame[49m[43m([49m[43mplaces_df[49m[43m,[49m[43m [49m[43mcrs[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mEPSG:4326[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mgeometry[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mgeom[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[1;32m      3[0m [38;5;28mtype[39m(places_geodf)
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:46[0m, in [0;36mpayload.<locals>.decorator.<locals>.wrapper[0;34m(*args, **kwargs)[0m
-[1;32m     44[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_list[39m[38;5;124m'[39m] [38;5;241m=[39m payload_list
-[1;32m     45[0m kwargs[[38;5;124m'[39m[38;5;124mpayload_type[39m[38;5;124m'[39m] [38;5;241m=[39m payload_type
-[0;32m---> 46[0m [38;5;28;01mreturn[39;00m [43mmethod[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/geodataframe.py:192[0m, in [0;36mGeoDataFrame.__init__[0;34m(self, data, geometry, crs, *args, **kwargs)[0m
+[1;32m    184[0m     [38;5;28;01mif[39;00m (
+[1;32m    185[0m         [38;5;28mhasattr[39m(geometry, [38;5;124m"[39m[38;5;124mcrs[39m[38;5;124m"[39m)
+[1;32m    186[0m         [38;5;129;01mand[39;00m geometry[38;5;241m.[39mcrs
+[1;32m    187[0m         [38;5;129;01mand[39;00m crs
+[1;32m    188[0m         [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m geometry[38;5;241m.[39mcrs [38;5;241m==[39m crs
+[1;32m    189[0m     ):
+[1;32m    190[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(crs_mismatch_error)
+[0;32m--> 192[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mset_geometry[49m[43m([49m[43mgeometry[49m[43m,[49m[43m [49m[43minplace[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m[43m [49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m)[49m
+[1;32m    194[0m [38;5;28;01mif[39;00m geometry [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m crs:
+[1;32m    195[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+[1;32m    196[0m         [38;5;124m"[39m[38;5;124mAssigning CRS to a GeoDataFrame without a geometry column is not [39m[38;5;124m"[39m
+[1;32m    197[0m         [38;5;124m"[39m[38;5;124msupported. Supply geometry using the [39m[38;5;124m'[39m[38;5;124mgeometry=[39m[38;5;124m'[39m[38;5;124m keyword argument, [39m[38;5;124m"[39m
+[1;32m    198[0m         [38;5;124m"[39m[38;5;124mor by providing a DataFrame with column name [39m[38;5;124m'[39m[38;5;124mgeometry[39m[38;5;124m'[39m[38;5;124m"[39m,
+[1;32m    199[0m     )
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:1136[0m, in [0;36mAPI.update_status[0;34m(self, status, **kwargs)[0m
-[1;32m   1133[0m [38;5;28;01mif[39;00m [38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m [38;5;129;01min[39;00m kwargs:
-[1;32m   1134[0m     kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m] [38;5;241m=[39m list_to_csv(kwargs[[38;5;124m'[39m[38;5;124mmedia_ids[39m[38;5;124m'[39m])
-[0;32m-> 1136[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m
-[1;32m   1137[0m [43m    [49m[38;5;124;43m'[39;49m[38;5;124;43mPOST[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mstatuses/update[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mendpoint_parameters[49m[38;5;241;43m=[39;49m[43m([49m
-[1;32m   1138[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mstatus[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43min_reply_to_status_id[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1139[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mauto_populate_reply_metadata[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mexclude_reply_user_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1140[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mattachment_url[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mmedia_ids[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mpossibly_sensitive[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mlat[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1141[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mlong[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mplace_id[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mdisplay_coordinates[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mtrim_user[39;49m[38;5;124;43m'[39;49m[43m,[49m
-[1;32m   1142[0m [43m        [49m[38;5;124;43m'[39;49m[38;5;124;43mcard_uri[39;49m[38;5;124;43m'[39;49m
-[1;32m   1143[0m [43m    [49m[43m)[49m[43m,[49m[43m [49m[43mstatus[49m[38;5;241;43m=[39;49m[43mstatus[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m
-[1;32m   1144[0m [43m[49m[43m)[49m
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/geodataframe.py:349[0m, in [0;36mGeoDataFrame.set_geometry[0;34m(self, col, drop, inplace, crs)[0m
+[1;32m    346[0m     level[38;5;241m.[39mcrs [38;5;241m=[39m crs
+[1;32m    348[0m [38;5;66;03m# Check that we are using a listlike of geometries[39;00m
+[0;32m--> 349[0m level [38;5;241m=[39m [43m_ensure_geometry[49m[43m([49m[43mlevel[49m[43m,[49m[43m [49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m)[49m
+[1;32m    350[0m [38;5;66;03m# update _geometry_column_name prior to assignment[39;00m
+[1;32m    351[0m [38;5;66;03m# to avoid default is None warning[39;00m
+[1;32m    352[0m frame[38;5;241m.[39m_geometry_column_name [38;5;241m=[39m geo_column_name
 
-File [0;32m~/opt/anaconda3/lib/python3.9/site-packages/tweepy/api.py:259[0m, in [0;36mAPI.request[0;34m(self, method, endpoint, endpoint_parameters, params, headers, json_payload, parser, payload_list, payload_type, post_data, files, require_auth, return_cursors, upload_api, use_cache, **kwargs)[0m
-[1;32m    257[0m     [38;5;28;01mraise[39;00m Unauthorized(resp)
-[1;32m    258[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m403[39m:
-[0;32m--> 259[0m     [38;5;28;01mraise[39;00m Forbidden(resp)
-[1;32m    260[0m [38;5;28;01mif[39;00m resp[38;5;241m.[39mstatus_code [38;5;241m==[39m [38;5;241m404[39m:
-[1;32m    261[0m     [38;5;28;01mraise[39;00m NotFound(resp)
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/geodataframe.py:57[0m, in [0;36m_ensure_geometry[0;34m(data, crs)[0m
+[1;32m     55[0m [38;5;28;01melse[39;00m:
+[1;32m     56[0m     [38;5;28;01mif[39;00m [38;5;28misinstance[39m(data, Series):
+[0;32m---> 57[0m         out [38;5;241m=[39m [43mfrom_shapely[49m[43m([49m[43mnp[49m[38;5;241;43m.[39;49m[43masarray[49m[43m([49m[43mdata[49m[43m)[49m[43m,[49m[43m [49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m)[49m
+[1;32m     58[0m         [38;5;28;01mreturn[39;00m GeoSeries(out, index[38;5;241m=[39mdata[38;5;241m.[39mindex, name[38;5;241m=[39mdata[38;5;241m.[39mname)
+[1;32m     59[0m     [38;5;28;01melse[39;00m:
 
-[0;31mForbidden[0m: 403 Forbidden
-453 - You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product
-Forbidden: 403 Forbidden
-453 - You currently have access to a subset of Twitter API v2 endpoints and limited v1.1 endpoints (e.g. media post, oauth) only. If you need access to this endpoint, you may need a different access level. You can learn more here: https://developer.twitter.com/en/portal/product
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/array.py:159[0m, in [0;36mfrom_shapely[0;34m(data, crs)[0m
+[1;32m    143[0m [38;5;28;01mdef[39;00m [38;5;21mfrom_shapely[39m(data, crs[38;5;241m=[39m[38;5;28;01mNone[39;00m):
+[1;32m    144[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m    145[0m [38;5;124;03m    Convert a list or array of shapely objects to a GeometryArray.[39;00m
+[1;32m    146[0m 
+[0;32m   (...)[0m
+[1;32m    157[0m 
+[1;32m    158[0m [38;5;124;03m    """[39;00m
+[0;32m--> 159[0m     [38;5;28;01mreturn[39;00m [43mGeometryArray[49m[43m([49m[43mvectorized[49m[38;5;241;43m.[39;49m[43mfrom_shapely[49m[43m([49m[43mdata[49m[43m)[49m[43m,[49m[43m [49m[43mcrs[49m[38;5;241;43m=[39;49m[43mcrs[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/array.py:294[0m, in [0;36mGeometryArray.__init__[0;34m(self, data, crs)[0m
+[1;32m    291[0m [38;5;28mself[39m[38;5;241m.[39m_data [38;5;241m=[39m data
+[1;32m    293[0m [38;5;28mself[39m[38;5;241m.[39m_crs [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[0;32m--> 294[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcrs[49m [38;5;241m=[39m crs
+[1;32m    295[0m [38;5;28mself[39m[38;5;241m.[39m_sindex [38;5;241m=[39m [38;5;28;01mNone[39;00m
+
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/geopandas/array.py:360[0m, in [0;36mGeometryArray.crs[0;34m(self, value)[0m
+[1;32m    357[0m [38;5;129m@crs[39m[38;5;241m.[39msetter
+[1;32m    358[0m [38;5;28;01mdef[39;00m [38;5;21mcrs[39m([38;5;28mself[39m, value):
+[1;32m    359[0m [38;5;250m    [39m[38;5;124;03m"""Sets the value of the crs"""[39;00m
+[0;32m--> 360[0m     [38;5;28mself[39m[38;5;241m.[39m_crs [38;5;241m=[39m [38;5;28;01mNone[39;00m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m value [38;5;28;01melse[39;00m [43mCRS[49m[38;5;241;43m.[39;49m[43mfrom_user_input[49m[43m([49m[43mvalue[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyproj/crs/crs.py:501[0m, in [0;36mCRS.from_user_input[0;34m(cls, value, **kwargs)[0m
+[1;32m    499[0m [38;5;28;01mif[39;00m [38;5;28misinstance[39m(value, [38;5;28mcls[39m):
+[1;32m    500[0m     [38;5;28;01mreturn[39;00m value
+[0;32m--> 501[0m [38;5;28;01mreturn[39;00m [38;5;28;43mcls[39;49m[43m([49m[43mvalue[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyproj/crs/crs.py:348[0m, in [0;36mCRS.__init__[0;34m(self, projparams, **kwargs)[0m
+[1;32m    346[0m     [38;5;28mself[39m[38;5;241m.[39m_local[38;5;241m.[39mcrs [38;5;241m=[39m projparams
+[1;32m    347[0m [38;5;28;01melse[39;00m:
+[0;32m--> 348[0m     [38;5;28mself[39m[38;5;241m.[39m_local[38;5;241m.[39mcrs [38;5;241m=[39m [43m_CRS[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43msrs[49m[43m)[49m
+
+File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/pyproj/_crs.pyx:2378[0m, in [0;36mpyproj._crs._CRS.__init__[0;34m()[0m
+
+[0;31mCRSError[0m: Invalid projection: EPSG:4326: (Internal Proj Error: proj_create: no database context specified)
+CRSError: Invalid projection: EPSG:4326: (Internal Proj Error: proj_create: no database context specified)
 
