@@ -1,5 +1,5 @@
 (lecture09)= 
-# Lecture 09: Geospatial Semantics II
+# Lecture 09: Spatial Ranking
 
 Slides will be pulished the week of the lecture. 
 

@@ -1,5 +1,5 @@
 (lecture07)= 
-# Lecture 07: Spatial Ranking 
+# Lecture 07: Geospatial Semantics II 
 
 Slides will be pulished the week of the lecture. 
 

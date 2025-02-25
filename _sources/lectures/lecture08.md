@@ -1,5 +1,5 @@
 (lecture08)= 
-# Lecture 08: Geospatial Semantics I
+# Lecture 08: Spatial Indexing I
 
 Slides will be pulished the week of the lecture. 
 

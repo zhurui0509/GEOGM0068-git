@@ -18,11 +18,11 @@ The unit aims to:
 | Week 4  (Feb. 05)      | Georeferencing I                               | GIR: Chapter 4              | Lab 2-1                   |
 | Week 5  (Feb. 12)      | Georeferencing   II                            | GIR: Chapter 4              | Lab 2-2                   |
 | Week 6  (Feb. 19)       | Reading                                        |                             | No Lab |
-| Week 7  (Feb. 26)      | Spatial   Indexing                             | GIR: Chapter 5              | Lab 3-1                   |
-| Week 8  (Mar. 05)      | Spatial   Ranking                              | GIR: Chapter 6              | Lab 3-2                   |
-| Week 9  (Mar. 12)      | Geospatial   Semantics I                        | [Kuhn, 2005](https://link.springer.com/chapter/10.1007/11496168_1), [Janowicz et al., 2015](https://ojs.aaai.org/index.php/aimagazine/article/view/2560), [Hu, 2017](https://arxiv.org/abs/1707.03550)                        | Lab 4-1                   |
-| Week 10  (Mar. 19)      | Geospatial Semantics II           | Same to Week 9                         | Lab 4-2                   |
-| Week 11  (Mar. 26)      | Ethics, Summary, and Career                    | -                         | Assessment Workshop                    |
+| Week 7  (Feb. 26)      | Geospatial   Semantics I                             | [Kuhn, 2005](https://link.springer.com/chapter/10.1007/11496168_1), [Janowicz et al., 2015](https://ojs.aaai.org/index.php/aimagazine/article/view/2560), [Hu, 2017](https://arxiv.org/abs/1707.03550), [Zhu, 2025](https://arxiv.org/abs/2405.07664)                                      | Lab 4-1                   |
+| Week 8  (Mar. 05)      | Geospatial Semantics II                              | Same to Week 7              | Lab 4-2                   |
+| Week 9  (Mar. 12)      | Spatial Indexing                        | GIR: Chapter 5 | Assessment Workshop                   |
+| Week 10  (Mar. 19)      | Spatial Ranking           | GIR: Chapter 6                         | Lab 3-1                   |
+| Week 11  (Mar. 26)      | Ethics, Summary, and Career                    | -                         | Lab 3-2                    |
 | Week 12  (Apr. 02)     | Reading                                        |                             | No Lab  |
 
 ## Data Science, Geographic (Spatial) Data Science, and this unit
