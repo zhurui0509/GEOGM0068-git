@@ -1,4 +1,4 @@
-(lecture05)= 
+(lecture04)= 
 # Lecture 04: Georeferencing I 
 
 <!-- Slides will be pulished the week of the lecture.  -->
