@@ -1,8 +1,9 @@
 (lecture08)= 
-# Lecture 08: Spatial Indexing I
+# Lecture 08: Spatial Indexing 
 
-Slides will be pulished the week of the lecture. 
+<!-- Slides will be pulished the week of the lecture.  -->
 
-<!-- We start to discuss geospatial semantics from this lecture. Topics in this lecture include: what is semantics, what is geospatial semantics and why it is special, semantic interoperability, Semantic Web, (geospatial) ontology and knowledge graphs. 
+We discuss what is indexing and its core techniques in Information Retrievel before delving into the introduction of spatial versions of these techniques, including space-filling curve, Quad-tree, and R-tree. Examples are demonstrated to help understand these techniques. 
 
-[![Lecture08-slides](/lectures/l08-preface.png)](https://docs.google.com/presentation/d/1ZdKFA0G3hIm9I4BW3DvHjtcK4D6kyIWP5Y-tIELa00E/edit?usp=sharing) -->
+
+[![Lecture08-slides](/lectures/l08-preface.png)](https://docs.google.com/presentation/d/1dPpEAMubYui9G5dme8qovO9AXkDWyX7gX0nEi9F1ZHs/edit?usp=sharing)

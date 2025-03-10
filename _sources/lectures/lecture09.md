@@ -1,9 +1,8 @@
 (lecture09)= 
 # Lecture 09: Spatial Ranking
 
-Slides will be pulished the week of the lecture. 
+<!-- Slides will be pulished the week of the lecture.  -->
 
-<!-- Following last lecture, we continue discussing geospatial semantics but with a focus on its technical side. More concretely, we discuss semantic similarity and methods to compute it. 
-{doc}`../labs/lab04` will be closely related to this lecture.
+After we have learnt how to index spatial information, we then need to understand how to use relevance metrics to rank these pieces of retrieved information so that the most relevant piece of information can be returned effectively to end users.
 
-[![Lecture09-slides](/lectures/l09-preface.png)](https://docs.google.com/presentation/d/1fNGkrYbaGO4VdKj2WaB4lx-FSghtFq_jlPdqSHaOyS8/edit?usp=sharing) -->
+[![Lecture09-slides](/lectures/l09-preface.png)](https://docs.google.com/presentation/d/1mBmTrPbyC5IryZ-VV7_0Bm6WfkgMbbVsbpdBC9OzNwY/edit?usp=sharing) 
