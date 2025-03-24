@@ -18,12 +18,7 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import spacy_dbpedia_spotlight
-import spacy
-nlp = spacy.blank('en')
-# add the pipeline stage
-nlp.add_pipe('dbpedia_spotlight')
-# get the document
+UK_physicalGeo = "The physical geography of the UK varies greatly. England consists of mostly lowland terrain, with upland or mountainous terrain only found north-west of the Tees-Exe line. The upland areas include the Lake District, the Pennines, North York Moors, Exmoor and Dartmoor. The lowland areas are typically traversed by ranges of low hills, frequently composed of chalk, and flat plains. Scotland is the most mountainous country in the UK and its physical geography is distinguished by the Highland Boundary Fault which traverses the Scottish mainland from Helensburgh to Stonehaven. The faultline separates the two distinctively different regions of the Highlands to the north and west, and the Lowlands to the south and east. The Highlands are predominantly mountainous, containing the majority of Scotland's mountainous landscape, while the Lowlands contain flatter land, especially across the Central Lowlands, with upland and mountainous terrain located at the Southern Uplands. Wales is mostly mountainous, though south Wales is less mountainous than north and mid Wales. Northern Ireland consists of mostly hilly landscape and its geography includes the Mourne Mountains as well as Lough Neagh, at 388 square kilometres (150 sq mi), the largest body of water in the UK.[12]The overall geomorphology of the UK was shaped by a combination of forces including tectonics and climate change, in particular glaciation in northern and western areas. The tallest mountain in the UK (and British Isles) is Ben Nevis, in the Grampian Mountains, Scotland. The longest river is the River Severn which flows from Wales into England. The largest lake by surface area is Lough Neagh in Northern Ireland, though Scotland's Loch Ness has the largest volume."
 doc = nlp(UK_physicalGeo)
 # see the entities
 entities_dbpedia = [(ent.text, ent.label_, ent.kb_id_, ent._.dbpedia_raw_result['@similarityScore']) for ent in doc.ents]
@@ -31,7 +26,7 @@ entities_dbpedia[1]
 ------------------
 
 ----- stdout -----
-[32m2025-03-24 23:12:21.393[0m | [31m[1mERROR   [0m | [36mspacy_dbpedia_spotlight.entity_linker[0m:[36mget_remote_response[0m:[36m248[0m - [31m[1mEndpoint unreachable, please check your connection. Document not updated.
+[32m2025-03-24 23:12:03.749[0m | [31m[1mERROR   [0m | [36mspacy_dbpedia_spotlight.entity_linker[0m:[36mget_remote_response[0m:[36m248[0m - [31m[1mEndpoint unreachable, please check your connection. Document not updated.
                 HTTPSConnectionPool(host='api.dbpedia-spotlight.org', port=443): Max retries exceeded with url: /en/annotate (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1000)')))[0m
 ------------------
 
@@ -189,12 +184,11 @@ File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/urllib3/util/re
 During handling of the above exception, another exception occurred:
 
 [0;31mSSLError[0m                                  Traceback (most recent call last)
-Cell [0;32mIn[25], line 7[0m
-[1;32m      5[0m nlp[38;5;241m.[39madd_pipe([38;5;124m'[39m[38;5;124mdbpedia_spotlight[39m[38;5;124m'[39m)
-[1;32m      6[0m [38;5;66;03m# get the document[39;00m
-[0;32m----> 7[0m doc [38;5;241m=[39m [43mnlp[49m[43m([49m[43mUK_physicalGeo[49m[43m)[49m
-[1;32m      8[0m [38;5;66;03m# see the entities[39;00m
-[1;32m      9[0m entities_dbpedia [38;5;241m=[39m [(ent[38;5;241m.[39mtext, ent[38;5;241m.[39mlabel_, ent[38;5;241m.[39mkb_id_, ent[38;5;241m.[39m_[38;5;241m.[39mdbpedia_raw_result[[38;5;124m'[39m[38;5;124m@similarityScore[39m[38;5;124m'[39m]) [38;5;28;01mfor[39;00m ent [38;5;129;01min[39;00m doc[38;5;241m.[39ments]
+Cell [0;32mIn[2], line 2[0m
+[1;32m      1[0m UK_physicalGeo [38;5;241m=[39m [38;5;124m"[39m[38;5;124mThe physical geography of the UK varies greatly. England consists of mostly lowland terrain, with upland or mountainous terrain only found north-west of the Tees-Exe line. The upland areas include the Lake District, the Pennines, North York Moors, Exmoor and Dartmoor. The lowland areas are typically traversed by ranges of low hills, frequently composed of chalk, and flat plains. Scotland is the most mountainous country in the UK and its physical geography is distinguished by the Highland Boundary Fault which traverses the Scottish mainland from Helensburgh to Stonehaven. The faultline separates the two distinctively different regions of the Highlands to the north and west, and the Lowlands to the south and east. The Highlands are predominantly mountainous, containing the majority of Scotland[39m[38;5;124m'[39m[38;5;124ms mountainous landscape, while the Lowlands contain flatter land, especially across the Central Lowlands, with upland and mountainous terrain located at the Southern Uplands. Wales is mostly mountainous, though south Wales is less mountainous than north and mid Wales. Northern Ireland consists of mostly hilly landscape and its geography includes the Mourne Mountains as well as Lough Neagh, at 388 square kilometres (150 sq mi), the largest body of water in the UK.[12]The overall geomorphology of the UK was shaped by a combination of forces including tectonics and climate change, in particular glaciation in northern and western areas. The tallest mountain in the UK (and British Isles) is Ben Nevis, in the Grampian Mountains, Scotland. The longest river is the River Severn which flows from Wales into England. The largest lake by surface area is Lough Neagh in Northern Ireland, though Scotland[39m[38;5;124m'[39m[38;5;124ms Loch Ness has the largest volume.[39m[38;5;124m"[39m
+[0;32m----> 2[0m doc [38;5;241m=[39m [43mnlp[49m[43m([49m[43mUK_physicalGeo[49m[43m)[49m
+[1;32m      3[0m [38;5;66;03m# see the entities[39;00m
+[1;32m      4[0m entities_dbpedia [38;5;241m=[39m [(ent[38;5;241m.[39mtext, ent[38;5;241m.[39mlabel_, ent[38;5;241m.[39mkb_id_, ent[38;5;241m.[39m_[38;5;241m.[39mdbpedia_raw_result[[38;5;124m'[39m[38;5;124m@similarityScore[39m[38;5;124m'[39m]) [38;5;28;01mfor[39;00m ent [38;5;129;01min[39;00m doc[38;5;241m.[39ments]
 
 File [0;32m~/opt/anaconda3/envs/ox/lib/python3.12/site-packages/spacy/language.py:1054[0m, in [0;36mLanguage.__call__[0;34m(self, text, disable, component_cfg)[0m
 [1;32m   1052[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(Errors[38;5;241m.[39mE109[38;5;241m.[39mformat(name[38;5;241m=[39mname)) [38;5;28;01mfrom[39;00m [38;5;21;01me[39;00m
